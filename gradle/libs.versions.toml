@@ -12,11 +12,13 @@ coroutine-verson = "1.6.4"
 dagger-hilt-version = "2.45"
 dagger-hilt-compose-version = "1.0.0"
 lifecycle-runtime-version = "2.5.1"
+logging-interceptor-version = "5.0.0-alpha.6"
 navigation-compose-version = "2.5.3"
 paging-version = "3.1.1"
 paging-compose-version = "1.0.0-alpha18"
 retrofit-version = "2.9.0"
 room-version = "2.5.0"
+timber-version = "5.0.1"
 
 [libraries]
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose-version" }
@@ -32,6 +34,7 @@ dagger-hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", versio
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt-version" }
 junit = { module = "junit:junit", version.ref = "junit-version" }
 lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-version" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "logging-interceptor-version" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose-version" }
 paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging-version" }
 paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose-version" }
@@ -41,11 +44,12 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-vers
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room-version" }
-
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber-version" }
 
 [bundles]
 coroutine-bundle = ["coroutine-android", "coroutine-core"]
 paging-bundle = ["paging-runtime", "paging-compose"]
+retrofit-bundle = ["retrofit", "retrofit-gson-deserializer"]
 room-bundle = ["room-runtime", "room-ktx", "room-paging"]
 
 [plugins]
