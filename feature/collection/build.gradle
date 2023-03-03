@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply from: '../../shared_compose.gradle'
+
 android {
     namespace 'com.lelestacia.collection'
     compileSdk 33
@@ -26,6 +28,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
     }
 }
 

@@ -1,7 +1,11 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    alias libs.plugins.android.application.plugin
+    alias libs.plugins.kotlin.android.plugin
+    alias libs.plugins.kotlin.kapt.plugin
+    alias libs.plugins.dagger.hilt.module.plugin
 }
+
+apply from: ('../shared_compose.gradle')
 
 android {
     namespace 'com.lelestacia.lelenimecompose'
@@ -48,23 +52,18 @@ android {
 
 dependencies {
     // Module Implementation
+    implementation project(':core:common')
     implementation project(':feature:explore')
     implementation project(':feature:collection')
     implementation project(':feature:more')
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-    implementation 'androidx.activity:activity-compose:1.6.1'
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material3:material3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    implementation libs.kotlin.ktx
+    implementation libs.lifecycle.runtime
+    implementation libs.activity.compose
+    androidTestImplementation libs.android.junit
+    testImplementation libs.junit
+    androidTestImplementation libs.espresso
+    implementation libs.dagger.hilt
+    kapt libs.dagger.hilt.compiler
 }
