@@ -1,0 +1,57 @@
+[versions]
+activity-compose-version = "1.6.1"
+android-version = "8.1.0-alpha07"
+android-junit-version = "1.1.5"
+espresso-version = "3.5.1"
+junit-version = "4.13.2"
+kotlin-android-version = "1.7.20"
+kotlin-kapt-version = "1.7.20"
+kotlin-ktx-version = "1.9.0"
+coil-compose-version = "2.2.2"
+coroutine-verson = "1.6.4"
+dagger-hilt-version = "2.45"
+dagger-hilt-compose-version = "1.0.0"
+lifecycle-runtime-version = "2.5.1"
+navigation-compose-version = "2.5.3"
+paging-version = "3.1.1"
+paging-compose-version = "1.0.0-alpha18"
+retrofit-version = "2.9.0"
+room-version = "2.5.0"
+
+[libraries]
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose-version" }
+android-junit = { module = "androidx.test.ext:junit", version.ref = "android-junit-version" }
+kotlin-ktx = { module = "androidx.core:core-ktx", version.ref = "kotlin-ktx-version" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose-version" }
+coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutine-verson" }
+coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine-verson" }
+coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutine-verson" }
+espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-version" }
+dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "dagger-hilt-version" }
+dagger-hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "dagger-hilt-compose-version" }
+dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt-version" }
+junit = { module = "junit:junit", version.ref = "junit-version" }
+lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-version" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose-version" }
+paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging-version" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging-compose-version" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-version" }
+retrofit-gson-deserializer = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit-version" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-version" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "room-version" }
+
+
+[bundles]
+coroutine-bundle = ["coroutine-android", "coroutine-core"]
+paging-bundle = ["paging-runtime", "paging-compose"]
+room-bundle = ["room-runtime", "room-ktx", "room-paging"]
+
+[plugins]
+android-application-plugin = { id = "com.android.application", version.ref = "android-version" }
+android-plugin = { id = "com.android.library", version.ref = "android-version" }
+kotlin-android-plugin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android-version" }
+kotlin-kapt-plugin = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin-kapt-version" }
+dagger-hilt-plugin = { id = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "dagger-hilt-version" }
+dagger-hilt-module-plugin = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt-version" }
