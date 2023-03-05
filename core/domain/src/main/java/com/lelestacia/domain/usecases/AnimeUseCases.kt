@@ -6,9 +6,10 @@ import com.lelestacia.model.Anime
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ExploreAnimeInteractor @Inject constructor (
+class AnimeUseCases @Inject constructor(
     private val animeRepository: IAnimeRepository
-): ExploreAnimeUseCases {
+) : IAnimeUseCases {
+
     override fun getAiringAnime(): Flow<PagingData<Anime>> {
         return animeRepository.getAiringAnime()
     }

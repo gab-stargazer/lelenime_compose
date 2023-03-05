@@ -1,26 +1,52 @@
 package com.lelestacia.explore
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.lelestacia.explore.component.HorizontalAnimeSection
+import com.lelestacia.explore.component.SearchBarDashboard
+import com.lelestacia.model.Anime
+import kotlinx.coroutines.launch
 
 @Composable
-fun ExploreScreen(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+fun ExploreScreen(
+    snackBarHostState: SnackbarHostState,
+    vm: ExploreViewModel = hiltViewModel()
+) {
+    val scrollState = rememberScrollState()
+    val scope = rememberCoroutineScope()
+    val airingAnime: LazyPagingItems<Anime> =
+        vm.airingAnime.collectAsLazyPagingItems()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(state = scrollState),
     ) {
-        Text(
-            text = "Explore Screen",
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Cursive,
-            style = MaterialTheme.typography.headlineMedium
-        )
+        SearchBarDashboard {
+
+        }
+        HorizontalAnimeSection(
+            sectionTitle = "Airing Anime",
+            listOfAnime = airingAnime,
+            onMoreButtonClicked = {
+
+            }, onAnimeClicked = { clickedAnime ->
+                scope.launch {
+                    snackBarHostState.showSnackbar(
+                        message = "Selected Anime is ${clickedAnime.title}",
+                        actionLabel = "Ok",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            })
     }
 }

@@ -5,10 +5,13 @@ import com.lelestacia.network.endpoint.AnimeAPI
 import com.lelestacia.network.model.anime.AnimeResponse
 import javax.inject.Inject
 
-class AnimeNetworkService @Inject constructor (
+class AnimeNetworkService @Inject constructor(
     private val animeAPI: AnimeAPI
-): IAnimeNetworkService {
+) : IAnimeNetworkService {
+
     override fun getAiringAnime(): PagingSource<Int, AnimeResponse> {
-        return AiringAnimePaging(animeAPI = animeAPI)
+        return AiringAnimePagingSource(
+            animeAPI = animeAPI
+        )
     }
 }

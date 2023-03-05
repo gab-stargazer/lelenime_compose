@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.library'
-    alias libs.plugins.kotlin.android.plugin
-    alias libs.plugins.kotlin.kapt.plugin
-    alias libs.plugins.dagger.hilt.module.plugin
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -23,19 +23,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 }
 
 dependencies {
-    implementation libs.bundles.retrofit.bundle
-    implementation libs.logging.interceptor
-    implementation libs.paging.runtime
+    //  Network Layer Libraries
+    implementation libs.bundles.network.layer.bundle
+
+    //  Dagger-Hilt
     implementation libs.dagger.hilt
     kapt libs.dagger.hilt.compiler
-    implementation libs.timber
 }

@@ -15,8 +15,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAnimeRepository(networkService: IAnimeNetworkService): IAnimeRepository =
+    fun provideAnimeRepository(animeNetworkService: IAnimeNetworkService): IAnimeRepository =
         AnimeRepository(
-            animeNetworkService = networkService
+            animeNetworkService = animeNetworkService
         )
 }

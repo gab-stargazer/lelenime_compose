@@ -1,8 +1,8 @@
 package com.lelestacia.domain.di
 
 import com.lelestacia.data.repository.IAnimeRepository
-import com.lelestacia.domain.usecases.ExploreAnimeInteractor
-import com.lelestacia.domain.usecases.ExploreAnimeUseCases
+import com.lelestacia.domain.usecases.AnimeUseCases
+import com.lelestacia.domain.usecases.IAnimeUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,12 +11,12 @@ import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object InteractorModule {
+object UseCasesModule {
 
     @Provides
     @ViewModelScoped
-    fun provideExploreAnimeUseCases(animeRepository: IAnimeRepository) : ExploreAnimeUseCases =
-        ExploreAnimeInteractor(
+    fun provideAnimeUseCases(animeRepository: IAnimeRepository): IAnimeUseCases =
+        AnimeUseCases(
             animeRepository = animeRepository
         )
 }

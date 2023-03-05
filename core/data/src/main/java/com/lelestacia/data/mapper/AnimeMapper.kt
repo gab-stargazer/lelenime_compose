@@ -30,7 +30,11 @@ fun AnimeResponse.asAnime(): Anime =
         synopsis = synopsis,
         season = season,
         year = year,
-        studios = studio.map { it.name },
-        genres = genres.map { it.name },
+        studios = studio.map { studio ->
+            studio.name
+        },
+        genres = genres.map { genre ->
+            genre.name
+        },
         isFavorite = false
     )

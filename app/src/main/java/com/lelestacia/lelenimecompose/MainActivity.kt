@@ -6,6 +6,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.remember
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,7 +19,9 @@ import com.lelestacia.explore.ExploreScreen
 import com.lelestacia.lelenimecompose.ui.component.BottomNav
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.MoreScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @OptIn(ExperimentalMaterial3Api::class)
@@ -23,10 +29,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LelenimeComposeTheme {
-                val navHostController = rememberNavController()
+                val navHostController: NavHostController = rememberNavController()
+                val snackBarHostState: SnackbarHostState = remember {
+                    SnackbarHostState()
+                }
                 Scaffold(
                     bottomBar = {
                         BottomNav(navController = navHostController)
+                    },
+                    snackbarHost = {
+                        SnackbarHost(snackBarHostState)
                     }
                 ) {
                     NavHost(
@@ -35,7 +47,9 @@ class MainActivity : ComponentActivity() {
                     ) {
 
                         composable(route = Screen.Explore.route) {
-                            ExploreScreen()
+                            ExploreScreen(
+                                snackBarHostState = snackBarHostState
+                            )
                         }
 
                         composable(route = Screen.Collection.route) {
