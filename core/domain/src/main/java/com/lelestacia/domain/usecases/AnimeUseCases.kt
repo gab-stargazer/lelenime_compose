@@ -13,4 +13,12 @@ class AnimeUseCases @Inject constructor(
     override fun getAiringAnime(): Flow<PagingData<Anime>> {
         return animeRepository.getAiringAnime()
     }
+
+    override fun getUpcomingAnime(): Flow<PagingData<Anime>> {
+        return animeRepository.getUpcomingAnime()
+    }
+
+    override fun getPopularAnime(): Flow<PagingData<Anime>> {
+        return animeRepository.getPopularAnime()
+    }
 }

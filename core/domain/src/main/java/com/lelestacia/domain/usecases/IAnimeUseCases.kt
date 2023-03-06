@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface IAnimeUseCases {
     fun getAiringAnime(): Flow<PagingData<Anime>>
+    fun getUpcomingAnime(): Flow<PagingData<Anime>>
+    fun getPopularAnime(): Flow<PagingData<Anime>>
 }

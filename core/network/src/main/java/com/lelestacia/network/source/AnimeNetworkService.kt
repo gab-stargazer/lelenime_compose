@@ -14,4 +14,16 @@ class AnimeNetworkService @Inject constructor(
             animeAPI = animeAPI
         )
     }
+
+    override fun getUpcomingAnime(): PagingSource<Int, AnimeResponse> {
+        return UpcomingAnimePagingSource(
+            animeAPI = animeAPI
+        )
+    }
+
+    override fun getPopularAnime(): PagingSource<Int, AnimeResponse> {
+        return PopularAnimePagingSource(
+            animeAPI = animeAPI
+        )
+    }
 }

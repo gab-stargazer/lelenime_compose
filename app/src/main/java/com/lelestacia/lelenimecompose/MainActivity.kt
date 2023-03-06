@@ -1,14 +1,15 @@
 package com.lelestacia.lelenimecompose
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     snackbarHost = {
                         SnackbarHost(snackBarHostState)
                     }
-                ) {
+                ) { paddingValue ->
                     NavHost(
                         navController = navHostController,
                         startDestination = Screen.Explore.route
@@ -48,16 +49,21 @@ class MainActivity : ComponentActivity() {
 
                         composable(route = Screen.Explore.route) {
                             ExploreScreen(
+                                modifier = Modifier.padding(paddingValue),
                                 snackBarHostState = snackBarHostState
                             )
                         }
 
                         composable(route = Screen.Collection.route) {
-                            CollectionScreen()
+                            CollectionScreen(
+                                modifier = Modifier.padding(paddingValue)
+                            )
                         }
 
                         composable(route = Screen.More.route) {
-                            MoreScreen()
+                            MoreScreen(
+                                modifier = Modifier.padding(paddingValue)
+                            )
                         }
                     }
                 }

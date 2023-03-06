@@ -15,6 +15,12 @@ class ExploreViewModel @Inject constructor(
     private val animeUseCases: IAnimeUseCases
 ) : ViewModel() {
 
+    val popularAnime: Flow<PagingData<Anime>> = animeUseCases.getPopularAnime()
+        .cachedIn(viewModelScope)
+
     val airingAnime: Flow<PagingData<Anime>> = animeUseCases.getAiringAnime()
+        .cachedIn(viewModelScope)
+
+    val upcomingAnime: Flow<PagingData<Anime>> = animeUseCases.getUpcomingAnime()
         .cachedIn(viewModelScope)
 }
