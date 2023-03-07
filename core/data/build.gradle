@@ -38,7 +38,7 @@ dependencies {
     implementation project(':core:model')
 
     //  Coroutine
-    implementation libs.bundles.coroutine.bundle
+    implementation libs.bundles.coroutine
 
     //  Paging
     implementation libs.paging.runtime
@@ -46,4 +46,10 @@ dependencies {
     //  Dagger Hilt
     implementation libs.dagger.hilt
     kapt libs.dagger.hilt.compiler
+}
+
+kapt {
+    correctErrorTypes = true
+    showProcessorStats = true
+    useBuildCache = true
 }

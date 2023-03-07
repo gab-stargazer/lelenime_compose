@@ -21,11 +21,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         compose true
@@ -39,9 +39,9 @@ dependencies {
 
     //  Compose Toolkit
     implementation platform(libs.compose.bom)
-    implementation libs.bundles.compose.bundle
+    implementation libs.bundles.compose
     implementation libs.compose.navigation
     androidTestImplementation platform(libs.compose.bom)
     androidTestImplementation libs.compose.junit
-    debugImplementation libs.bundles.compose.tooling.and.manifest.bundle
+    debugImplementation libs.bundles.compose.tooling.and.manifest
 }

@@ -6,9 +6,13 @@ import com.lelestacia.model.Anime
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class AnimeUseCases @Inject constructor(
+class DashboardUseCases @Inject constructor(
     private val animeRepository: IAnimeRepository
-) : IAnimeUseCases {
+) : IDashboardUseCases {
+
+    override suspend fun insertOrUpdateAnimeHistory(anime: Anime) {
+        animeRepository.insertOrUpdateAnimeHistory(anime = anime)
+    }
 
     override fun getAiringAnime(): Flow<PagingData<Anime>> {
         return animeRepository.getAiringAnime()

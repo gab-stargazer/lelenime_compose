@@ -1,4 +1,4 @@
-package com.lelestacia.common
+package com.lelestacia.common.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
@@ -11,3 +11,4 @@ val blue = Color(0xFF6D67E4)
 val lightBlue = Color(0xFF46C2CB)
 val darkModeYellow = Color(0xFFF2F7A1)
 val purpleBlue = Color(0xFF444aa2)
+val dividerBackground = Color(0xFFDDDDDD)

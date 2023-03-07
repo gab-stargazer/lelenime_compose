@@ -4,17 +4,70 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.lelestacia.data.mapper.PagingDataMapper
+import com.lelestacia.data.mapper.asAnime
+import com.lelestacia.data.mapper.asNewEntity
+import com.lelestacia.database.entity.anime.AnimeEntity
+import com.lelestacia.database.service.IAnimeDatabaseService
 import com.lelestacia.model.Anime
 import com.lelestacia.network.model.anime.AnimeResponse
 import com.lelestacia.network.source.IAnimeNetworkService
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
+import java.util.Date
 import javax.inject.Inject
 
 class AnimeRepository @Inject constructor(
     private val animeNetworkService: IAnimeNetworkService,
-    private val mapper: PagingDataMapper = PagingDataMapper()
+    private val animeDatabaseService: IAnimeDatabaseService,
+    private val mapper: PagingDataMapper = PagingDataMapper(),
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IAnimeRepository {
+
+    override suspend fun insertOrUpdateAnimeHistory(anime: Anime) {
+        withContext(ioDispatcher) {
+            val localAnime: AnimeEntity? = animeDatabaseService.getAnimeByAnimeID(anime.malID)
+            val isAnimeExist = localAnime != null
+
+            if (isAnimeExist) {
+                val updatedHistory: AnimeEntity = (localAnime as AnimeEntity).copy(
+                    image = anime.coverImages,
+                    trailer = AnimeEntity.Trailer(
+                        id = anime.trailer?.youtubeId,
+                        url = anime.trailer?.url,
+                        image = anime.trailer?.images
+                    ),
+                    episodes = anime.episodes,
+                    status = anime.status,
+                    airing = anime.airing,
+                    startedDate = anime.startedDate,
+                    finishedDate = anime.finishedDate,
+                    score = anime.score,
+                    scoredBy = anime.scoredBy,
+                    rank = anime.rank,
+                    lastViewed = Date(),
+                    updatedAt = Date()
+                )
+                animeDatabaseService.updateAnime(updatedHistory)
+                return@withContext
+            }
+
+            val newAnime = anime.asNewEntity()
+            animeDatabaseService.insertOrReplaceAnime(newAnime)
+        }
+    }
+
+    override suspend fun updateAnimeFavoriteByAnimeID(animeID: Int) {
+        withContext(ioDispatcher) {
+            val anime = animeDatabaseService.getAnimeByAnimeID(animeID = animeID)
+            anime?.let { oldAnime ->
+                val newAnime = oldAnime.copy(isFavorite = !oldAnime.isFavorite)
+                animeDatabaseService.updateAnime(newAnime)
+            }
+        }
+    }
 
     override fun getAiringAnime(): Flow<PagingData<Anime>> {
         return getAnimePager(1).flow.map { pagingData ->
@@ -32,6 +85,14 @@ class AnimeRepository @Inject constructor(
         return getAnimePager(3).flow.map { pagingData ->
             mapper.mapResponseToAnime(pagingData = pagingData)
         }
+    }
+
+    override fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Anime> {
+        return animeDatabaseService
+            .getAndSubscribeAnimeByAnimeID(animeID = animeID)
+            .map { animeEntity ->
+                animeEntity.asAnime()
+            }
     }
 
     private fun getAnimePager(number: Int): Pager<Int, AnimeResponse> {

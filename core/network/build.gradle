@@ -32,10 +32,26 @@ android {
 }
 
 dependencies {
-    //  Network Layer Libraries
-    implementation libs.bundles.network.layer.bundle
+
+    //  Retrofit + GSON
+    implementation libs.bundles.retrofit.gson
+
+    //  Paging
+    implementation libs.paging.runtime
+
+    // Logging Interceptor
+    implementation libs.logging.interceptor
+
+    //  Timber
+    implementation libs.timber
 
     //  Dagger-Hilt
     implementation libs.dagger.hilt
     kapt libs.dagger.hilt.compiler
+}
+
+kapt {
+    correctErrorTypes = true
+    showProcessorStats = true
+    useBuildCache = true
 }

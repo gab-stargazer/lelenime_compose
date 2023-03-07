@@ -1,31 +1,39 @@
 package com.lelestacia.common
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.CollectionsBookmark
+import androidx.compose.material.icons.filled.Explore
+import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.outlined.CollectionsBookmark
+import androidx.compose.material.icons.outlined.Explore
+import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.lelestacia.common.route.Screen
 
 data class BottomNavItem(
     val title: String,
-    val icon: ImageVector,
+    val iconActive: ImageVector,
+    val iconInactive: ImageVector,
     val screen: Screen
 )
 
 val navItem: List<BottomNavItem> = listOf(
     BottomNavItem(
         title = "Explore",
-        icon = Icons.Default.Home,
+        iconActive = Icons.Filled.Explore,
+        iconInactive = Icons.Outlined.Explore,
         screen = Screen.Explore
     ),
     BottomNavItem(
         title = "Collection",
-        icon = Icons.Default.Person,
+        iconActive = Icons.Filled.CollectionsBookmark,
+        iconInactive = Icons.Outlined.CollectionsBookmark,
         screen = Screen.Collection
     ),
     BottomNavItem(
         title = "More",
-        icon = Icons.Default.Settings,
+        iconActive = Icons.Filled.MoreHoriz,
+        iconInactive = Icons.Outlined.MoreHoriz,
         screen = Screen.More
     )
 )

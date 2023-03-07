@@ -11,13 +11,17 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.lelestacia.collection.CollectionScreen
-import com.lelestacia.common.Screen
+import com.lelestacia.common.route.Screen
+import com.lelestacia.common.ui.screen.detail.DetailAnimeScreen
 import com.lelestacia.explore.ExploreScreen
 import com.lelestacia.lelenimecompose.ui.component.BottomNav
+import com.lelestacia.lelenimecompose.ui.component.MainTopBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.MoreScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +39,9 @@ class MainActivity : ComponentActivity() {
                     SnackbarHostState()
                 }
                 Scaffold(
+                    topBar = {
+                        MainTopBar(navHostController = navHostController)
+                    },
                     bottomBar = {
                         BottomNav(navController = navHostController)
                     },
@@ -50,8 +57,20 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.Explore.route) {
                             ExploreScreen(
                                 modifier = Modifier.padding(paddingValue),
-                                snackBarHostState = snackBarHostState
-                            )
+                            ) { animeID ->
+                                navHostController.navigate(
+                                    route = Screen.DetailAnimeScreen.createRoute(animeID = animeID)
+                                ) {
+                                    popUpTo(
+                                        navHostController.currentDestination?.id
+                                            ?: navHostController.graph.startDestinationId
+                                    ) {
+                                        saveState = true
+                                    }
+                                    restoreState = true
+                                    launchSingleTop = true
+                                }
+                            }
                         }
 
                         composable(route = Screen.Collection.route) {
@@ -63,6 +82,21 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.More.route) {
                             MoreScreen(
                                 modifier = Modifier.padding(paddingValue)
+                            )
+                        }
+
+                        composable(
+                            route = Screen.DetailAnimeScreen.route,
+                            arguments = listOf(
+                                navArgument(name = "mal_id") {
+                                    type = NavType.IntType
+                                }
+                            )
+                        ) {
+
+                            DetailAnimeScreen(
+                                animeID = it.arguments?.getInt("mal_id") ?: 0,
+                                snackbarHostState = snackBarHostState
                             )
                         }
                     }
