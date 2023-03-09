@@ -22,52 +22,45 @@ import com.lelestacia.common.ui.theme.purpleBlue
 fun BottomNav(navController: NavHostController) {
     val navBackStackEntry: NavBackStackEntry? by navController.currentBackStackEntryAsState()
     val currentRoute: String? = navBackStackEntry?.destination?.route
-    val listOfRootDestination: List<String> = listOf(
-        Screen.Explore.route,
-        Screen.Collection.route,
-        Screen.More.route
-    )
-    if (listOfRootDestination.contains(currentRoute)) {
-        NavigationBar(
-            modifier = Modifier,
-            containerColor = MaterialTheme.colorScheme.background,
-        ) {
-            navItem.map { navItem ->
-                NavigationBarItem(
-                    selected = currentRoute == navItem.screen.route,
-                    onClick = {
-                        navController.navigate(navItem.title) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            restoreState = true
-                            launchSingleTop = true
+    NavigationBar(
+        modifier = Modifier,
+        containerColor = MaterialTheme.colorScheme.background,
+    ) {
+        navItem.map { navItem ->
+            NavigationBarItem(
+                selected = currentRoute == navItem.screen.route,
+                onClick = {
+                    navController.navigate(navItem.title) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
                         }
-                    },
-                    icon = {
-                        Icon(
-                            imageVector =
-                            if (currentRoute == navItem.screen.route)
-                                navItem.iconActive
-                            else navItem.iconInactive,
-                            contentDescription = navItem.title
-                        )
-                    },
-                    label = {
-                        Text(text = navItem.title)
-                    },
-                    alwaysShowLabel = false,
-                    colors = NavigationBarItemDefaults.colors(
-                        indicatorColor =
-                        if (isSystemInDarkTheme()) {
-                            purpleBlue
-                        } else {
-                            purpleBlue.copy(alpha = 0.1f)
-                        },
-                        selectedIconColor = Color.White
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+                },
+                icon = {
+                    Icon(
+                        imageVector =
+                        if (currentRoute == navItem.screen.route)
+                            navItem.iconActive
+                        else navItem.iconInactive,
+                        contentDescription = navItem.title
                     )
+                },
+                label = {
+                    Text(text = navItem.title)
+                },
+                alwaysShowLabel = false,
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor =
+                    if (isSystemInDarkTheme()) {
+                        purpleBlue
+                    } else {
+                        purpleBlue.copy(alpha = 0.1f)
+                    },
+                    selectedIconColor = Color.White
                 )
-            }
+            )
         }
     }
 }

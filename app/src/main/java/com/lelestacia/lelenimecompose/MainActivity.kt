@@ -18,10 +18,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lelestacia.collection.CollectionScreen
 import com.lelestacia.common.route.Screen
-import com.lelestacia.common.ui.screen.detail.DetailAnimeScreen
+import com.lelestacia.detail.DetailScreen
 import com.lelestacia.explore.ExploreScreen
 import com.lelestacia.lelenimecompose.ui.component.BottomNav
-import com.lelestacia.lelenimecompose.ui.component.MainTopBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.MoreScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,9 +38,6 @@ class MainActivity : ComponentActivity() {
                     SnackbarHostState()
                 }
                 Scaffold(
-                    topBar = {
-                        MainTopBar(navHostController = navHostController)
-                    },
                     bottomBar = {
                         BottomNav(navController = navHostController)
                     },
@@ -93,10 +89,8 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         ) {
-
-                            DetailAnimeScreen(
-                                animeID = it.arguments?.getInt("mal_id") ?: 0,
-                                snackbarHostState = snackBarHostState
+                            DetailScreen(
+                                animeID = it.arguments?.getInt("mal_id") ?: 0
                             )
                         }
                     }
