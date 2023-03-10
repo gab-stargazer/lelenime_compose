@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rank_and_score">#%s - %s</string>
+    <string name="rated_by">Rated by %d people</string>
+</resources>

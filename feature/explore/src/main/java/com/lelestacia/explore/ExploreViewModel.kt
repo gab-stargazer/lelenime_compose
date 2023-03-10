@@ -19,6 +19,7 @@ class ExploreViewModel @Inject constructor(
     val popularAnime: Flow<PagingData<Anime>> = useCases.getPopularAnime()
         .cachedIn(viewModelScope)
 
+
     val airingAnime: Flow<PagingData<Anime>> = useCases.getAiringAnime()
         .cachedIn(viewModelScope)
 

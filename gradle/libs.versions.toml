@@ -14,11 +14,12 @@ coroutine-verson = "1.6.4"
 dagger-hilt-version = "2.45"
 dagger-hilt-compose-version = "1.0.0"
 ksp-version = "1.8.10-1.0.9"
-lifecycle-runtime-version = "2.5.1"
+lifecycle-runtime-version = "2.6.0"
 logging-interceptor-version = "5.0.0-alpha.6"
 navigation-compose-version = "2.5.3"
 paging-version = "3.1.1"
 paging-compose-version = "1.0.0-alpha18"
+shimmer-version = "1.0.4"
 retrofit-version = "2.9.0"
 room-version = "2.5.0"
 system-ui-controller-version = "0.27.0"
@@ -72,6 +73,8 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room-vers
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room-version" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room-version" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room-version" }
+#   Shimmer
+shimmer-effect = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "shimmer-version" }
 #   System UI Controller
 system-ui-controller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "system-ui-controller-version" }
 #   Timber (Logging)

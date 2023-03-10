@@ -1,5 +1,6 @@
 package com.lelestacia.domain.usecases
 
+import com.lelestacia.common.Resource
 import com.lelestacia.data.repository.IAnimeRepository
 import com.lelestacia.model.Anime
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,7 @@ class DetailUseCases @Inject constructor(
         animeRepository.updateAnimeFavoriteByAnimeID(animeID = animeID)
     }
 
-    override fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Anime> {
+    override fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Resource<Anime>> {
         return animeRepository.getAnimeFromLocalDatabaseByAnimeID(animeID = animeID)
     }
 }

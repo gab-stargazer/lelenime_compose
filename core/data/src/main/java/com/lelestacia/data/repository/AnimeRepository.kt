@@ -3,6 +3,7 @@ package com.lelestacia.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.lelestacia.common.Resource
 import com.lelestacia.data.mapper.PagingDataMapper
 import com.lelestacia.data.mapper.asAnime
 import com.lelestacia.data.mapper.asNewEntity
@@ -87,11 +88,11 @@ class AnimeRepository @Inject constructor(
         }
     }
 
-    override fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Anime> {
+    override fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Resource<Anime>> {
         return animeDatabaseService
             .getAndSubscribeAnimeByAnimeID(animeID = animeID)
             .map { animeEntity ->
-                animeEntity.asAnime()
+                Resource.Success(data = animeEntity.asAnime())
             }
     }
 

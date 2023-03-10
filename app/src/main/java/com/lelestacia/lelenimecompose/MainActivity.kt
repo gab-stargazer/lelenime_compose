@@ -20,7 +20,7 @@ import com.lelestacia.collection.CollectionScreen
 import com.lelestacia.common.route.Screen
 import com.lelestacia.detail.DetailScreen
 import com.lelestacia.explore.ExploreScreen
-import com.lelestacia.lelenimecompose.ui.component.BottomNav
+import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.MoreScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 }
                 Scaffold(
                     bottomBar = {
-                        BottomNav(navController = navHostController)
+                        LeleNimeBottomBar(navController = navHostController)
                     },
                     snackbarHost = {
                         SnackbarHost(snackBarHostState)
@@ -90,7 +90,8 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             DetailScreen(
-                                animeID = it.arguments?.getInt("mal_id") ?: 0
+                                animeID = it.arguments?.getInt("mal_id") ?: 0,
+                                navHostController = navHostController
                             )
                         }
                     }

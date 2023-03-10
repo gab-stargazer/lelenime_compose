@@ -71,6 +71,9 @@ dependencies {
 
     // Junit
     testImplementation(libs.junit)
+
+    //  Shimmer
+    implementation(libs.shimmer.effect)
 }
 
 kapt {

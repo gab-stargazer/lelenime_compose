@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -19,6 +20,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.lelestacia.common.ui.theme.purpleBlue
@@ -39,7 +45,7 @@ fun HorizontalAnimeSection(
     sectionTitle: String,
     listOfAnime: LazyPagingItems<Anime>,
     onMoreButtonClicked: () -> Unit,
-    onAnimeClicked: (Anime) -> Unit
+    onAnimeClicked: (Anime) -> Unit,
 ) {
     Card(
         onClick = {
@@ -72,9 +78,15 @@ fun HorizontalAnimeSection(
             )
         }
     }
+    val lazyListState = rememberLazyListState()
+    var isContentReady by remember {
+        mutableStateOf(value = false)
+    }
     LazyRow(
+        state = lazyListState,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
+        userScrollEnabled = isContentReady,
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 24.dp)
@@ -91,6 +103,45 @@ fun HorizontalAnimeSection(
                     onAnimeClicked(clickedAnime)
                 }
             }
+        }
+
+        when (val loadState = listOfAnime.loadState.refresh) {
+            is LoadState.Error ->
+                item {
+                    AnimeCardError(
+                        modifier = Modifier.fillParentMaxWidth(),
+                        errorMessage = loadState.error.message
+                    ) {
+                        listOfAnime.retry()
+                    }
+                }
+
+            LoadState.Loading ->
+                items(count = 6) {
+                    AnimeCardLoading()
+                }
+
+            is LoadState.NotLoading -> {
+                if (!isContentReady) isContentReady = true
+            }
+        }
+
+        when (val loadState = listOfAnime.loadState.append) {
+            is LoadState.Error ->
+                item {
+                    AnimeCardError(
+                        errorMessage = loadState.error.message
+                    ) {
+                        listOfAnime.retry()
+                    }
+                }
+
+            LoadState.Loading ->
+                items(count = 6) {
+                    AnimeCardLoading()
+                }
+
+            is LoadState.NotLoading -> Unit
         }
     }
     if (sectionTitle != stringResource(id = R.string.upcoming_anim)) {

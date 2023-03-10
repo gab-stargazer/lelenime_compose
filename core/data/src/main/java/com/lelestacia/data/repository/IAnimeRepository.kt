@@ -1,6 +1,7 @@
 package com.lelestacia.data.repository
 
 import androidx.paging.PagingData
+import com.lelestacia.common.Resource
 import com.lelestacia.model.Anime
 import kotlinx.coroutines.flow.Flow
 
@@ -10,5 +11,5 @@ interface IAnimeRepository {
     fun getAiringAnime(): Flow<PagingData<Anime>>
     fun getUpcomingAnime(): Flow<PagingData<Anime>>
     fun getPopularAnime(): Flow<PagingData<Anime>>
-    fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Anime>
+    fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Resource<Anime>>
 }
