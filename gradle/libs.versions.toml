@@ -51,7 +51,7 @@ coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android
 coroutine-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine-verson" }
 coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutine-verson" }
 #   Dagger-Hilt
-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "dagger-hilt-version" }
+dagger-hilt-module = { module = "com.google.dagger:hilt-android", version.ref = "dagger-hilt-version" }
 dagger-hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "dagger-hilt-compose-version" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt-version" }
 #   Linter
@@ -96,7 +96,7 @@ paging = [
 #   Room Runtime + KTX + Paging
 room = ["room-runtime", "room-ktx", "room-paging"]
 #   Compose Bundling
-compose = [
+compose-toolkit = [
     "compose-ui",
     "compose-ui-graphic",
     "compose-ui-preview",

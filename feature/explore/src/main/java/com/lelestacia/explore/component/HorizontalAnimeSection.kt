@@ -20,10 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -79,71 +75,76 @@ fun HorizontalAnimeSection(
         }
     }
     val lazyListState = rememberLazyListState()
-    var isContentReady by remember {
-        mutableStateOf(value = false)
-    }
-    LazyRow(
-        state = lazyListState,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp),
-        userScrollEnabled = isContentReady,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 24.dp)
-            .animateContentSize()
-    ) {
-        items(
-            items = listOfAnime,
-            key = {
-                it.malID
-            }
-        ) {
-            it?.let { anime ->
-                AnimeCard(anime = anime) { clickedAnime ->
-                    onAnimeClicked(clickedAnime)
-                }
+    val loadState = listOfAnime.loadState
+    when (loadState.refresh) {
+        is LoadState.Error -> {
+            AnimeCardError(
+                modifier = Modifier.fillMaxWidth(),
+                errorMessage = (loadState.refresh as LoadState.Error).error.message
+            ) {
+                listOfAnime.retry()
             }
         }
 
-        when (val loadState = listOfAnime.loadState.refresh) {
-            is LoadState.Error ->
-                item {
-                    AnimeCardError(
-                        modifier = Modifier.fillParentMaxWidth(),
-                        errorMessage = loadState.error.message
-                    ) {
-                        listOfAnime.retry()
-                    }
-                }
-
-            LoadState.Loading ->
+        LoadState.Loading ->
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                userScrollEnabled = false,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp)
+                    .animateContentSize()
+            ) {
                 items(count = 6) {
                     AnimeCardLoading()
                 }
-
-            is LoadState.NotLoading -> {
-                if (!isContentReady) isContentReady = true
             }
-        }
 
-        when (val loadState = listOfAnime.loadState.append) {
-            is LoadState.Error ->
-                item {
-                    AnimeCardError(
-                        errorMessage = loadState.error.message
-                    ) {
-                        listOfAnime.retry()
+        is LoadState.NotLoading -> {
+            LazyRow(
+                state = lazyListState,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp)
+                    .animateContentSize()
+            ) {
+                items(
+                    items = listOfAnime,
+                    key = {
+                        it.malID
+                    }
+                ) {
+                    it?.let { anime ->
+                        AnimeCard(anime = anime) { clickedAnime ->
+                            onAnimeClicked(clickedAnime)
+                        }
                     }
                 }
 
-            LoadState.Loading ->
-                items(count = 6) {
-                    AnimeCardLoading()
-                }
+                when (loadState.append) {
+                    is LoadState.Error ->
+                        item {
+                            AnimeCardError(
+                                errorMessage = (loadState.append as LoadState.Error).error.message
+                            ) {
+                                listOfAnime.retry()
+                            }
+                        }
 
-            is LoadState.NotLoading -> Unit
+                    LoadState.Loading ->
+                        items(count = 6) {
+                            AnimeCardLoading()
+                        }
+
+                    is LoadState.NotLoading -> Unit
+                }
+            }
         }
     }
+
     if (sectionTitle != stringResource(id = R.string.upcoming_anim)) {
         Card(
             modifier = Modifier

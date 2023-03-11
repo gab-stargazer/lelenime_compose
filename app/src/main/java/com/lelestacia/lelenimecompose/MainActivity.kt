@@ -18,7 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lelestacia.collection.CollectionScreen
 import com.lelestacia.common.route.Screen
-import com.lelestacia.detail.DetailScreen
+import com.lelestacia.detail.screen.DetailScreen
 import com.lelestacia.explore.ExploreScreen
 import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
