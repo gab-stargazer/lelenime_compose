@@ -19,7 +19,8 @@ import androidx.navigation.navArgument
 import com.lelestacia.collection.CollectionScreen
 import com.lelestacia.common.route.Screen
 import com.lelestacia.detail.screen.DetailScreen
-import com.lelestacia.explore.ExploreScreen
+import com.lelestacia.explore.screen.expanded.ExpandedScreen
+import com.lelestacia.explore.screen.explore.ExploreScreen
 import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.MoreScreen
@@ -53,6 +54,47 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.Explore.route) {
                             ExploreScreen(
                                 modifier = Modifier.padding(paddingValue),
+                                onAnimeClicked = { animeID ->
+                                    navHostController.navigate(
+                                        route = Screen.DetailAnimeScreen.createRoute(animeID = animeID)
+                                    ) {
+                                        popUpTo(
+                                            navHostController.currentDestination?.id
+                                                ?: navHostController.graph.startDestinationId
+                                        ) {
+                                            saveState = true
+                                        }
+                                        restoreState = true
+                                        launchSingleTop = true
+                                    }
+                                },
+                                onMoreButtonClicked = { animeType ->
+                                    navHostController.navigate(
+                                        route = Screen.ExploreExpanded.createRoute(animeType = animeType)
+                                    ) {
+                                        popUpTo(
+                                            navHostController.currentDestination?.id
+                                                ?: navHostController.graph.startDestinationId
+                                        ) {
+                                            saveState = true
+                                        }
+                                        restoreState = true
+                                        launchSingleTop = true
+                                    }
+                                }
+                            )
+                        }
+
+                        composable(
+                            route = Screen.ExploreExpanded.route,
+                            arguments = listOf(
+                                navArgument("anime_type") {
+                                    type = NavType.IntType
+                                }
+                            )
+                        ) {
+                            ExpandedScreen(
+                                type = it.arguments?.getInt("anime_type") ?: 1
                             ) { animeID ->
                                 navHostController.navigate(
                                     route = Screen.DetailAnimeScreen.createRoute(animeID = animeID)

@@ -1,6 +1,7 @@
 package com.lelestacia.detail.screen
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,7 +44,7 @@ import com.lelestacia.detail.component.AnimeInformation
 import com.lelestacia.detail.component.AnimeTitleAndScore
 import com.lelestacia.model.Anime
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedCrossfadeTargetStateParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
@@ -52,6 +53,9 @@ fun DetailScreen(
     vm: DetailViewModel = hiltViewModel()
 ) {
     val animeResource = vm.anime.collectAsState()
+    val scrollState = rememberScrollState()
+
+
     var isDataInitiated by remember {
         mutableStateOf(false)
     }
@@ -103,16 +107,18 @@ fun DetailScreen(
                         onClick = {
                             vm.updateAnimeByAnimeID(animeID = animeID)
                         }) {
-                        Icon(
-                            imageVector =
-                            if (animeFavorite.data?.isFavorite as Boolean) {
-                                Icons.Default.Favorite
-                            } else {
-                                Icons.Default.FavoriteBorder
-                            },
-                            tint = Color.White,
-                            contentDescription = "Favorite Button"
-                        )
+                        Crossfade(targetState = animeFavorite.data?.isFavorite, label = "") {
+                            Icon(
+                                imageVector =
+                                if (animeFavorite.data?.isFavorite as Boolean) {
+                                    Icons.Default.Favorite
+                                } else {
+                                    Icons.Default.FavoriteBorder
+                                },
+                                tint = Color.White,
+                                contentDescription = "Favorite Button"
+                            )
+                        }
                     }
                 }
 
@@ -131,7 +137,7 @@ fun DetailScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValues)
-                        .verticalScroll(state = rememberScrollState()),
+                        .verticalScroll(state = scrollState),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     AnimeCoverImage(anime = anime)

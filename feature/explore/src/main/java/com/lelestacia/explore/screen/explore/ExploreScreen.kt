@@ -1,4 +1,4 @@
-package com.lelestacia.explore
+package com.lelestacia.explore.screen.explore
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.lelestacia.explore.R
 import com.lelestacia.explore.component.HorizontalAnimeSection
 import com.lelestacia.explore.component.SearchBarDashboard
 import kotlinx.coroutines.launch
@@ -21,7 +22,8 @@ import kotlinx.coroutines.launch
 fun ExploreScreen(
     modifier: Modifier = Modifier,
     vm: ExploreViewModel = hiltViewModel(),
-    onAnimeClicked: (Int) -> Unit
+    onAnimeClicked: (Int) -> Unit,
+    onMoreButtonClicked: (Int) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     Column(
@@ -41,7 +43,7 @@ fun ExploreScreen(
             sectionTitle = stringResource(id = R.string.popular_anime),
             listOfAnime = vm.popularAnime.collectAsLazyPagingItems(),
             onMoreButtonClicked = {
-
+                onMoreButtonClicked(1)
             },
             onAnimeClicked = { clickedAnime ->
                 scope.launch {
@@ -54,7 +56,7 @@ fun ExploreScreen(
             sectionTitle = stringResource(id = R.string.airing_anime),
             listOfAnime = vm.airingAnime.collectAsLazyPagingItems(),
             onMoreButtonClicked = {
-
+                onMoreButtonClicked(2)
             }, onAnimeClicked = { clickedAnime ->
                 scope.launch {
                     vm.insertOrUpdateAnimeHistory(anime = clickedAnime).join()
@@ -65,7 +67,7 @@ fun ExploreScreen(
             sectionTitle = stringResource(id = R.string.upcoming_anim),
             listOfAnime = vm.upcomingAnime.collectAsLazyPagingItems(),
             onMoreButtonClicked = {
-
+                onMoreButtonClicked(3)
             },
             onAnimeClicked = { clickedAnime ->
                 scope.launch {

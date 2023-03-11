@@ -1,4 +1,4 @@
-package com.lelestacia.explore
+package com.lelestacia.explore.screen.explore
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
