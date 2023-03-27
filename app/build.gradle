@@ -61,6 +61,7 @@ android {
 dependencies {
     //  Module Implementation
     implementation project(":core:common")
+    implementation project(":core:model")
     implementation project(":feature:explore")
     implementation project(":feature:collection")
     implementation project(":feature:more")
@@ -95,6 +96,7 @@ dependencies {
     //  Dagger Hilt
     implementation libs.dagger.hilt.module
     kapt libs.dagger.hilt.compiler
+    implementation libs.dagger.hilt.compose
 
     //  Timber
     implementation libs.timber

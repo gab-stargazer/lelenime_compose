@@ -8,8 +8,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -19,12 +22,14 @@ import androidx.navigation.navArgument
 import com.lelestacia.collection.CollectionScreen
 import com.lelestacia.common.route.Screen
 import com.lelestacia.detail.screen.DetailScreen
-import com.lelestacia.explore.screen.expanded.ExpandedScreen
-import com.lelestacia.explore.screen.explore.ExploreScreen
+import com.lelestacia.explore.screen.explore.ExplorationScreen
+import com.lelestacia.explore.screen.explore.ExplorationScreenViewModel
 import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.MoreScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -34,6 +39,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LelenimeComposeTheme {
+                val scope: CoroutineScope = rememberCoroutineScope()
                 val navHostController: NavHostController = rememberNavController()
                 val snackBarHostState: SnackbarHostState = remember {
                     SnackbarHostState()
@@ -52,63 +58,23 @@ class MainActivity : ComponentActivity() {
                     ) {
 
                         composable(route = Screen.Explore.route) {
-                            ExploreScreen(
-                                modifier = Modifier.padding(paddingValue),
-                                onAnimeClicked = { animeID ->
-                                    navHostController.navigate(
-                                        route = Screen.DetailAnimeScreen.createRoute(animeID = animeID)
-                                    ) {
-                                        popUpTo(
-                                            navHostController.currentDestination?.id
-                                                ?: navHostController.graph.startDestinationId
-                                        ) {
-                                            saveState = true
-                                        }
-                                        restoreState = true
-                                        launchSingleTop = true
+                            val viewModel: ExplorationScreenViewModel = hiltViewModel()
+                            val uiState = viewModel.explorationScreenState.collectAsState()
+                            ExplorationScreen(
+                                screenState = uiState.value,
+                                onEvent = viewModel::onEvent,
+                                onAnimeClicked = { anime ->
+                                    scope.launch {
+                                        viewModel.insertOrUpdateAnimeHistory(anime = anime).join()
+                                        navHostController.navigate(
+                                            route = Screen.DetailAnimeScreen.createRoute(
+                                                anime.malID
+                                            )
+                                        )
                                     }
                                 },
-                                onMoreButtonClicked = { animeType ->
-                                    navHostController.navigate(
-                                        route = Screen.ExploreExpanded.createRoute(animeType = animeType)
-                                    ) {
-                                        popUpTo(
-                                            navHostController.currentDestination?.id
-                                                ?: navHostController.graph.startDestinationId
-                                        ) {
-                                            saveState = true
-                                        }
-                                        restoreState = true
-                                        launchSingleTop = true
-                                    }
-                                }
+                                modifier = Modifier.padding(paddingValue)
                             )
-                        }
-
-                        composable(
-                            route = Screen.ExploreExpanded.route,
-                            arguments = listOf(
-                                navArgument("anime_type") {
-                                    type = NavType.IntType
-                                }
-                            )
-                        ) {
-                            ExpandedScreen(
-                                type = it.arguments?.getInt("anime_type") ?: 1
-                            ) { animeID ->
-                                navHostController.navigate(
-                                    route = Screen.DetailAnimeScreen.createRoute(animeID = animeID)
-                                ) {
-                                    popUpTo(
-                                        navHostController.currentDestination?.id
-                                            ?: navHostController.graph.startDestinationId
-                                    ) {
-                                        saveState = true
-                                    }
-                                    restoreState = true
-                                    launchSingleTop = true
-                                }
-                            }
                         }
 
                         composable(route = Screen.Collection.route) {
