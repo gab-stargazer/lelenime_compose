@@ -12,7 +12,7 @@ import com.lelestacia.explore.screen.explore.DisplayType
 import com.lelestacia.explore.screen.explore.ExploreScreenState
 
 @Composable
-fun DisplayTypeRow(
+fun DashboardDisplayTypeHeader(
     state: ExploreScreenState,
     onEvent: (DisplayType) -> Unit
 ) {

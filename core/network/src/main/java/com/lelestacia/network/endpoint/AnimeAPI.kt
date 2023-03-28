@@ -20,4 +20,34 @@ interface AnimeAPI {
     suspend fun getPopularAnime(
         @Query("page") page: Int
     ): GenericPaginationResponse<AnimeResponse>
+
+    @GET("/anime")
+    suspend fun getAnimeSearch(
+        @Query("q") q: String,
+        @Query("page") page: Int
+    ): GenericPaginationResponse<AnimeResponse>
+
+    @GET("/anime")
+    suspend fun getAnimeSearch(
+        @Query("q") q: String,
+        @Query("type") type: String,
+        @Query("page") page: Int
+    ): GenericPaginationResponse<AnimeResponse>
+
+    @GET("/anime")
+    suspend fun getAnimeSearch(
+        @Query("q") q: String,
+        @Query("type") type: String,
+        @Query("status")status: String,
+        @Query("page") page: Int
+    ): GenericPaginationResponse<AnimeResponse>
+
+    @GET("/anime")
+    suspend fun getAnimeSearch(
+        @Query("q") q: String,
+        @Query("type") type: String,
+        @Query("status")status: String,
+        @Query("rating")rating: String,
+        @Query("page") page: Int
+    ): GenericPaginationResponse<AnimeResponse>
 }

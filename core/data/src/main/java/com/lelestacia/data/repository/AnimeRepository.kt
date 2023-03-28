@@ -3,8 +3,8 @@ package com.lelestacia.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.map
 import com.lelestacia.common.Resource
-import com.lelestacia.data.mapper.PagingDataMapper
 import com.lelestacia.data.mapper.asAnime
 import com.lelestacia.data.mapper.asNewEntity
 import com.lelestacia.database.entity.anime.AnimeEntity
@@ -23,7 +23,6 @@ import javax.inject.Inject
 class AnimeRepository @Inject constructor(
     private val animeNetworkService: IAnimeNetworkService,
     private val animeDatabaseService: IAnimeDatabaseService,
-    private val mapper: PagingDataMapper = PagingDataMapper(),
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IAnimeRepository {
 
@@ -72,19 +71,45 @@ class AnimeRepository @Inject constructor(
 
     override fun getAiringAnime(): Flow<PagingData<Anime>> {
         return getAnimePager(1).flow.map { pagingData ->
-            mapper.mapResponseToAnime(pagingData = pagingData)
+            pagingData.map(AnimeResponse::asAnime)
         }
     }
 
     override fun getUpcomingAnime(): Flow<PagingData<Anime>> {
         return getAnimePager(2).flow.map { pagingData ->
-            mapper.mapResponseToAnime(pagingData = pagingData)
+            pagingData.map(AnimeResponse::asAnime)
         }
     }
 
     override fun getPopularAnime(): Flow<PagingData<Anime>> {
         return getAnimePager(3).flow.map { pagingData ->
-            mapper.mapResponseToAnime(pagingData = pagingData)
+            pagingData.map(AnimeResponse::asAnime)
+        }
+    }
+
+    override fun getAnimeSearch(
+        searchQuery: String,
+        type: String?,
+        status: String?,
+        rating: String?
+    ): Flow<PagingData<Anime>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 25,
+                prefetchDistance = 15,
+                enablePlaceholders = false,
+                initialLoadSize = 25
+            ),
+            pagingSourceFactory = {
+                animeNetworkService.getAnimeSearch(
+                    searchQuery = searchQuery,
+                    type = type,
+                    status = status,
+                    rating = rating
+                )
+            }
+        ).flow.map { pagingData ->
+            pagingData.map(AnimeResponse::asAnime)
         }
     }
 
@@ -100,7 +125,7 @@ class AnimeRepository @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = 25,
-                prefetchDistance = 5,
+                prefetchDistance = 15,
                 enablePlaceholders = false,
                 initialLoadSize = 25
             ),

@@ -22,7 +22,7 @@ class PopularAnimePagingSource(
             Timber.d("Successfully fetch ${apiResponse.data.size} data")
             delay(
                 if (currentPage == 1) 0
-                else 300
+                else 500
             )
             val previousPage =
                 if (currentPage == 1) null

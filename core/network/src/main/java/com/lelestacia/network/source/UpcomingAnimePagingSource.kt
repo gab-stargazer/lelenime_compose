@@ -21,8 +21,8 @@ class UpcomingAnimePagingSource(
             val apiResponse = animeAPI.getUpcomingSeason(page = currentPage)
             Timber.d("Successfully fetch ${apiResponse.data.size} data")
             delay(
-                if (currentPage == 1) 600
-                else 300
+                if (currentPage == 1) 0
+                else 500
             )
             val previousPage =
                 if (currentPage == 1) null

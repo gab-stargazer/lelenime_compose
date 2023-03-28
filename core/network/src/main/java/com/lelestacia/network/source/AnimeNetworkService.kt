@@ -26,4 +26,19 @@ class AnimeNetworkService @Inject constructor(
             animeAPI = animeAPI
         )
     }
+
+    override fun getAnimeSearch(
+        searchQuery: String,
+        type: String?,
+        status: String?,
+        rating: String?
+    ): PagingSource<Int, AnimeResponse> {
+        return SearchAnimePagingSource(
+            animeAPI = animeAPI,
+            searchQuery = searchQuery,
+            type = type,
+            status = status,
+            rating = rating
+        )
+    }
 }

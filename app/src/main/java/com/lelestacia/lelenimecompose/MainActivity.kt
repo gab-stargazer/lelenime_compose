@@ -70,7 +70,9 @@ class MainActivity : ComponentActivity() {
                                             route = Screen.DetailAnimeScreen.createRoute(
                                                 anime.malID
                                             )
-                                        )
+                                        ) {
+                                            restoreState = true
+                                        }
                                     }
                                 },
                                 modifier = Modifier.padding(paddingValue)

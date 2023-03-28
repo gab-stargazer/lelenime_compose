@@ -25,4 +25,18 @@ class DashboardUseCases @Inject constructor(
     override fun getPopularAnime(): Flow<PagingData<Anime>> {
         return animeRepository.getPopularAnime()
     }
+
+    override fun getAnimeSearch(
+        searchQuery: String,
+        type: String?,
+        status: String?,
+        rating: String?
+    ): Flow<PagingData<Anime>> {
+        return animeRepository.getAnimeSearch(
+            searchQuery = searchQuery,
+            type = type,
+            status = status,
+            rating = rating
+        )
+    }
 }
