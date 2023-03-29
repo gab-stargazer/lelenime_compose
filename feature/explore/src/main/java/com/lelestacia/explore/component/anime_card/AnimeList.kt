@@ -1,9 +1,10 @@
-package com.lelestacia.explore.component
+package com.lelestacia.explore.component.anime_card
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -31,14 +32,15 @@ import com.lelestacia.explore.R
 import com.lelestacia.model.Anime
 
 @Composable
-fun ListAnimeItem(
+fun AnimeList(
     anime: Anime,
     onAnimeClicked: (Anime) -> Unit
 ) {
     Row(
         modifier = Modifier
-            .padding(8.dp)
+            .fillMaxWidth()
             .clickable { onAnimeClicked(anime) }
+            .padding(8.dp)
     ) {
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)

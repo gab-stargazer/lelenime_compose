@@ -21,20 +21,20 @@ interface AnimeAPI {
         @Query("page") page: Int
     ): GenericPaginationResponse<AnimeResponse>
 
-    @GET("/anime")
+    @GET("anime")
     suspend fun getAnimeSearch(
         @Query("q") q: String,
         @Query("page") page: Int
     ): GenericPaginationResponse<AnimeResponse>
 
-    @GET("/anime")
+    @GET("anime")
     suspend fun getAnimeSearch(
         @Query("q") q: String,
         @Query("type") type: String,
         @Query("page") page: Int
     ): GenericPaginationResponse<AnimeResponse>
 
-    @GET("/anime")
+    @GET("anime")
     suspend fun getAnimeSearch(
         @Query("q") q: String,
         @Query("type") type: String,
@@ -42,7 +42,7 @@ interface AnimeAPI {
         @Query("page") page: Int
     ): GenericPaginationResponse<AnimeResponse>
 
-    @GET("/anime")
+    @GET("anime")
     suspend fun getAnimeSearch(
         @Query("q") q: String,
         @Query("type") type: String,

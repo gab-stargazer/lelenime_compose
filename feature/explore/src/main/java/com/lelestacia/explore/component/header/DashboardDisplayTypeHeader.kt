@@ -7,14 +7,16 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MovieFilter
 import androidx.compose.material.icons.filled.Upcoming
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lelestacia.explore.screen.explore.DisplayType
+import com.lelestacia.explore.screen.explore.ExploreScreenEvent
 import com.lelestacia.explore.screen.explore.ExploreScreenState
 
 @Composable
 fun DashboardDisplayTypeHeader(
     state: ExploreScreenState,
-    onEvent: (DisplayType) -> Unit
+    onEvent: (ExploreScreenEvent) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -24,7 +26,7 @@ fun DashboardDisplayTypeHeader(
             displayType = DisplayType.POPULAR,
             icon = Icons.Filled.Favorite,
             onClicked = {
-                onEvent(DisplayType.POPULAR)
+                onEvent(ExploreScreenEvent.OnDisplayTypeChanged(DisplayType.POPULAR))
             }
         )
         DisplayTypeButton(
@@ -32,7 +34,7 @@ fun DashboardDisplayTypeHeader(
             displayType = DisplayType.AIRING,
             icon = Icons.Filled.MovieFilter,
             onClicked = {
-                onEvent(DisplayType.AIRING)
+                onEvent(ExploreScreenEvent.OnDisplayTypeChanged(DisplayType.AIRING))
             }
         )
         DisplayTypeButton(
@@ -40,8 +42,17 @@ fun DashboardDisplayTypeHeader(
             displayType = DisplayType.UPCOMING,
             icon = Icons.Filled.Upcoming,
             onClicked = {
-                onEvent(DisplayType.UPCOMING)
+                onEvent(ExploreScreenEvent.OnDisplayTypeChanged(DisplayType.UPCOMING))
             }
         )
     }
+}
+
+@Preview
+@Composable
+fun PreviewTopHeader() {
+    DashboardDisplayTypeHeader(
+        state = ExploreScreenState(),
+        onEvent = {}
+    )
 }

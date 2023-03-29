@@ -2,14 +2,13 @@ package com.lelestacia.explore.screen.explore
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -26,10 +25,10 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.common.ui.theme.purpleBlue
-import com.lelestacia.explore.component.anime_card.AnimeCard
-import com.lelestacia.explore.component.anime_card.AnimeCardCompact
-import com.lelestacia.explore.component.header.DashboardTopHeader
 import com.lelestacia.explore.component.header.DashboardDisplayTypeHeader
+import com.lelestacia.explore.component.header.DashboardTopHeader
+import com.lelestacia.explore.component.paging_list.LazyGridAnime
+import com.lelestacia.explore.component.paging_list.LazyListAnime
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,15 +40,18 @@ fun ExplorationScreen(
     modifier: Modifier = Modifier
 ) {
     val pagingAnime: LazyPagingItems<Anime> = screenState.anime.collectAsLazyPagingItems()
-    val popularScrollState = rememberLazyGridState()
-    val airingScrollState = rememberLazyGridState()
-    val upcomingScrollState = rememberLazyGridState()
-    val scrollState =
-        when (screenState.displayType) {
-            DisplayType.POPULAR -> popularScrollState
-            DisplayType.AIRING -> airingScrollState
-            DisplayType.UPCOMING -> upcomingScrollState
-        }
+    val listOfLazyGridState: Map<DisplayType, LazyGridState> = mapOf(
+        Pair(DisplayType.POPULAR, rememberLazyGridState()),
+        Pair(DisplayType.AIRING, rememberLazyGridState()),
+        Pair(DisplayType.UPCOMING, rememberLazyGridState())
+    )
+    val listOfLazyListState: Map<DisplayType, LazyListState> = mapOf(
+        Pair(DisplayType.POPULAR, rememberLazyListState()),
+        Pair(DisplayType.AIRING, rememberLazyListState()),
+        Pair(DisplayType.UPCOMING, rememberLazyListState())
+    )
+    val lazyGridState = listOfLazyGridState[screenState.displayType]
+    val lazyListState = listOfLazyListState[screenState.displayType]
 
     Scaffold(
         topBar = {
@@ -65,94 +67,70 @@ fun ExplorationScreen(
                 )
                 DashboardDisplayTypeHeader(
                     state = screenState,
-                    onEvent = {
-                        onEvent(
-                            ExploreScreenEvent.OnDisplayTypeChanged(it)
-                        )
-                    }
+                    onEvent = onEvent
                 )
                 Divider(modifier = Modifier.fillMaxWidth())
             }
         },
         modifier = modifier
     ) { paddingValue ->
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            state = scrollState,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(8.dp),
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValue)
-        ) {
-            items(pagingAnime.itemCount) { index ->
-                pagingAnime[index]?.let { anime ->
-                    when (screenState.displayStyle) {
-                        DisplayStyle.CARD -> {
-                            AnimeCard(
-                                anime = anime,
-                                onAnimeClicked = { clickedAnime ->
-                                    onAnimeClicked(clickedAnime)
-                                })
-                        }
 
-                        else -> {
-                            AnimeCardCompact(
-                                anime = anime,
-                                onAnimeClicked = { clickedAnime ->
-                                    onAnimeClicked(clickedAnime)
-                                }
-                            )
-                        }
-                    }
-                }
-            }
-
-            when (val appending = pagingAnime.loadState.append) {
-                is LoadState.Error -> {
-                    item(
-                        span = {
-                            GridItemSpan(3)
-                        }
+        when (val refreshing = pagingAnime.loadState.refresh) {
+            is LoadState.Error -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValue),
+                    verticalArrangement = Arrangement.spacedBy(
+                        space = 8.dp,
+                        alignment = Alignment.CenterVertically
+                    ),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = refreshing.error.message ?: "")
+                    Button(
+                        onClick = { pagingAnime.retry() },
+                        shape = RoundedCornerShape(4.dp)
                     ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 24.dp)
-                        ) {
-                            Text(text = appending.error.message ?: "")
-                            Button(
-                                onClick = { pagingAnime.retry() },
-                                shape = RoundedCornerShape(4.dp)
-                            ) {
-                                Text(text = "Retry")
-                            }
-                        }
+                        Text(text = "Retry")
                     }
                 }
-
-                LoadState.Loading -> {
-                    item(
-                        span = {
-                            GridItemSpan(3)
-                        }) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 24.dp)
-                        ) {
-                            CircularProgressIndicator(
-                                color = purpleBlue
-                            )
-                        }
-                    }
-                }
-
-                is LoadState.NotLoading -> Unit
+                return@Scaffold
             }
+
+            LoadState.Loading -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValue)
+                ) {
+                    CircularProgressIndicator(
+                        color = purpleBlue
+                    )
+                }
+                return@Scaffold
+            }
+
+            is LoadState.NotLoading -> Unit
+        }
+
+        if (screenState.displayStyle == DisplayStyle.LIST) {
+            LazyListAnime(
+                lazyListState = lazyListState,
+                pagingAnime = pagingAnime,
+                modifier = Modifier.padding(paddingValue),
+                onAnimeClicked = onAnimeClicked
+            )
+        } else {
+            LazyGridAnime(
+                lazyGridState = lazyGridState ?: rememberLazyGridState(),
+                pagingAnime = pagingAnime,
+                screenState = screenState,
+                modifier = Modifier.padding(paddingValue),
+                onAnimeClicked = onAnimeClicked
+            )
         }
     }
 }
