@@ -26,7 +26,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.common.ui.theme.purpleBlue
 import com.lelestacia.explore.component.header.DashboardDisplayTypeHeader
-import com.lelestacia.explore.component.header.DashboardTopHeader
+import com.lelestacia.explore.component.header.DashboardSearchHeader
 import com.lelestacia.explore.component.paging_list.LazyGridAnime
 import com.lelestacia.explore.component.paging_list.LazyListAnime
 import com.lelestacia.model.Anime
@@ -61,7 +61,7 @@ fun ExplorationScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
-                DashboardTopHeader(
+                DashboardSearchHeader(
                     screenState = screenState,
                     onEvent = onEvent
                 )

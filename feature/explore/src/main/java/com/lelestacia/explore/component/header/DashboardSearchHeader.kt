@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.Search
@@ -34,7 +35,7 @@ import com.lelestacia.explore.screen.explore.ExploreScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardTopHeader(
+fun DashboardSearchHeader(
     screenState: ExploreScreenState,
     onEvent: (ExploreScreenEvent) -> Unit
 ) {
@@ -42,21 +43,15 @@ fun DashboardTopHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (screenState.headerScreenState.isSearching) {
+            IconButton(onClick = { onEvent(ExploreScreenEvent.OnStopSearching) }) {
+                Icon(imageVector = Icons.Filled.Close, contentDescription = "Close search mode")
+            }
             TextField(
                 value = screenState.headerScreenState.searchQuery,
                 onValueChange = { newSearchQuery ->
                     onEvent(ExploreScreenEvent.OnSearchQueryChanged(newSearchQuery))
                 },
                 shape = RoundedCornerShape(4.dp),
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(8.dp),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = null
-                    )
-                },
                 label = {
                     Text(text = "Insert Anime Title")
                 },
@@ -69,7 +64,10 @@ fun DashboardTopHeader(
                 ),
                 keyboardActions = KeyboardActions {
                     onEvent(ExploreScreenEvent.OnDisplayTypeChanged(DisplayType.SEARCH))
-                }
+                },
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(8.dp)
             )
         } else {
             Spacer(modifier = Modifier.weight(1f))
@@ -151,7 +149,7 @@ fun DashboardTopHeader(
 @Composable
 fun PreviewDashboardTopHeader() {
     Surface {
-        DashboardTopHeader(
+        DashboardSearchHeader(
             screenState = ExploreScreenState(),
             onEvent = {}
         )
@@ -165,7 +163,7 @@ fun PreviewDashboardTopHeader() {
 @Composable
 fun PreviewDashboardTopHeaderDarkMode() {
     Surface {
-        DashboardTopHeader(
+        DashboardSearchHeader(
             screenState = ExploreScreenState(
                 headerScreenState = HeaderScreenState(
                     searchQuery = "Test",

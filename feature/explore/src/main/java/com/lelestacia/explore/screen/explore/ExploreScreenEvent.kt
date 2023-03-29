@@ -6,4 +6,5 @@ sealed class ExploreScreenEvent {
     data class OnDisplayStyleChanged(val selectedStyle: DisplayStyle) : ExploreScreenEvent()
     data class OnSearchQueryChanged(val newSearchQuery: String) : ExploreScreenEvent()
     object OnStartSearching: ExploreScreenEvent()
+    object OnStopSearching: ExploreScreenEvent()
 }

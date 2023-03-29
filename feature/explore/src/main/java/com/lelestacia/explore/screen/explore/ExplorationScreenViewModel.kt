@@ -32,19 +32,18 @@ class ExplorationScreenViewModel @Inject constructor(
     private val headerState: MutableStateFlow<HeaderScreenState> =
         MutableStateFlow(HeaderScreenState())
 
-    private val searchedAnime = headerState
+    private val displayedStyle: MutableStateFlow<DisplayStyle> =
+        MutableStateFlow(DisplayStyle.CARD)
+
+    private val displayedItemType: MutableStateFlow<DisplayType> =
+        MutableStateFlow(DisplayType.POPULAR)
+
+    private val searchedAnime: Flow<PagingData<Anime>> = headerState
         .debounce(500)
-        .distinctUntilChangedBy {
-            it.searchQuery
-        }
-        .flatMapLatest {
-            useCases.getAnimeSearch(searchQuery = it.searchQuery)
-        }
+        .distinctUntilChangedBy { it.searchQuery }
+        .flatMapLatest { useCases.getAnimeSearch(searchQuery = it.searchQuery) }
 
-    private val displayedStyle: MutableStateFlow<DisplayStyle> = MutableStateFlow(DisplayStyle.CARD)
-    private val displayedItem: MutableStateFlow<DisplayType> = MutableStateFlow(DisplayType.POPULAR)
-
-    private val anime: Flow<PagingData<Anime>> = displayedItem.flatMapLatest { type ->
+    private val anime: Flow<PagingData<Anime>> = displayedItemType.flatMapLatest { type ->
         when (type) {
             DisplayType.POPULAR -> useCases.getPopularAnime().cachedIn(viewModelScope)
             DisplayType.AIRING -> useCases.getAiringAnime().cachedIn(viewModelScope)
@@ -52,11 +51,12 @@ class ExplorationScreenViewModel @Inject constructor(
             DisplayType.SEARCH -> searchedAnime.cachedIn(viewModelScope)
         }
     }
+
     val explorationScreenState: StateFlow<ExploreScreenState> =
         combine(
             headerState,
             displayedStyle,
-            displayedItem,
+            displayedItemType,
         ) { headerState: HeaderScreenState, displayedStyle: DisplayStyle, displayedType: DisplayType ->
             ExploreScreenState(
                 headerScreenState = headerState,
@@ -72,7 +72,7 @@ class ExplorationScreenViewModel @Inject constructor(
 
     fun onEvent(event: ExploreScreenEvent) {
         when (event) {
-            is ExploreScreenEvent.OnDisplayTypeChanged -> displayedItem.update {
+            is ExploreScreenEvent.OnDisplayTypeChanged -> displayedItemType.update {
                 event.selectedType
             }
 
@@ -94,7 +94,14 @@ class ExplorationScreenViewModel @Inject constructor(
 
             ExploreScreenEvent.OnStartSearching -> headerState.update {
                 it.copy(
+                    searchQuery = "",
                     isSearching = true
+                )
+            }
+
+            ExploreScreenEvent.OnStopSearching -> headerState.update {
+                it.copy(
+                    isSearching = false
                 )
             }
         }
