@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,10 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.lelestacia.collection.screen.CollectionScreenState
-import com.lelestacia.common.ui.purpleBlue
+import com.lelestacia.common.DisplayStyle
 import com.lelestacia.common.item_anime.AnimeCard
 import com.lelestacia.common.item_anime.AnimeCardCompact
-import com.lelestacia.common.DisplayStyle
 import com.lelestacia.model.Anime
 
 @Composable
@@ -103,7 +103,7 @@ fun LazyGridAnime(
                             .padding(vertical = 24.dp)
                     ) {
                         CircularProgressIndicator(
-                            color = purpleBlue
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 }

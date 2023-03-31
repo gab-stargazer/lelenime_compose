@@ -30,7 +30,8 @@ import com.lelestacia.explore.screen.ExplorationScreen
 import com.lelestacia.explore.screen.ExplorationScreenViewModel
 import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
-import com.lelestacia.more.MoreScreen
+import com.lelestacia.more.screen.about.AboutScreen
+import com.lelestacia.more.screen.more.MoreScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -119,6 +120,10 @@ class MainActivity : ComponentActivity() {
                                 navController = navHostController,
                                 modifier = Modifier.padding(paddingValue)
                             )
+                        }
+
+                        composable(route = Screen.AboutMe.route) {
+                            AboutScreen(navController = navHostController)
                         }
 
                         composable(

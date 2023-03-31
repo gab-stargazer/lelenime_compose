@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +27,6 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.common.DisplayStyle
-import com.lelestacia.common.ui.purpleBlue
 import com.lelestacia.explore.component.header.DashboardDisplayTypeHeader
 import com.lelestacia.explore.component.header.DashboardSearchHeader
 import com.lelestacia.explore.component.paging_list.LazyGridAnime
@@ -61,7 +61,7 @@ fun ExplorationScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp)
+                    .padding(bottom = 8.dp)
             ) {
                 DashboardSearchHeader(
                     screenState = screenState,
@@ -127,7 +127,7 @@ fun ExplorationScreen(
                         .padding(paddingValue)
                 ) {
                     CircularProgressIndicator(
-                        color = purpleBlue
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
                 return@Scaffold

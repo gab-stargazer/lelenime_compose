@@ -54,7 +54,6 @@ fun DetailScreen(
     val animeResource = vm.anime.collectAsState()
     val scrollState = rememberScrollState()
 
-
     var isDataInitiated by remember {
         mutableStateOf(false)
     }

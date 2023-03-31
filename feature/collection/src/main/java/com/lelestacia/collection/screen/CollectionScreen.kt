@@ -16,6 +16,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +27,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.collection.component.paging_list.LazyGridAnime
 import com.lelestacia.collection.component.paging_list.LazyListAnime
 import com.lelestacia.common.DisplayStyle
-import com.lelestacia.common.ui.purpleBlue
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -116,7 +116,7 @@ fun CollectionScreen(
                         .padding(paddingValue)
                 ) {
                     CircularProgressIndicator(
-                        color = purpleBlue
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
                 return@Scaffold
