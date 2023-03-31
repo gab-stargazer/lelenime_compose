@@ -15,6 +15,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -36,6 +40,9 @@ android {
 }
 
 dependencies {
+
+    // Module Implementation
+    implementation project(':core:common')
 
     //  Compose Toolkit
     implementation(platform(libs.compose.bom))

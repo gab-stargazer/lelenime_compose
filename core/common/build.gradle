@@ -15,6 +15,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles(
@@ -49,4 +53,7 @@ dependencies {
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.junit)
     debugImplementation(libs.bundles.compose.tooling.and.manifest)
+
+    //  Coil
+    implementation(libs.coil.compose)
 }

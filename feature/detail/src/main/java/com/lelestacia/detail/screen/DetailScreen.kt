@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.lelestacia.common.Resource
-import com.lelestacia.common.ui.theme.purpleBlue
 import com.lelestacia.detail.component.AnimeCoverImage
 import com.lelestacia.detail.component.AnimeInformation
 import com.lelestacia.detail.component.AnimeTitleAndScore
@@ -92,7 +91,7 @@ fun DetailScreen(
                     }
                 },
                 colors = TopAppBarDefaults.largeTopAppBarColors(
-                    containerColor = purpleBlue
+                    containerColor = MaterialTheme.colorScheme.primary
                 ),
                 scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
             )
@@ -103,10 +102,11 @@ fun DetailScreen(
                     FloatingActionButton(
                         modifier = Modifier
                             .padding(16.dp),
-                        containerColor = purpleBlue,
                         onClick = {
                             vm.updateAnimeByAnimeID(animeID = animeID)
-                        }) {
+                        },
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ) {
                         Crossfade(targetState = animeFavorite.data?.isFavorite, label = "") {
                             Icon(
                                 imageVector =

@@ -1,5 +1,6 @@
-package com.lelestacia.explore.component.anime_card
+package com.lelestacia.common.item_anime
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ fun AnimeCard(
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.animateContentSize()
     ) {
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)

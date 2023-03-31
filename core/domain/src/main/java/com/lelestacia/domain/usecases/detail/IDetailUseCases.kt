@@ -1,4 +1,4 @@
-package com.lelestacia.domain.usecases
+package com.lelestacia.domain.usecases.detail
 
 import com.lelestacia.common.Resource
 import com.lelestacia.model.Anime

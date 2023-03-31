@@ -1,4 +1,4 @@
-package com.lelestacia.domain.usecases
+package com.lelestacia.domain.usecases.detail
 
 import com.lelestacia.common.Resource
 import com.lelestacia.data.repository.IAnimeRepository
@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DetailUseCases @Inject constructor(
-    private val animeRepository: IAnimeRepository
+    private val repository: IAnimeRepository
 ) : IDetailUseCases {
 
     override suspend fun updateAnimeFavoriteByAnimeID(animeID: Int) {
-        animeRepository.updateAnimeFavoriteByAnimeID(animeID = animeID)
+        repository.updateAnimeFavoriteByAnimeID(animeID = animeID)
     }
 
     override fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Resource<Anime>> {
-        return animeRepository.getAnimeFromLocalDatabaseByAnimeID(animeID = animeID)
+        return repository.getAnimeFromLocalDatabaseByAnimeID(animeID = animeID)
     }
 }

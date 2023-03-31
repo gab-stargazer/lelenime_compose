@@ -1,4 +1,4 @@
-package com.lelestacia.explore.screen.explore
+package com.lelestacia.explore.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,12 +19,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.lelestacia.common.ui.theme.purpleBlue
+import com.lelestacia.common.DisplayStyle
+import com.lelestacia.common.ui.purpleBlue
 import com.lelestacia.explore.component.header.DashboardDisplayTypeHeader
 import com.lelestacia.explore.component.header.DashboardSearchHeader
 import com.lelestacia.explore.component.paging_list.LazyGridAnime
@@ -59,7 +61,7 @@ fun ExplorationScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                    .padding(vertical = 8.dp)
             ) {
                 DashboardSearchHeader(
                     screenState = screenState,
@@ -67,13 +69,31 @@ fun ExplorationScreen(
                 )
                 DashboardDisplayTypeHeader(
                     state = screenState,
-                    onEvent = onEvent
+                    onEvent = onEvent,
+                    modifier = Modifier.padding(start = 12.dp)
                 )
-                Divider(modifier = Modifier.fillMaxWidth())
+                Divider()
             }
         },
         modifier = modifier
     ) { paddingValue ->
+
+        if (pagingAnime.itemCount == 0 && screenState.displayType == DisplayType.SEARCH) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValue)
+            ) {
+                Text(
+                    text = "Sorry, we could not find any result related to ${screenState.headerScreenState.searchQuery}",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 24.dp)
+                )
+            }
+            return@Scaffold
+        }
 
         when (val refreshing = pagingAnime.loadState.refresh) {
             is LoadState.Error -> {

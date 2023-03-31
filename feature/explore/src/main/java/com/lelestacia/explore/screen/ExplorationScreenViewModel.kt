@@ -1,10 +1,11 @@
-package com.lelestacia.explore.screen.explore
+package com.lelestacia.explore.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.domain.usecases.IDashboardUseCases
+import com.lelestacia.common.DisplayStyle
+import com.lelestacia.domain.usecases.explore.IExploreUseCases
 import com.lelestacia.explore.component.header.HeaderScreenState
 import com.lelestacia.model.Anime
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -26,8 +27,10 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @HiltViewModel
 class ExplorationScreenViewModel @Inject constructor(
-    private val useCases: IDashboardUseCases
+    private val useCases: IExploreUseCases
 ) : ViewModel() {
+
+    private val currentSearchQuery: MutableStateFlow<String> = MutableStateFlow("")
 
     private val headerState: MutableStateFlow<HeaderScreenState> =
         MutableStateFlow(HeaderScreenState())
@@ -35,15 +38,15 @@ class ExplorationScreenViewModel @Inject constructor(
     private val displayedStyle: MutableStateFlow<DisplayStyle> =
         MutableStateFlow(DisplayStyle.CARD)
 
-    private val displayedItemType: MutableStateFlow<DisplayType> =
+    private val displayedAnimeType: MutableStateFlow<DisplayType> =
         MutableStateFlow(DisplayType.POPULAR)
 
-    private val searchedAnime: Flow<PagingData<Anime>> = headerState
-        .debounce(500)
-        .distinctUntilChangedBy { it.searchQuery }
-        .flatMapLatest { useCases.getAnimeSearch(searchQuery = it.searchQuery) }
+    private val searchedAnime: Flow<PagingData<Anime>> = currentSearchQuery
+        .debounce(0)
+        .distinctUntilChanged()
+        .flatMapLatest { useCases.getAnimeSearch(searchQuery = it) }
 
-    private val anime: Flow<PagingData<Anime>> = displayedItemType.flatMapLatest { type ->
+    private val anime: Flow<PagingData<Anime>> = displayedAnimeType.flatMapLatest { type ->
         when (type) {
             DisplayType.POPULAR -> useCases.getPopularAnime().cachedIn(viewModelScope)
             DisplayType.AIRING -> useCases.getAiringAnime().cachedIn(viewModelScope)
@@ -56,7 +59,7 @@ class ExplorationScreenViewModel @Inject constructor(
         combine(
             headerState,
             displayedStyle,
-            displayedItemType,
+            displayedAnimeType,
         ) { headerState: HeaderScreenState, displayedStyle: DisplayStyle, displayedType: DisplayType ->
             ExploreScreenState(
                 headerScreenState = headerState,
@@ -72,12 +75,18 @@ class ExplorationScreenViewModel @Inject constructor(
 
     fun onEvent(event: ExploreScreenEvent) {
         when (event) {
-            is ExploreScreenEvent.OnDisplayTypeChanged -> displayedItemType.update {
+            is ExploreScreenEvent.OnDisplayTypeChanged -> displayedAnimeType.update {
                 event.selectedType
             }
 
             is ExploreScreenEvent.OnDisplayStyleChanged -> displayedStyle.update {
                 event.selectedStyle
+            }
+
+            ExploreScreenEvent.OnFilterOptionMenuChangedState -> headerState.update {
+                it.copy(
+                    isFilterOptionOpened = !it.isFilterOptionOpened
+                )
             }
 
             ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState -> headerState.update {
@@ -94,15 +103,26 @@ class ExplorationScreenViewModel @Inject constructor(
 
             ExploreScreenEvent.OnStartSearching -> headerState.update {
                 it.copy(
-                    searchQuery = "",
                     isSearching = true
                 )
             }
 
-            ExploreScreenEvent.OnStopSearching -> headerState.update {
-                it.copy(
-                    isSearching = false
-                )
+            ExploreScreenEvent.OnSearch -> {
+                displayedAnimeType.update {
+                    DisplayType.SEARCH
+                }
+                currentSearchQuery.update {
+                    headerState.value.searchQuery
+                }
+            }
+
+            ExploreScreenEvent.OnStopSearching -> {
+                headerState.update {
+                    it.copy(
+                        searchQuery = "",
+                        isSearching = false
+                    )
+                }
             }
         }
     }

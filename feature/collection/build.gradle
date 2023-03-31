@@ -1,11 +1,13 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
     namespace 'com.lelestacia.collection'
-    compileSdkVersion 33
+    compileSdk = 33
 
     defaultConfig {
         minSdkVersion 24
@@ -15,6 +17,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -36,6 +42,11 @@ android {
 }
 
 dependencies {
+    // Module Implementation
+    implementation project(':core:common')
+    implementation project(':core:domain')
+    implementation project(':core:model')
+
     //  Compose Toolkit
     implementation platform(libs.compose.bom)
     implementation libs.bundles.compose.toolkit
@@ -49,4 +60,13 @@ dependencies {
 
     // Junit
     testImplementation libs.junit
+
+    //  Dagger Hilt
+    implementation libs.dagger.hilt.module
+    kapt libs.dagger.hilt.compiler
+    implementation libs.dagger.hilt.compose
+
+    //  Paging and Paging Compose
+    implementation libs.paging.runtime
+    implementation libs.paging.compose
 }

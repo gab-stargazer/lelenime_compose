@@ -1,6 +1,7 @@
-package com.lelestacia.explore.screen.explore
+package com.lelestacia.explore.screen
 
 import androidx.paging.PagingData
+import com.lelestacia.common.DisplayStyle
 import com.lelestacia.explore.component.header.HeaderScreenState
 import com.lelestacia.model.Anime
 import kotlinx.coroutines.flow.Flow

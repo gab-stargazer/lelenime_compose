@@ -1,4 +1,4 @@
-package com.lelestacia.explore.component.anime_card
+package com.lelestacia.common.item_anime
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,7 +40,7 @@ fun AnimeCardCompact(
     var sizeImage by remember { mutableStateOf(IntSize.Zero) }
     val gradient = Brush.verticalGradient(
         colors = listOf(Color.Transparent, Color.Black),
-        startY = sizeImage.height.toFloat() / 4,
+        startY = sizeImage.height.toFloat() / 3,
         endY = sizeImage.height.toFloat()
     )
 

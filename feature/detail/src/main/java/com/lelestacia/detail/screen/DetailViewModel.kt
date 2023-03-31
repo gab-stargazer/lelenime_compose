@@ -3,7 +3,7 @@ package com.lelestacia.detail.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lelestacia.common.Resource
-import com.lelestacia.domain.usecases.IDetailUseCases
+import com.lelestacia.domain.usecases.detail.IDetailUseCases
 import com.lelestacia.model.Anime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

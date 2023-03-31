@@ -23,6 +23,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -100,6 +104,9 @@ dependencies {
 
     //  Timber
     implementation libs.timber
+
+    //  UI Controller
+    implementation libs.system.ui.controller
 }
 
 kapt {

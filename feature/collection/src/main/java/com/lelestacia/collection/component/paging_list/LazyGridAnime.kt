@@ -1,4 +1,4 @@
-package com.lelestacia.explore.component.paging_list
+package com.lelestacia.collection.component.paging_list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,18 +20,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.lelestacia.collection.screen.CollectionScreenState
 import com.lelestacia.common.ui.purpleBlue
 import com.lelestacia.common.item_anime.AnimeCard
 import com.lelestacia.common.item_anime.AnimeCardCompact
 import com.lelestacia.common.DisplayStyle
-import com.lelestacia.explore.screen.ExploreScreenState
 import com.lelestacia.model.Anime
 
 @Composable
 fun LazyGridAnime(
     lazyGridState: LazyGridState,
     pagingAnime: LazyPagingItems<Anime>,
-    screenState: ExploreScreenState,
+    screenState: CollectionScreenState,
     modifier: Modifier = Modifier,
     onAnimeClicked: (Anime) -> Unit
 ) {

@@ -1,4 +1,4 @@
-package com.lelestacia.explore.component.anime_card
+package com.lelestacia.common.item_anime
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.lelestacia.explore.R
+import com.lelestacia.common.R
 import com.lelestacia.model.Anime
 
 @Composable

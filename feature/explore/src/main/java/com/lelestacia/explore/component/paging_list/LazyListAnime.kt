@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
-import com.lelestacia.common.ui.theme.purpleBlue
-import com.lelestacia.explore.component.anime_card.AnimeList
+import com.lelestacia.common.ui.purpleBlue
+import com.lelestacia.common.item_anime.AnimeList
 import com.lelestacia.model.Anime
 
 

@@ -17,5 +17,7 @@ interface IAnimeRepository {
         status: String? = null,
         rating: String? = null
     ): Flow<PagingData<Anime>>
+    fun getAnimeHistory(): Flow<PagingData<Anime>>
+    fun getAnimeFavorite(): Flow<PagingData<Anime>>
     fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Resource<Anime>>
 }

@@ -1,4 +1,4 @@
-package com.lelestacia.domain.usecases
+package com.lelestacia.domain.usecases.explore
 
 import androidx.paging.PagingData
 import com.lelestacia.data.repository.IAnimeRepository
@@ -6,24 +6,24 @@ import com.lelestacia.model.Anime
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class DashboardUseCases @Inject constructor(
-    private val animeRepository: IAnimeRepository
-) : IDashboardUseCases {
+class ExploreUseCases @Inject constructor(
+    private val repository: IAnimeRepository
+) : IExploreUseCases {
 
     override suspend fun insertOrUpdateAnimeHistory(anime: Anime) {
-        animeRepository.insertOrUpdateAnimeHistory(anime = anime)
+        repository.insertOrUpdateAnimeHistory(anime = anime)
     }
 
     override fun getAiringAnime(): Flow<PagingData<Anime>> {
-        return animeRepository.getAiringAnime()
+        return repository.getAiringAnime()
     }
 
     override fun getUpcomingAnime(): Flow<PagingData<Anime>> {
-        return animeRepository.getUpcomingAnime()
+        return repository.getUpcomingAnime()
     }
 
     override fun getPopularAnime(): Flow<PagingData<Anime>> {
-        return animeRepository.getPopularAnime()
+        return repository.getPopularAnime()
     }
 
     override fun getAnimeSearch(
@@ -32,7 +32,7 @@ class DashboardUseCases @Inject constructor(
         status: String?,
         rating: String?
     ): Flow<PagingData<Anime>> {
-        return animeRepository.getAnimeSearch(
+        return repository.getAnimeSearch(
             searchQuery = searchQuery,
             type = type,
             status = status,

@@ -113,6 +113,38 @@ class AnimeRepository @Inject constructor(
         }
     }
 
+    override fun getAnimeHistory(): Flow<PagingData<Anime>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 25,
+                prefetchDistance = 15,
+                enablePlaceholders = false,
+                initialLoadSize = 25
+            ),
+            pagingSourceFactory = {
+                animeDatabaseService.getAnimeHistory()
+            }
+        ).flow.map { pagingData ->
+            pagingData.map(AnimeEntity::asAnime)
+        }
+    }
+
+    override fun getAnimeFavorite(): Flow<PagingData<Anime>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 25,
+                prefetchDistance = 15,
+                enablePlaceholders = false,
+                initialLoadSize = 25
+            ),
+            pagingSourceFactory = {
+                animeDatabaseService.getAnimeFavorite()
+            }
+        ).flow.map { pagingData ->
+            pagingData.map(AnimeEntity::asAnime)
+        }
+    }
+
     override fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Resource<Anime>> {
         return animeDatabaseService
             .getAndSubscribeAnimeByAnimeID(animeID = animeID)
