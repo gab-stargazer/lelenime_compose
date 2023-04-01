@@ -2,6 +2,13 @@ package com.lelestacia.lelenimecompose.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
-class LeleNimeApp : Application()
+class LeleNimeApp : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        Timber.plant(Timber.DebugTree())
+    }
+}

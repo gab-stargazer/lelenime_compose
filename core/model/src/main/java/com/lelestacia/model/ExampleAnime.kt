@@ -1,0 +1,56 @@
+package com.lelestacia.model
+
+val vindlandSagaSecondSeason = Anime(
+    malID = 49387,
+    coverImages = "https://cdn.myanimelist.net/images/anime/1170/124312l.webp",
+    trailer = null,
+    title = "Vinland Saga Season 2",
+    titleEnglish = "Vinland Saga Season 2",
+    titleJapanese = "ヴィンランド・サガ SEASON2",
+    type = "TV",
+    source = "Manga",
+    episodes = 24,
+    status = "Currently Airing",
+    airing = true,
+    startedDate = "2023-01-10T00:00:00+00:00",
+    finishedDate = null,
+    duration = "25 min per ep",
+    rating = "R - 17+ (violence & profanity)",
+    score = 8.73,
+    scoredBy = 41918,
+    rank = 46,
+    synopsis = "After his father's death and the destruction of his village at the hands of English raiders, Einar wishes for a peaceful life with his family on their newly rebuilt farms. However, fate has other plans: his village is invaded once again. Einar watches helplessly as the marauding Danes burn his lands and slaughter his family. The invaders capture Einar and take him back to Denmark as a slave. \n\nEinar clings to his mother's final words to survive. He is purchased by Ketil, a kind slave owner and landlord who promises that Einar can regain his freedom in return for working in the fields. Soon, Einar encounters his new partner in farm cultivation—Thorfinn, a dejected and melancholic slave. As Einar and Thorfinn work together toward their freedom, they are haunted by both sins of the past and the ploys of the present. Yet they carry on, grasping for a glimmer of hope, redemption, and peace in a world that is nothing but unjust and unforgiving.\n\n[Written by MAL Rewrite]",
+    season = "winter",
+    year = 2023,
+    studios = listOf("MAPPA"),
+    genres = listOf("Action", "Adventure", "Drama"),
+    isFavorite = false
+)
+
+val misfitDemonKingSecondSeason = Anime(
+    malID = 48417,
+    coverImages = "https://cdn.myanimelist.net/images/anime/1471/128323l.webp",
+    trailer = null,
+    title = "Maou Gakuin no Futekigousha: Shijou Saikyou no Maou no Shiso, Tensei shite Shison-tachi no Gakkou e Kayou II",
+    titleEnglish = "The Misfit of Demon King Academy Ⅱ",
+    titleJapanese = "魔王学院の不適合者 ～史上最強の魔王の始祖、転生して子孫たちの学校へ通う～ II",
+    type = "TV",
+    source = "Light novel",
+    episodes = null,
+    status = "Currently Airing",
+    airing = true,
+    startedDate = "2023-01-08T00:00:00+00:00",
+    finishedDate = null,
+    duration = "23 min",
+    rating = "R - 17+ (violence & profanity)",
+    score = 7.18,
+    scoredBy = 23265,
+    rank = 3197,
+    synopsis = "As peace returns to the demon realm, Anos Voldigoad wishes nothing more than to put his reputation as the Demon King of Tyranny to rest and go back to being a misfit at the prestigious Demon King Academy. Unfortunately, any tranquility is fleeting: sinister demons, kings, and deities plot Anos's demise from the shadows.\\n\\nRumors spread about the \"Child of God,\" a being whose power may rival that of Anos. To uncover the truth and eliminate the potential threat, Anos must journey deep into the land of spirits. However, the spirit world is shrouded in mystery, and it may only be entered after undergoing a series of difficult trials.\\n\\nWith unrivaled power and confidence, Anos braces himself to defeat various formidable enemies with grandiose titles. But he—with the assistance of his trusted allies—will barely have to break a sweat as the true Demon King of Tyranny.\\n\\n[Written by MAL Rewrite]",
+    season = "winter",
+    year = 2023,
+    studios = listOf("SILVER LINK."),
+    genres = listOf("Action", "Fantasy"),
+    isFavorite = false
+
+)

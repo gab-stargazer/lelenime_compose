@@ -1,32 +1,59 @@
 plugins {
-    id 'com.android.library'
-    alias libs.plugins.kotlin.android.plugin
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
 
-apply from: '../../shared_compose.gradle'
-
 android {
-    namespace 'com.lelestacia.common'
-    compileSdk 33
+    namespace = "com.lelestacia.common"
+    compileSdk = 33
 
     defaultConfig {
-        minSdk 24
+        minSdk = 24
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        release {
+            minifyEnabled false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "17"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
+}
+
+dependencies {
+    //  Module Implementation
+    implementation(project(":core:model"))
+
+    //  Compose Toolkit
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose.toolkit)
+    implementation(libs.compose.navigation)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.junit)
+    debugImplementation(libs.bundles.compose.tooling.and.manifest)
+
+    //  Coil
+    implementation(libs.coil.compose)
 }
