@@ -52,7 +52,10 @@ dependencies {
     androidTestImplementation(libs.compose.junit)
     debugImplementation(libs.bundles.compose.tooling.and.manifest)
 
+    //  Coil
+    implementation libs.coil.compose
     // Android JUnit
+
     androidTestImplementation(libs.android.junit)
 
     // Junit

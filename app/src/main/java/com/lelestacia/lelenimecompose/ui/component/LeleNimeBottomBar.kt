@@ -22,8 +22,8 @@ fun LeleNimeBottomBar(navController: NavHostController) {
                 NavigationBarItem(
                     selected = currentRoute == navItem.screen.route,
                     onClick = {
-                        navController.navigate(navItem.title) {
-                            popUpTo(navController.graph.startDestinationId) {
+                        navController.navigate(route = navItem.title) {
+                            popUpTo(id = navController.graph.startDestinationId) {
                                 saveState = true
                             }
                             restoreState = true

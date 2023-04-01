@@ -36,7 +36,8 @@ fun DisplayTypeButton(
                 text = displayType.name,
                 color =
                 if (isSystemInDarkTheme()) {
-                    Color.White
+                    if (isActive) Color.Black
+                    else Color.White
                 } else {
                     if (isActive) Color.White
                     else Color.Black
@@ -54,8 +55,13 @@ fun DisplayTypeButton(
             if (isActive) MaterialTheme.colorScheme.primary
             else Color.Transparent,
             leadingIconContentColor =
-            if (isActive) Color.White
-            else MaterialTheme.colorScheme.primary,
+            if (isSystemInDarkTheme()) {
+                if (isActive) Color.Black
+                else MaterialTheme.colorScheme.primary
+            } else {
+                if (isActive) Color.White
+                else MaterialTheme.colorScheme.primary
+            }
         ),
         border = AssistChipDefaults.assistChipBorder(
             borderColor =
