@@ -19,7 +19,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.collection.component.paging_list.LazyGridAnime
 import com.lelestacia.collection.component.paging_list.LazyListAnime
 import com.lelestacia.common.DisplayStyle
-import com.lelestacia.common.display_style.DisplayStyleMenu
+import com.lelestacia.common.display_style_menu.DisplayStyleMenu
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,6 +41,7 @@ fun CollectionScreen(
                 horizontalAlignment = Alignment.End,
             ) {
                 DisplayStyleMenu(
+                    currentStyle = screenState.displayStyle,
                     isExpanded = screenState.isDisplayStyleOptionOpened,
                     onStyleChanged = { onEvent(CollectionScreenEvent.OnDisplayStyleChanged(it)) },
                     onDismiss = { onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState) }
@@ -68,24 +69,24 @@ fun CollectionScreen(
                 return@Scaffold
             }
 
-            is LoadState.NotLoading -> Unit
-        }
-
-        if (screenState.displayStyle == DisplayStyle.LIST) {
-            LazyListAnime(
-                lazyListState = lazyListState,
-                pagingAnime = pagingAnime,
-                modifier = Modifier.padding(paddingValue),
-                onAnimeClicked = onAnimeClicked
-            )
-        } else {
-            LazyGridAnime(
-                lazyGridState = lazyGridState,
-                pagingAnime = pagingAnime,
-                screenState = screenState,
-                modifier = Modifier.padding(paddingValue),
-                onAnimeClicked = onAnimeClicked
-            )
+            is LoadState.NotLoading -> {
+                if (screenState.displayStyle == DisplayStyle.LIST) {
+                    LazyListAnime(
+                        lazyListState = lazyListState,
+                        pagingAnime = pagingAnime,
+                        modifier = Modifier.padding(paddingValue),
+                        onAnimeClicked = onAnimeClicked
+                    )
+                } else {
+                    LazyGridAnime(
+                        lazyGridState = lazyGridState,
+                        pagingAnime = pagingAnime,
+                        screenState = screenState,
+                        modifier = Modifier.padding(paddingValue),
+                        onAnimeClicked = onAnimeClicked
+                    )
+                }
+            }
         }
     }
 }

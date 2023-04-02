@@ -75,8 +75,17 @@ class ExplorationScreenViewModel @Inject constructor(
 
     fun onEvent(event: ExploreScreenEvent) {
         when (event) {
-            is ExploreScreenEvent.OnDisplayTypeChanged -> displayedAnimeType.update {
-                event.selectedType
+            is ExploreScreenEvent.OnDisplayTypeChanged -> {
+                displayedAnimeType.update {
+                    event.selectedType
+                }
+
+                if (event.selectedType == DisplayType.SEARCH) return
+                headerState.update {
+                    it.copy(
+                        isSearching = false
+                    )
+                }
             }
 
             is ExploreScreenEvent.OnDisplayStyleChanged -> displayedStyle.update {
@@ -110,6 +119,11 @@ class ExplorationScreenViewModel @Inject constructor(
             ExploreScreenEvent.OnSearch -> {
                 displayedAnimeType.update {
                     DisplayType.SEARCH
+                }
+                headerState.update {
+                    it.copy(
+                        searchedAnimeTitle = it.searchQuery
+                    )
                 }
                 currentSearchQuery.update {
                     headerState.value.searchQuery

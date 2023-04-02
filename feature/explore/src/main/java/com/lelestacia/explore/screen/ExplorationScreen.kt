@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.common.DisplayStyle
+import com.lelestacia.common.R.string.unknown_error
+import com.lelestacia.explore.R
 import com.lelestacia.explore.component.header.DashboardDisplayTypeHeader
 import com.lelestacia.explore.component.header.DashboardSearchHeader
 import com.lelestacia.explore.component.paging_list.LazyGridAnime
@@ -78,23 +81,6 @@ fun ExplorationScreen(
         modifier = modifier
     ) { paddingValue ->
 
-        if (pagingAnime.itemCount == 0 && screenState.displayType == DisplayType.SEARCH) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValue)
-            ) {
-                Text(
-                    text = "Sorry, we could not find any result related to ${screenState.headerScreenState.searchQuery}",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(horizontal = 24.dp)
-                )
-            }
-            return@Scaffold
-        }
-
         when (val refreshing = pagingAnime.loadState.refresh) {
             is LoadState.Error -> {
                 Column(
@@ -107,7 +93,7 @@ fun ExplorationScreen(
                     ),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = refreshing.error.message ?: "")
+                    Text(text = refreshing.error.message ?: stringResource(id = unknown_error))
                     Button(
                         onClick = { pagingAnime.retry() },
                         shape = RoundedCornerShape(4.dp)
@@ -133,24 +119,45 @@ fun ExplorationScreen(
                 return@Scaffold
             }
 
-            is LoadState.NotLoading -> Unit
-        }
+            is LoadState.NotLoading -> {
 
-        if (screenState.displayStyle == DisplayStyle.LIST) {
-            LazyListAnime(
-                lazyListState = lazyListState,
-                pagingAnime = pagingAnime,
-                modifier = Modifier.padding(paddingValue),
-                onAnimeClicked = onAnimeClicked
-            )
-        } else {
-            LazyGridAnime(
-                lazyGridState = lazyGridState ?: rememberLazyGridState(),
-                pagingAnime = pagingAnime,
-                screenState = screenState,
-                modifier = Modifier.padding(paddingValue),
-                onAnimeClicked = onAnimeClicked
-            )
+                if (pagingAnime.itemCount == 0 && screenState.displayType == DisplayType.SEARCH) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValue)
+                    ) {
+                        Text(
+                            text = stringResource(
+                                id = R.string.anime_not_found,
+                                screenState.headerScreenState.searchedAnimeTitle
+                            ),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 24.dp)
+                        )
+                    }
+                    return@Scaffold
+                }
+
+                if (screenState.displayStyle == DisplayStyle.LIST) {
+                    LazyListAnime(
+                        lazyListState = lazyListState,
+                        pagingAnime = pagingAnime,
+                        modifier = Modifier.padding(paddingValue),
+                        onAnimeClicked = onAnimeClicked
+                    )
+                } else {
+                    LazyGridAnime(
+                        lazyGridState = lazyGridState ?: rememberLazyGridState(),
+                        pagingAnime = pagingAnime,
+                        screenState = screenState,
+                        modifier = Modifier.padding(paddingValue),
+                        onAnimeClicked = onAnimeClicked
+                    )
+                }
+            }
         }
     }
 }

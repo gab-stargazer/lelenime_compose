@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="information_value">:\t%s</string>
+    <string name="card">Card</string>
+    <string name="compact_card">Compact Card</string>
+    <string name="list">List</string>
+    <string name="unknown_error">We encounter unknown error</string>
 </resources>

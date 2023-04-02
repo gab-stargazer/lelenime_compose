@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lelestacia.common.display_style.DisplayStyleMenu
+import com.lelestacia.common.display_style_menu.DisplayStyleMenu
 import com.lelestacia.explore.screen.ExploreScreenEvent
 import com.lelestacia.explore.screen.ExploreScreenState
 
@@ -90,6 +90,7 @@ fun DashboardSearchHeader(
                 contentDescription = "Display Style"
             )
             DisplayStyleMenu(
+                currentStyle = screenState.displayStyle,
                 isExpanded = screenState.headerScreenState.isDisplayStyleOptionOpened,
                 onStyleChanged = { onEvent(ExploreScreenEvent.OnDisplayStyleChanged(it)) },
                 onDismiss = { onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState) }
