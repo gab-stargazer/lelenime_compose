@@ -16,10 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.lelestacia.collection.component.paging_list.LazyGridAnime
-import com.lelestacia.collection.component.paging_list.LazyListAnime
-import com.lelestacia.common.DisplayStyle
-import com.lelestacia.common.display_style_menu.DisplayStyleMenu
+import com.lelestacia.collection.state_and_event.CollectionScreenEvent
+import com.lelestacia.collection.state_and_event.CollectionScreenState
+import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.display_style.DisplayStyleMenu
+import com.lelestacia.common.lazy_anime.LazyGridAnime
+import com.lelestacia.common.lazy_anime.LazyListAnime
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,7 +83,7 @@ fun CollectionScreen(
                     LazyGridAnime(
                         lazyGridState = lazyGridState,
                         pagingAnime = pagingAnime,
-                        screenState = screenState,
+                        displayStyle = screenState.displayStyle,
                         modifier = Modifier.padding(paddingValue),
                         onAnimeClicked = onAnimeClicked
                     )

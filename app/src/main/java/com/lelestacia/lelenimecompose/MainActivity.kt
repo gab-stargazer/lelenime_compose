@@ -117,7 +117,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable(route = Screen.AboutMe.route) {
+                        composable(route = Screen.About.route) {
                             AboutScreen(navController = navController)
                         }
 

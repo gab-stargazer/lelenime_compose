@@ -1,4 +1,4 @@
-package com.lelestacia.common.display_style_menu
+package com.lelestacia.common.display_style
 
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
@@ -7,7 +7,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.lelestacia.common.DisplayStyle
 import com.lelestacia.common.R
 
 @Composable

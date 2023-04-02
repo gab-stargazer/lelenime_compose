@@ -1,4 +1,4 @@
-package com.lelestacia.explore.component.paging_list
+package com.lelestacia.common.lazy_anime
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,20 +18,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.R
 import com.lelestacia.common.item_anime.AnimeCard
 import com.lelestacia.common.item_anime.AnimeCardCompact
-import com.lelestacia.common.DisplayStyle
-import com.lelestacia.explore.screen.ExploreScreenState
 import com.lelestacia.model.Anime
 
 @Composable
 fun LazyGridAnime(
     lazyGridState: LazyGridState,
     pagingAnime: LazyPagingItems<Anime>,
-    screenState: ExploreScreenState,
+    displayStyle: DisplayStyle,
     modifier: Modifier = Modifier,
     onAnimeClicked: (Anime) -> Unit
 ) {
@@ -46,7 +47,7 @@ fun LazyGridAnime(
     ) {
         items(pagingAnime.itemCount) { index ->
             pagingAnime[index]?.let { anime ->
-                when (screenState.displayStyle) {
+                when (displayStyle) {
                     DisplayStyle.CARD -> {
                         AnimeCard(
                             anime = anime,
@@ -80,12 +81,15 @@ fun LazyGridAnime(
                             .fillMaxWidth()
                             .padding(vertical = 24.dp)
                     ) {
-                        Text(text = appending.error.message ?: "")
+                        Text(
+                            text = appending.error.message
+                                ?: stringResource(id = R.string.unknown_error)
+                        )
                         Button(
                             onClick = { pagingAnime.retry() },
                             shape = RoundedCornerShape(4.dp)
                         ) {
-                            Text(text = "Retry")
+                            Text(text = stringResource(id = R.string.retry))
                         }
                     }
                 }

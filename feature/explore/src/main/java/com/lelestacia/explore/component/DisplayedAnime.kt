@@ -1,4 +1,4 @@
-package com.lelestacia.explore.component.header
+package com.lelestacia.explore.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lelestacia.explore.screen.DisplayType
-import com.lelestacia.explore.screen.ExploreScreenEvent
-import com.lelestacia.explore.screen.ExploreScreenState
+import com.lelestacia.explore.state_and_event.ExploreScreenEvent
+import com.lelestacia.explore.state_and_event.ExploreScreenState
 
 @Composable
 fun DashboardDisplayTypeHeader(

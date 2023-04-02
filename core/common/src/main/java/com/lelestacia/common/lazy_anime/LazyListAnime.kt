@@ -1,101 +1,73 @@
-package com.lelestacia.collection.component.paging_list
+package com.lelestacia.common.lazy_anime
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.lelestacia.collection.screen.CollectionScreenState
-import com.lelestacia.common.DisplayStyle
-import com.lelestacia.common.item_anime.AnimeCard
-import com.lelestacia.common.item_anime.AnimeCardCompact
+import androidx.paging.compose.items
+import com.lelestacia.common.R
+import com.lelestacia.common.item_anime.AnimeList
 import com.lelestacia.model.Anime
 
 @Composable
-fun LazyGridAnime(
-    lazyGridState: LazyGridState,
+fun LazyListAnime(
+    lazyListState: LazyListState,
     pagingAnime: LazyPagingItems<Anime>,
-    screenState: CollectionScreenState,
     modifier: Modifier = Modifier,
     onAnimeClicked: (Anime) -> Unit
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        state = lazyGridState,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    LazyColumn(
         contentPadding = PaddingValues(8.dp),
+        state = lazyListState,
         modifier = modifier
-            .fillMaxSize()
     ) {
-        items(pagingAnime.itemCount) { index ->
-            pagingAnime[index]?.let { anime ->
-                when (screenState.displayStyle) {
-                    DisplayStyle.CARD -> {
-                        AnimeCard(
-                            anime = anime,
-                            onAnimeClicked = { clickedAnime ->
-                                onAnimeClicked(clickedAnime)
-                            })
-                    }
-
-                    else -> {
-                        AnimeCardCompact(
-                            anime = anime,
-                            onAnimeClicked = { clickedAnime ->
-                                onAnimeClicked(clickedAnime)
-                            }
-                        )
-                    }
-                }
+        items(items = pagingAnime, key = { it.malID }) { pagingAnime ->
+            pagingAnime?.let { anime ->
+                AnimeList(anime = anime, onAnimeClicked = onAnimeClicked)
+                Divider()
             }
         }
 
         when (val appending = pagingAnime.loadState.append) {
             is LoadState.Error -> {
-                item(
-                    span = {
-                        GridItemSpan(3)
-                    }
-                ) {
+                item {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 24.dp)
                     ) {
-                        Text(text = appending.error.message ?: "")
+                        Text(
+                            text = appending.error.message
+                                ?: stringResource(id = R.string.unknown_error)
+                        )
                         Button(
                             onClick = { pagingAnime.retry() },
                             shape = RoundedCornerShape(4.dp)
                         ) {
-                            Text(text = "Retry")
+                            Text(text = stringResource(id = R.string.retry))
                         }
                     }
                 }
             }
 
             LoadState.Loading -> {
-                item(
-                    span = {
-                        GridItemSpan(3)
-                    }) {
+                item {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier

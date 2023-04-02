@@ -1,4 +1,4 @@
-package com.lelestacia.explore.component.header
+package com.lelestacia.explore.component
 
 data class HeaderScreenState(
     val searchedAnimeTitle: String = "",

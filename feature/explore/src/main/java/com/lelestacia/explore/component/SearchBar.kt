@@ -1,4 +1,4 @@
-package com.lelestacia.explore.component.header
+package com.lelestacia.explore.component
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Row
@@ -26,9 +26,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lelestacia.common.display_style_menu.DisplayStyleMenu
-import com.lelestacia.explore.screen.ExploreScreenEvent
-import com.lelestacia.explore.screen.ExploreScreenState
+import com.lelestacia.common.display_style.DisplayStyleMenu
+import com.lelestacia.explore.state_and_event.ExploreScreenEvent
+import com.lelestacia.explore.state_and_event.ExploreScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,7 +83,7 @@ fun DashboardSearchHeader(
         }
         IconButton(
             onClick = {
-                onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState)
+                onEvent(ExploreScreenEvent.OnDisplayStyleMenuStateChanged)
             }) {
             Icon(
                 imageVector = Icons.Filled.GridView,
@@ -93,7 +93,7 @@ fun DashboardSearchHeader(
                 currentStyle = screenState.displayStyle,
                 isExpanded = screenState.headerScreenState.isDisplayStyleOptionOpened,
                 onStyleChanged = { onEvent(ExploreScreenEvent.OnDisplayStyleChanged(it)) },
-                onDismiss = { onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState) }
+                onDismiss = { onEvent(ExploreScreenEvent.OnDisplayStyleMenuStateChanged) }
             )
         }
     }

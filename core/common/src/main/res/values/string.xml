@@ -5,4 +5,5 @@
     <string name="compact_card">Compact Card</string>
     <string name="list">List</string>
     <string name="unknown_error">We encounter unknown error</string>
+    <string name="retry">Retry</string>
 </resources>

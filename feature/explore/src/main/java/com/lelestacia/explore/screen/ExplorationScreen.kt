@@ -27,13 +27,16 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.lelestacia.common.DisplayStyle
+import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.R.string.retry
 import com.lelestacia.common.R.string.unknown_error
+import com.lelestacia.common.lazy_anime.LazyGridAnime
+import com.lelestacia.common.lazy_anime.LazyListAnime
 import com.lelestacia.explore.R
-import com.lelestacia.explore.component.header.DashboardDisplayTypeHeader
-import com.lelestacia.explore.component.header.DashboardSearchHeader
-import com.lelestacia.explore.component.paging_list.LazyGridAnime
-import com.lelestacia.explore.component.paging_list.LazyListAnime
+import com.lelestacia.explore.component.DashboardDisplayTypeHeader
+import com.lelestacia.explore.component.DashboardSearchHeader
+import com.lelestacia.explore.state_and_event.ExploreScreenEvent
+import com.lelestacia.explore.state_and_event.ExploreScreenState
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,8 +58,8 @@ fun ExplorationScreen(
         Pair(DisplayType.AIRING, rememberLazyListState()),
         Pair(DisplayType.UPCOMING, rememberLazyListState())
     )
-    val lazyGridState = listOfLazyGridState[screenState.displayType]
-    val lazyListState = listOfLazyListState[screenState.displayType]
+    val lazyGridState = listOfLazyGridState[screenState.displayType] ?: rememberLazyGridState()
+    val lazyListState = listOfLazyListState[screenState.displayType] ?: rememberLazyListState()
 
     Scaffold(
         topBar = {
@@ -98,7 +101,7 @@ fun ExplorationScreen(
                         onClick = { pagingAnime.retry() },
                         shape = RoundedCornerShape(4.dp)
                     ) {
-                        Text(text = "Retry")
+                        Text(text = stringResource(id = retry))
                     }
                 }
                 return@Scaffold
@@ -150,9 +153,9 @@ fun ExplorationScreen(
                     )
                 } else {
                     LazyGridAnime(
-                        lazyGridState = lazyGridState ?: rememberLazyGridState(),
+                        lazyGridState = lazyGridState,
                         pagingAnime = pagingAnime,
-                        screenState = screenState,
+                        displayStyle = screenState.displayStyle,
                         modifier = Modifier.padding(paddingValue),
                         onAnimeClicked = onAnimeClicked
                     )
