@@ -20,17 +20,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.lelestacia.common.DisplayStyle
-import com.lelestacia.explore.component.header.DashboardDisplayTypeHeader
-import com.lelestacia.explore.component.header.DashboardSearchHeader
-import com.lelestacia.explore.component.paging_list.LazyGridAnime
-import com.lelestacia.explore.component.paging_list.LazyListAnime
+import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.R.string.retry
+import com.lelestacia.common.R.string.unknown_error
+import com.lelestacia.common.lazy_anime.LazyGridAnime
+import com.lelestacia.common.lazy_anime.LazyListAnime
+import com.lelestacia.explore.R
+import com.lelestacia.explore.component.DashboardDisplayTypeHeader
+import com.lelestacia.explore.component.DashboardSearchHeader
+import com.lelestacia.explore.state_and_event.ExploreScreenEvent
+import com.lelestacia.explore.state_and_event.ExploreScreenState
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,8 +58,9 @@ fun ExplorationScreen(
         Pair(DisplayType.AIRING, rememberLazyListState()),
         Pair(DisplayType.UPCOMING, rememberLazyListState())
     )
-    val lazyGridState = listOfLazyGridState[screenState.displayType]
-    val lazyListState = listOfLazyListState[screenState.displayType]
+    
+    val lazyGridState = listOfLazyGridState[screenState.displayType] ?: rememberLazyGridState()
+    val lazyListState = listOfLazyListState[screenState.displayType] ?: rememberLazyListState()
 
     Scaffold(
         topBar = {
@@ -77,24 +84,6 @@ fun ExplorationScreen(
         },
         modifier = modifier
     ) { paddingValue ->
-
-        if (pagingAnime.itemCount == 0 && screenState.displayType == DisplayType.SEARCH) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValue)
-            ) {
-                Text(
-                    text = "Sorry, we could not find any result related to ${screenState.headerScreenState.searchQuery}",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(horizontal = 24.dp)
-                )
-            }
-            return@Scaffold
-        }
-
         when (val refreshing = pagingAnime.loadState.refresh) {
             is LoadState.Error -> {
                 Column(
@@ -107,12 +96,12 @@ fun ExplorationScreen(
                     ),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = refreshing.error.message ?: "")
+                    Text(text = refreshing.error.message ?: stringResource(id = unknown_error))
                     Button(
                         onClick = { pagingAnime.retry() },
                         shape = RoundedCornerShape(4.dp)
                     ) {
-                        Text(text = "Retry")
+                    Text(text = stringResource(id = retry))
                     }
                 }
                 return@Scaffold
@@ -133,24 +122,45 @@ fun ExplorationScreen(
                 return@Scaffold
             }
 
-            is LoadState.NotLoading -> Unit
-        }
+            is LoadState.NotLoading -> {
 
-        if (screenState.displayStyle == DisplayStyle.LIST) {
-            LazyListAnime(
-                lazyListState = lazyListState,
-                pagingAnime = pagingAnime,
-                modifier = Modifier.padding(paddingValue),
-                onAnimeClicked = onAnimeClicked
-            )
-        } else {
-            LazyGridAnime(
-                lazyGridState = lazyGridState ?: rememberLazyGridState(),
-                pagingAnime = pagingAnime,
-                screenState = screenState,
-                modifier = Modifier.padding(paddingValue),
-                onAnimeClicked = onAnimeClicked
-            )
+                if (pagingAnime.itemCount == 0 && screenState.displayType == DisplayType.SEARCH) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValue)
+                    ) {
+                        Text(
+                            text = stringResource(
+                                id = R.string.anime_not_found,
+                                screenState.headerScreenState.searchedAnimeTitle
+                            ),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = 24.dp)
+                        )
+                    }
+                    return@Scaffold
+                }
+
+                if (screenState.displayStyle == DisplayStyle.LIST) {
+                    LazyListAnime(
+                        lazyListState = lazyListState,
+                        pagingAnime = pagingAnime,
+                        modifier = Modifier.padding(paddingValue),
+                        onAnimeClicked = onAnimeClicked
+                    )
+                } else {
+                    LazyGridAnime(
+                        lazyGridState = lazyGridState,
+                        pagingAnime = pagingAnime,
+                        displayStyle = screenState.displayStyle,
+                        modifier = Modifier.padding(paddingValue),
+                        onAnimeClicked = onAnimeClicked
+                    )
+                }
+            }
         }
     }
 }

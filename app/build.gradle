@@ -13,8 +13,9 @@ android {
         applicationId 'com.lelestacia.lelenimecompose'
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 1
-        versionName '1.0'
+        versionCode 2
+        versionName '1.0.0-beta'
+
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         vectorDrawables {
@@ -105,8 +106,9 @@ dependencies {
     //  Timber
     implementation libs.timber
 
-    //  UI Controller
-    implementation libs.system.ui.controller
+    //  Accompanist
+    implementation libs.accompanist.system.ui.controller
+    implementation libs.accompanist.animation.navigation
 }
 
 kapt {

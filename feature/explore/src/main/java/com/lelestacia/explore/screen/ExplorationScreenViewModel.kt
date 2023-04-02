@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.common.DisplayStyle
+import com.lelestacia.common.display_style.DisplayStyle
 import com.lelestacia.domain.usecases.explore.IExploreUseCases
-import com.lelestacia.explore.component.header.HeaderScreenState
+import com.lelestacia.explore.component.HeaderScreenState
+import com.lelestacia.explore.state_and_event.ExploreScreenEvent
+import com.lelestacia.explore.state_and_event.ExploreScreenState
 import com.lelestacia.model.Anime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -69,14 +71,25 @@ class ExplorationScreenViewModel @Inject constructor(
             )
         }.stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
+            started = SharingStarted.Eagerly,
             initialValue = ExploreScreenState()
         )
 
     fun onEvent(event: ExploreScreenEvent) {
         when (event) {
-            is ExploreScreenEvent.OnDisplayTypeChanged -> displayedAnimeType.update {
-                event.selectedType
+            is ExploreScreenEvent.OnDisplayTypeChanged -> {
+                displayedAnimeType.update {
+                    event.selectedType
+                }
+
+                if (event.selectedType == DisplayType.SEARCH) return
+                headerState.update {
+                    it.copy(
+                        searchedAnimeTitle = "",
+                        isSearching = false
+                    )
+                }
+                currentSearchQuery.update { "" }
             }
 
             is ExploreScreenEvent.OnDisplayStyleChanged -> displayedStyle.update {
@@ -88,8 +101,8 @@ class ExplorationScreenViewModel @Inject constructor(
                     isFilterOptionOpened = !it.isFilterOptionOpened
                 )
             }
-
-            ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState -> headerState.update {
+            
+            ExploreScreenEvent.OnDisplayStyleMenuStateChanged -> headerState.update {
                 it.copy(
                     isDisplayStyleOptionOpened = !it.isDisplayStyleOptionOpened
                 )
@@ -110,6 +123,11 @@ class ExplorationScreenViewModel @Inject constructor(
             ExploreScreenEvent.OnSearch -> {
                 displayedAnimeType.update {
                     DisplayType.SEARCH
+                }
+                headerState.update {
+                    it.copy(
+                        searchedAnimeTitle = it.searchQuery
+                    )
                 }
                 currentSearchQuery.update {
                     headerState.value.searchQuery

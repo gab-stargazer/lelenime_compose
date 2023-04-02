@@ -2,8 +2,9 @@ package com.lelestacia.collection.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -11,8 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,11 +21,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.lelestacia.collection.component.paging_list.LazyGridAnime
-import com.lelestacia.collection.component.paging_list.LazyListAnime
-import com.lelestacia.common.DisplayStyle
+import com.lelestacia.collection.state_and_event.CollectionScreenEvent
+import com.lelestacia.collection.state_and_event.CollectionScreenState
+import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.display_style.DisplayStyleMenu
+import com.lelestacia.common.lazy_anime.LazyGridAnime
+import com.lelestacia.common.lazy_anime.LazyListAnime
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,57 +49,31 @@ fun CollectionScreen(
     Scaffold(
         topBar = {
             Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.End,
+               verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                IconButton(onClick = { onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState) }) {
-                    Icon(
-                        imageVector = Icons.Filled.GridView,
-                        contentDescription = "Display Style"
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Collection",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.SemiBold
+                        ),
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .weight(1f)
                     )
-                    DropdownMenu(
-                        expanded = screenState.isDisplayStyleOptionOpened,
-                        onDismissRequest = { onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState) }) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(text = "Card")
-                            },
-                            onClick = {
-                                onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState)
-                                onEvent(
-                                    CollectionScreenEvent.OnDisplayStyleChanged(
-                                        DisplayStyle.CARD
-                                    )
-                                )
-                            }
+                    IconButton(onClick = { onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState) }) {
+                        Icon(
+                            imageVector = Icons.Filled.GridView,
+                            contentDescription = "Display Style Button"
                         )
-                        Divider()
-                        DropdownMenuItem(
-                            text = {
-                                Text(text = "Compact Card")
-                            },
-                            onClick = {
-                                onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState)
-                                onEvent(
-                                    CollectionScreenEvent.OnDisplayStyleChanged(
-                                        DisplayStyle.COMPACT_CARD
-                                    )
-                                )
-                            }
-                        )
-                        Divider()
-                        DropdownMenuItem(
-                            text = {
-                                Text(text = "List")
-                            },
-                            onClick = {
-                                onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState)
-                                onEvent(
-                                    CollectionScreenEvent.OnDisplayStyleChanged(
-                                        DisplayStyle.LIST
-                                    )
-                                )
-                            }
+                        DisplayStyleMenu(
+                            currentStyle = screenState.displayStyle,
+                            isExpanded = screenState.isDisplayStyleOptionOpened,
+                            onStyleChanged = { onEvent(CollectionScreenEvent.OnDisplayStyleChanged(it)) },
+                            onDismiss = { onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState) }
                         )
                     }
                 }
@@ -122,24 +101,24 @@ fun CollectionScreen(
                 return@Scaffold
             }
 
-            is LoadState.NotLoading -> Unit
-        }
-
-        if (screenState.displayStyle == DisplayStyle.LIST) {
-            LazyListAnime(
-                lazyListState = lazyListState,
-                pagingAnime = pagingAnime,
-                modifier = Modifier.padding(paddingValue),
-                onAnimeClicked = onAnimeClicked
-            )
-        } else {
-            LazyGridAnime(
-                lazyGridState = lazyGridState,
-                pagingAnime = pagingAnime,
-                screenState = screenState,
-                modifier = Modifier.padding(paddingValue),
-                onAnimeClicked = onAnimeClicked
-            )
+             is LoadState.NotLoading -> {
+                if (screenState.displayStyle == DisplayStyle.LIST) {
+                    LazyListAnime(
+                        lazyListState = lazyListState,
+                        pagingAnime = pagingAnime,
+                        modifier = Modifier.padding(paddingValue),
+                        onAnimeClicked = onAnimeClicked
+                    )
+                } else {
+                    LazyGridAnime(
+                        lazyGridState = lazyGridState,
+                        pagingAnime = pagingAnime,
+                        displayStyle = screenState.displayStyle,
+                        modifier = Modifier.padding(paddingValue),
+                        onAnimeClicked = onAnimeClicked
+                    )
+                }
+            }
         }
     }
 }

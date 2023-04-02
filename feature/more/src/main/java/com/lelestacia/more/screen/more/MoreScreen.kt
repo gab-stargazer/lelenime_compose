@@ -37,7 +37,7 @@ fun MoreScreen(
     ) {
         Card(
             onClick = {
-                navController.navigate(route = Screen.AboutMe.route) {
+                navController.navigate(route = Screen.About.route) {
                     restoreState = true
                 }
             },
