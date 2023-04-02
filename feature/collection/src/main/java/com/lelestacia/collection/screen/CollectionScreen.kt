@@ -7,18 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +19,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.collection.component.paging_list.LazyGridAnime
 import com.lelestacia.collection.component.paging_list.LazyListAnime
 import com.lelestacia.common.DisplayStyle
+import com.lelestacia.common.display_style.DisplayStyleMenu
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,58 +40,11 @@ fun CollectionScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.End,
             ) {
-                IconButton(onClick = { onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState) }) {
-                    Icon(
-                        imageVector = Icons.Filled.GridView,
-                        contentDescription = "Display Style"
-                    )
-                    DropdownMenu(
-                        expanded = screenState.isDisplayStyleOptionOpened,
-                        onDismissRequest = { onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState) }) {
-                        DropdownMenuItem(
-                            text = {
-                                Text(text = "Card")
-                            },
-                            onClick = {
-                                onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState)
-                                onEvent(
-                                    CollectionScreenEvent.OnDisplayStyleChanged(
-                                        DisplayStyle.CARD
-                                    )
-                                )
-                            }
-                        )
-                        Divider()
-                        DropdownMenuItem(
-                            text = {
-                                Text(text = "Compact Card")
-                            },
-                            onClick = {
-                                onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState)
-                                onEvent(
-                                    CollectionScreenEvent.OnDisplayStyleChanged(
-                                        DisplayStyle.COMPACT_CARD
-                                    )
-                                )
-                            }
-                        )
-                        Divider()
-                        DropdownMenuItem(
-                            text = {
-                                Text(text = "List")
-                            },
-                            onClick = {
-                                onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState)
-                                onEvent(
-                                    CollectionScreenEvent.OnDisplayStyleChanged(
-                                        DisplayStyle.LIST
-                                    )
-                                )
-                            }
-                        )
-                    }
-                }
-                Divider()
+                DisplayStyleMenu(
+                    isExpanded = screenState.isDisplayStyleOptionOpened,
+                    onStyleChanged = { onEvent(CollectionScreenEvent.OnDisplayStyleChanged(it)) },
+                    onDismiss = { onEvent(CollectionScreenEvent.OnDisplayStyleOptionMenuChangedState) }
+                )
             }
         },
         modifier = modifier
