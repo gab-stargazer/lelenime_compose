@@ -105,8 +105,9 @@ dependencies {
     //  Timber
     implementation libs.timber
 
-    //  UI Controller
+    //  Accompanist
     implementation libs.accompanist.system.ui.controller
+    implementation libs.accompanist.animation.navigation
 }
 
 kapt {
