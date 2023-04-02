@@ -106,7 +106,7 @@ dependencies {
     implementation libs.timber
 
     //  UI Controller
-    implementation libs.system.ui.controller
+    implementation libs.accompanist.system.ui.controller
 }
 
 kapt {
