@@ -2,6 +2,7 @@ package com.lelestacia.detail.screen
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,9 +33,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.lelestacia.common.Resource
 import com.lelestacia.detail.component.AnimeCoverImage
@@ -49,16 +49,18 @@ import com.lelestacia.model.Anime
 fun DetailScreen(
     navHostController: NavHostController,
     animeID: Int,
-    vm: DetailViewModel = hiltViewModel()
+    anime: Resource<Anime>,
+    initiate: (Int) -> Unit,
+    updateAnimeByAnimeID: (Int) -> Unit
 ) {
-    val animeResource = vm.anime.collectAsState()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val scrollState = rememberScrollState()
 
     var isDataInitiated by remember {
         mutableStateOf(false)
     }
     if (!isDataInitiated) {
-        vm.getAnimeByAnimeID(animeID = animeID)
+        initiate(animeID)
         isDataInitiated = true
     }
     val snackbarHostState = remember {
@@ -71,7 +73,6 @@ fun DetailScreen(
                 title = {
                     Text(
                         text = "Detail Anime",
-                        color = Color.White,
                         style = MaterialTheme.typography.titleMedium,
                     )
                 },
@@ -83,33 +84,45 @@ fun DetailScreen(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Navigation Icon",
-                            tint = Color.White,
-                            modifier = Modifier
-                                .padding(8.dp)
                         )
                     }
                 },
-                colors = TopAppBarDefaults.largeTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    scrolledContainerColor = MaterialTheme.colorScheme.background,
+                    containerColor = Color.Transparent,
+                    titleContentColor =
+                    if (scrollState.value == 0) {
+                        Color.White
+                    } else {
+                        if (isSystemInDarkTheme()) Color.White
+                        else Color.Black
+                    },
+                    navigationIconContentColor =
+                    if (scrollState.value == 0) {
+                        Color.White
+                    } else {
+                        if (isSystemInDarkTheme()) Color.White
+                        else Color.Black
+                    }
                 ),
-                scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+                scrollBehavior = scrollBehavior
             )
         },
         floatingActionButton = {
-            when (val animeFavorite = animeResource.value) {
+            when (anime) {
                 is Resource.Success -> {
                     FloatingActionButton(
                         modifier = Modifier
                             .padding(16.dp),
                         onClick = {
-                            vm.updateAnimeByAnimeID(animeID = animeID)
+                            updateAnimeByAnimeID(animeID)
                         },
                         containerColor = MaterialTheme.colorScheme.primary
                     ) {
-                        Crossfade(targetState = animeFavorite.data?.isFavorite, label = "") {
+                        Crossfade(targetState = anime.data?.isFavorite, label = "") {
                             Icon(
                                 imageVector =
-                                if (animeFavorite.data?.isFavorite as Boolean) {
+                                if (anime.data?.isFavorite as Boolean) {
                                     Icons.Default.Favorite
                                 } else {
                                     Icons.Default.FavoriteBorder
@@ -126,32 +139,33 @@ fun DetailScreen(
         },
         snackbarHost = {
             SnackbarHost(snackbarHostState)
-        }
-    ) { paddingValues ->
+        },
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+    ) {
 
-        when (animeResource.value) {
+        when (anime) {
             is Resource.Success -> {
-                val anime = animeResource.value.data as Anime
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                        .verticalScroll(state = scrollState),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    AnimeCoverImage(anime = anime)
-                    Spacer(modifier = Modifier.height(64.dp))
-                    AnimeTitleAndScore(anime = anime)
-                    AnimeInformation(anime = anime)
-                    Text(
-                        text = anime.synopsis ?: "Unknown",
-                        style = MaterialTheme.typography.bodyMedium,
-                        textAlign = TextAlign.Justify,
+                anime.data?.let {
+                    Column(
                         modifier = Modifier
-                            .padding(horizontal = 12.dp)
-                            .padding(top = 16.dp)
-                    )
-                    Spacer(modifier = Modifier.height(48.dp))
+                            .fillMaxSize()
+                            .verticalScroll(state = scrollState),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        AnimeCoverImage(anime = it)
+                        Spacer(modifier = Modifier.height(64.dp))
+                        AnimeTitleAndScore(anime = it)
+                        AnimeInformation(anime = it)
+                        Text(
+                            text = it.synopsis ?: "Unknown",
+                            style = MaterialTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Justify,
+                            modifier = Modifier
+                                .padding(horizontal = 12.dp)
+                                .padding(top = 16.dp)
+                        )
+                        Spacer(modifier = Modifier.height(48.dp))
+                    }
                 }
             }
 

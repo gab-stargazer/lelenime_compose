@@ -29,6 +29,7 @@ import com.lelestacia.collection.screen.CollectionScreen
 import com.lelestacia.collection.screen.CollectionScreenViewModel
 import com.lelestacia.common.route.Screen
 import com.lelestacia.detail.screen.DetailScreen
+import com.lelestacia.detail.screen.DetailViewModel
 import com.lelestacia.explore.screen.ExplorationScreen
 import com.lelestacia.explore.screen.ExplorationScreenViewModel
 import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
@@ -111,6 +112,10 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Screen.More.route) {
+                            uiController.setStatusBarColor(
+                                color = MaterialTheme.colorScheme.background,
+                                darkIcons = !isSystemInDarkTheme()
+                            )
                             MoreScreen(
                                 navController = navController,
                                 modifier = Modifier.padding(paddingValue)
@@ -118,6 +123,10 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Screen.About.route) {
+                            uiController.setStatusBarColor(
+                                color = MaterialTheme.colorScheme.background,
+                                darkIcons = !isSystemInDarkTheme()
+                            )
                             AboutScreen(navController = navController)
                         }
 
@@ -146,12 +155,19 @@ class MainActivity : ComponentActivity() {
                             }
                         ) {
                             uiController.setStatusBarColor(
-                                color = MaterialTheme.colorScheme.primary,
-                                darkIcons = false
+                                color = MaterialTheme.colorScheme.background,
+                                darkIcons = !isSystemInDarkTheme()
                             )
+
+                            val viewModel = hiltViewModel<DetailViewModel>()
+                            val animeResource by viewModel.anime.collectAsState()
+
                             DetailScreen(
                                 animeID = it.arguments?.getInt("mal_id") ?: 0,
-                                navHostController = navController
+                                navHostController = navController,
+                                anime = animeResource,
+                                initiate = viewModel::getAnimeByAnimeID,
+                                updateAnimeByAnimeID = viewModel::updateAnimeByAnimeID
                             )
                         }
                     }
