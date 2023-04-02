@@ -136,7 +136,7 @@ class MainActivity : ComponentActivity() {
                                 navArgument(name = "mal_id") {
                                     type = NavType.IntType
                                 }
-                            ),
+                              ),
                             enterTransition = {
                                 slideIntoContainer(
                                     towards = AnimatedContentScope.SlideDirection.Up,

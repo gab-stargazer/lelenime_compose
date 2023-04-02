@@ -58,6 +58,7 @@ fun ExplorationScreen(
         Pair(DisplayType.AIRING, rememberLazyListState()),
         Pair(DisplayType.UPCOMING, rememberLazyListState())
     )
+    
     val lazyGridState = listOfLazyGridState[screenState.displayType] ?: rememberLazyGridState()
     val lazyListState = listOfLazyListState[screenState.displayType] ?: rememberLazyListState()
 
@@ -83,7 +84,6 @@ fun ExplorationScreen(
         },
         modifier = modifier
     ) { paddingValue ->
-
         when (val refreshing = pagingAnime.loadState.refresh) {
             is LoadState.Error -> {
                 Column(
@@ -101,7 +101,7 @@ fun ExplorationScreen(
                         onClick = { pagingAnime.retry() },
                         shape = RoundedCornerShape(4.dp)
                     ) {
-                        Text(text = stringResource(id = retry))
+                    Text(text = stringResource(id = retry))
                     }
                 }
                 return@Scaffold

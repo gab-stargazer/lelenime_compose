@@ -137,7 +137,7 @@ fun AboutScreen(
                     modifier = Modifier
                         .size(64.dp)
                         .clip(CircleShape)
-                        .border(BorderStroke(1.dp, MaterialTheme.colorScheme.primary), CircleShape)
+                         .border(BorderStroke(1.dp, MaterialTheme.colorScheme.primary), CircleShape)
                 )
 
                 Column {
@@ -153,7 +153,7 @@ fun AboutScreen(
                             val intent = Intent(Intent.ACTION_VIEW)
                             intent.data = Uri.parse("https://github.com/Kamil-Malik/")
                             context.startActivity(intent)
-                        },
+                         },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent,
                             contentColor =

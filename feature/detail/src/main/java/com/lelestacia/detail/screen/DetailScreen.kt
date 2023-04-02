@@ -139,33 +139,7 @@ fun DetailScreen(
         },
         snackbarHost = {
             SnackbarHost(snackbarHostState)
-        },
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
-    ) {
 
-        when (anime) {
-            is Resource.Success -> {
-                anime.data?.let {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(state = scrollState),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        AnimeCoverImage(anime = it)
-                        Spacer(modifier = Modifier.height(64.dp))
-                        AnimeTitleAndScore(anime = it)
-                        AnimeInformation(anime = it)
-                        Text(
-                            text = it.synopsis ?: "Unknown",
-                            style = MaterialTheme.typography.bodyMedium,
-                            textAlign = TextAlign.Justify,
-                            modifier = Modifier
-                                .padding(horizontal = 12.dp)
-                                .padding(top = 16.dp)
-                        )
-                        Spacer(modifier = Modifier.height(48.dp))
-                    }
                 }
             }
 

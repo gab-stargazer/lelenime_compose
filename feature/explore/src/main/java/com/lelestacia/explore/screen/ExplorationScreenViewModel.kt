@@ -101,7 +101,7 @@ class ExplorationScreenViewModel @Inject constructor(
                     isFilterOptionOpened = !it.isFilterOptionOpened
                 )
             }
-
+            
             ExploreScreenEvent.OnDisplayStyleMenuStateChanged -> headerState.update {
                 it.copy(
                     isDisplayStyleOptionOpened = !it.isDisplayStyleOptionOpened

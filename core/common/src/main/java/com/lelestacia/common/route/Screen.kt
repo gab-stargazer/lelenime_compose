@@ -12,6 +12,5 @@ sealed class Screen(val route: String) {
             )
         }
     }
-
     object About : Screen("about")
 }

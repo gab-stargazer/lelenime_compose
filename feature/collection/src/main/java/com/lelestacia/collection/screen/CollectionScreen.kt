@@ -2,6 +2,7 @@ package com.lelestacia.collection.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -48,7 +49,7 @@ fun CollectionScreen(
     Scaffold(
         topBar = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+               verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -100,7 +101,7 @@ fun CollectionScreen(
                 return@Scaffold
             }
 
-            is LoadState.NotLoading -> {
+             is LoadState.NotLoading -> {
                 if (screenState.displayStyle == DisplayStyle.LIST) {
                     LazyListAnime(
                         lazyListState = lazyListState,
