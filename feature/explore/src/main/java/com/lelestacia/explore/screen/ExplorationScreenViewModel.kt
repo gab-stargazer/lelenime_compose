@@ -102,7 +102,7 @@ class ExplorationScreenViewModel @Inject constructor(
                 )
             }
             
-            ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState -> headerState.update {
+            ExploreScreenEvent.OnDisplayStyleOptionMenuStateChanged -> headerState.update {
                 it.copy(
                     isDisplayStyleOptionOpened = !it.isDisplayStyleOptionOpened
                 )

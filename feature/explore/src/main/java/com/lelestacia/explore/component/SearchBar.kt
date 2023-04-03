@@ -84,7 +84,7 @@ fun DashboardSearchHeader(
         }
         IconButton(
             onClick = {
-                onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState)
+                onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuStateChanged)
             }) {
             Icon(
                 imageVector = Icons.Filled.GridView,
@@ -94,7 +94,7 @@ fun DashboardSearchHeader(
                 currentStyle = screenState.displayStyle,
                 isExpanded = screenState.headerScreenState.isDisplayStyleOptionOpened,
                 onStyleChanged = { onEvent(ExploreScreenEvent.OnDisplayStyleChanged(it)) },
-                onDismiss = { onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState) }
+                onDismiss = { onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuStateChanged) }
             )
         }
     }

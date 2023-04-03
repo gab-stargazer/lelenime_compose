@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lelestacia.explore.component.menu.DisplayStyleMenu
+import com.lelestacia.common.display_style.DisplayStyleMenu
 import com.lelestacia.explore.state_and_event.ExploreScreenEvent
 import com.lelestacia.explore.state_and_event.ExploreScreenState
 
@@ -83,15 +83,21 @@ fun DashboardSearchHeader(
         }
         IconButton(
             onClick = {
-                onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState)
+                onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuStateChanged)
             }) {
             Icon(
                 imageVector = Icons.Filled.GridView,
                 contentDescription = "Display Style"
             )
             DisplayStyleMenu(
-                screenState = screenState,
-                onEvent = onEvent
+                currentStyle = screenState.displayStyle,
+                isExpanded = screenState.headerScreenState.isDisplayStyleOptionOpened,
+                onStyleChanged = {
+                    onEvent(ExploreScreenEvent.OnDisplayStyleChanged(it))
+                },
+                onDismiss = {
+                    onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuStateChanged)
+                }
             )
         }
     }
