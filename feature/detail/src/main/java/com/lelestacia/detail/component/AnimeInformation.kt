@@ -26,8 +26,7 @@ fun AnimeInformation(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp)
-            .padding(top = 16.dp)
+            .padding(horizontal = 16.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -40,11 +39,6 @@ fun AnimeInformation(
             )
             Text(
                 text = stringResource(id = R.string.episode),
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = stringResource(id = R.string.status),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold
             )
@@ -100,11 +94,6 @@ fun AnimeInformation(
                     id = R.string.information_value,
                     anime.episodes ?: "Unknown"
                 ),
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Normal
-            )
-            Text(
-                text = stringResource(id = R.string.information_value, anime.status),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Normal
             )
