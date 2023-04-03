@@ -5,9 +5,9 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.lelestacia.common.DisplayStyle
-import com.lelestacia.explore.screen.ExploreScreenEvent
-import com.lelestacia.explore.screen.ExploreScreenState
+import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.explore.state_and_event.ExploreScreenEvent
+import com.lelestacia.explore.state_and_event.ExploreScreenState
 
 @Composable
 fun DisplayStyleMenu(
