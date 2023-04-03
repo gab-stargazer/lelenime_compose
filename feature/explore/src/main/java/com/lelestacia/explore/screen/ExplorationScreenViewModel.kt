@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lelestacia.common.display_style.DisplayStyle
 import com.lelestacia.domain.usecases.explore.IExploreUseCases
-import com.lelestacia.explore.component.HeaderScreenState
+import com.lelestacia.explore.component.header.HeaderScreenState
 import com.lelestacia.explore.state_and_event.ExploreScreenEvent
 import com.lelestacia.explore.state_and_event.ExploreScreenState
 import com.lelestacia.model.Anime
@@ -102,7 +102,7 @@ class ExplorationScreenViewModel @Inject constructor(
                 )
             }
             
-            ExploreScreenEvent.OnDisplayStyleMenuStateChanged -> headerState.update {
+            ExploreScreenEvent.OnDisplayStyleOptionMenuChangedState -> headerState.update {
                 it.copy(
                     isDisplayStyleOptionOpened = !it.isDisplayStyleOptionOpened
                 )

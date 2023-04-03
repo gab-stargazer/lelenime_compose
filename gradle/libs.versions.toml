@@ -50,6 +50,7 @@ compose-junit = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose-version" }
+#   Coil
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose-version" }
 #   Coroutine
 coroutine-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutine-verson" }

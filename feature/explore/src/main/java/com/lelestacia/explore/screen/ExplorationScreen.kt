@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.lelestacia.common.display_style.DisplayStyle
 import com.lelestacia.common.R.string.retry
 import com.lelestacia.common.R.string.unknown_error
+import com.lelestacia.common.display_style.DisplayStyle
 import com.lelestacia.common.lazy_anime.LazyGridAnime
 import com.lelestacia.common.lazy_anime.LazyListAnime
 import com.lelestacia.explore.R

@@ -1,6 +1,7 @@
 package com.lelestacia.explore.component.header
 
 data class HeaderScreenState(
+    val searchedAnimeTitle: String = "",
     val searchQuery: String = "",
     val isSearching: Boolean = false,
     val isFilterOptionOpened: Boolean = false,

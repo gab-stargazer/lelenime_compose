@@ -27,8 +27,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lelestacia.explore.component.menu.DisplayStyleMenu
-import com.lelestacia.explore.screen.ExploreScreenEvent
-import com.lelestacia.explore.screen.ExploreScreenState
+import com.lelestacia.explore.state_and_event.ExploreScreenEvent
+import com.lelestacia.explore.state_and_event.ExploreScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

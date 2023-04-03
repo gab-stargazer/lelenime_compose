@@ -46,6 +46,11 @@ fun AnimeList(
             model = ImageRequest.Builder(context = LocalContext.current)
                 .data(data = anime.coverImages)
                 .memoryCachePolicy(CachePolicy.ENABLED)
+                .memoryCacheKey(anime.malID.toString())
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .diskCacheKey(anime.malID.toString())
+                .allowHardware(false)
+                .allowRgb565(true)
                 .crossfade(enable = true)
                 .build(),
             contentDescription = "Cover Image from Anime ${anime.title}",

@@ -22,10 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.lelestacia.common.display_style.DisplayStyle
 import com.lelestacia.common.R
+import com.lelestacia.common.display_style.DisplayStyle
 import com.lelestacia.common.item_anime.AnimeCard
-import com.lelestacia.common.item_anime.AnimeCardCompact
 import com.lelestacia.model.Anime
 
 @Composable
@@ -47,24 +46,12 @@ fun LazyGridAnime(
     ) {
         items(pagingAnime.itemCount) { index ->
             pagingAnime[index]?.let { anime ->
-                when (displayStyle) {
-                    DisplayStyle.CARD -> {
-                        AnimeCard(
-                            anime = anime,
-                            onAnimeClicked = { clickedAnime ->
-                                onAnimeClicked(clickedAnime)
-                            })
-                    }
-
-                    else -> {
-                        AnimeCardCompact(
-                            anime = anime,
-                            onAnimeClicked = { clickedAnime ->
-                                onAnimeClicked(clickedAnime)
-                            }
-                        )
-                    }
-                }
+                AnimeCard(
+                    anime = anime,
+                    displayStyle = displayStyle,
+                    onAnimeClicked = { clickedAnime ->
+                        onAnimeClicked(clickedAnime)
+                    })
             }
         }
 
