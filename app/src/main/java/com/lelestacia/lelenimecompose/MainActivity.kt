@@ -61,7 +61,47 @@ class MainActivity : ComponentActivity() {
                         startDestination = Screen.Explore.route,
                     ) {
 
-                        composable(route = Screen.Explore.route) {
+                        composable(
+                            route = Screen.Explore.route,
+                            enterTransition = {
+                                when (initialState.destination.route) {
+                                    Screen.Collection.route -> slideIntoContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Right,
+                                        animationSpec = tween(500)
+                                    )+ fadeIn(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    Screen.More.route -> slideIntoContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Right,
+                                        animationSpec = tween(500)
+                                    )+ fadeIn(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    else -> null
+                                }
+                            },
+                            exitTransition = {
+                                when (initialState.destination.route) {
+                                    Screen.Collection.route -> slideOutOfContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Left,
+                                        animationSpec = tween(500)
+                                    )+ fadeOut(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    Screen.More.route -> slideOutOfContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Left,
+                                        animationSpec = tween(500)
+                                    )+ fadeOut(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    else -> null
+                                }
+                            }
+                        ) {
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
                                 darkIcons = !isSystemInDarkTheme()
@@ -87,7 +127,46 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable(route = Screen.Collection.route) {
+                        composable(
+                            route = Screen.Collection.route,
+                            enterTransition = {
+                                when (initialState.destination.route) {
+                                    Screen.Explore.route -> slideIntoContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Left,
+                                        animationSpec = tween(500)
+                                    )+ fadeIn(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    Screen.More.route -> slideIntoContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Right,
+                                        animationSpec = tween(500)
+                                    )+ fadeIn(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    else -> null
+                                }
+                            },
+                            exitTransition = {
+                                when (initialState.destination.route) {
+                                    Screen.Explore.route -> slideOutOfContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Right,
+                                        animationSpec = tween(500)
+                                    )+ fadeOut(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    Screen.More.route -> slideOutOfContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Left,
+                                        animationSpec = tween(500)
+                                    )+ fadeOut(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    else -> null
+                                }
+                            }) {
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
                                 darkIcons = !isSystemInDarkTheme()
@@ -111,7 +190,46 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        composable(route = Screen.More.route) {
+                        composable(
+                            route = Screen.More.route,
+                            enterTransition = {
+                                when (initialState.destination.route) {
+                                    Screen.Explore.route -> slideIntoContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Left,
+                                        animationSpec = tween(500)
+                                    )+ fadeIn(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    Screen.Collection.route -> slideIntoContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Left,
+                                        animationSpec = tween(500)
+                                    )+ fadeIn(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    else -> null
+                                }
+                            },
+                            exitTransition = {
+                                when (initialState.destination.route) {
+                                    Screen.Collection.route -> slideOutOfContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Right,
+                                        animationSpec = tween(500)
+                                    )+ fadeOut(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    Screen.More.route -> slideOutOfContainer(
+                                        towards = AnimatedContentScope.SlideDirection.Right,
+                                        animationSpec = tween(500)
+                                    )+ fadeOut(
+                                        animationSpec = tween(500)
+                                    )
+
+                                    else -> null
+                                }
+                            }) {
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
                                 darkIcons = !isSystemInDarkTheme()
@@ -136,7 +254,7 @@ class MainActivity : ComponentActivity() {
                                 navArgument(name = "mal_id") {
                                     type = NavType.IntType
                                 }
-                              ),
+                            ),
                             enterTransition = {
                                 slideIntoContainer(
                                     towards = AnimatedContentScope.SlideDirection.Up,
