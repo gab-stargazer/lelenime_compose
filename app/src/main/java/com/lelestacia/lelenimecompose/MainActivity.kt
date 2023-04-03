@@ -140,17 +140,17 @@ class MainActivity : ComponentActivity() {
                             enterTransition = {
                                 slideIntoContainer(
                                     towards = AnimatedContentScope.SlideDirection.Up,
-                                    animationSpec = tween(1000)
+                                    animationSpec = tween(500)
                                 ) + fadeIn(
-                                    animationSpec = tween(1000)
+                                    animationSpec = tween(500)
                                 )
                             },
                             exitTransition = {
                                 slideOutOfContainer(
                                     towards = AnimatedContentScope.SlideDirection.Down,
-                                    animationSpec = tween(1000)
+                                    animationSpec = tween(500)
                                 ) + fadeOut(
-                                    animationSpec = tween(1000)
+                                    animationSpec = tween(500)
                                 )
                             }
                         ) {
