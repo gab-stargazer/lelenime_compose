@@ -24,6 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -70,6 +73,11 @@ fun AnimeCard(
                     .build(),
                 contentDescription = "Cover Image from Anime ${anime.title}",
                 contentScale = ContentScale.Crop,
+                colorFilter = ColorFilter.colorMatrix(
+                    colorMatrix = ColorMatrix().apply {
+                        setToSaturation(sat = 0.85F)
+                    }),
+                filterQuality = FilterQuality.Low,
                 modifier = Modifier
                     .width(width = 150.dp)
                     .aspectRatio(3f / 4f)

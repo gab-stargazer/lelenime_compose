@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,6 +49,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -59,6 +63,7 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.lelestacia.common.Resource
+import com.lelestacia.common.request_param.AnimeRating
 import com.lelestacia.detail.component.AnimeInformation
 import com.lelestacia.model.Anime
 
@@ -108,19 +113,11 @@ fun DetailScreen(
                     scrolledContainerColor = MaterialTheme.colorScheme.background,
                     containerColor = Color.Transparent,
                     titleContentColor =
-                    if (scrollState.value == 0) {
-                        Color.White
-                    } else {
-                        if (isSystemInDarkTheme()) Color.White
-                        else Color.Black
-                    },
+                    if (isSystemInDarkTheme()) Color.White
+                    else Color.Black,
                     navigationIconContentColor =
-                    if (scrollState.value == 0) {
-                        Color.White
-                    } else {
-                        if (isSystemInDarkTheme()) Color.White
-                        else Color.Black
-                    }
+                    if (isSystemInDarkTheme()) Color.White
+                    else Color.Black
                 ),
                 scrollBehavior = scrollBehavior
             )
@@ -192,6 +189,12 @@ fun DetailScreen(
                                 .build(),
                             contentDescription = "Cover Image from Anime ${it.title}",
                             contentScale = ContentScale.Crop,
+                            colorFilter = ColorFilter.colorMatrix(
+                                colorMatrix = ColorMatrix().apply {
+                                    setToSaturation(sat = 0.5F)
+                                }),
+                            filterQuality = FilterQuality.Medium,
+                            alignment = Alignment.TopCenter,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .heightIn(max = 300.dp)
@@ -208,9 +211,10 @@ fun DetailScreen(
 
                     Row(
                         modifier = Modifier
-                            .offset(y = 50.dp)
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                            .offset(y = 64.dp)
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         AsyncImage(
                             model = ImageRequest.Builder(context = LocalContext.current)
@@ -235,17 +239,20 @@ fun DetailScreen(
                             verticalArrangement = Arrangement.spacedBy(4.dp),
                             modifier = Modifier
                                 .weight(2f)
-                                .padding(8.dp)
+                                .padding(horizontal = 8.dp)
                         ) {
-                            Text(
-                                text = "#" + it.rank.toString(),
-                                style = MaterialTheme.typography.headlineSmall.copy(
-                                    fontWeight = FontWeight.Black
+                            if (it.rating != AnimeRating.RX.title) {
+                                Text(
+                                    text = "#" + it.rank.toString(),
+                                    style = MaterialTheme.typography.headlineSmall.copy(
+                                        fontWeight = FontWeight.Black
+                                    )
                                 )
-                            )
+                            }
+
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                horizontalArrangement = Arrangement.spacedBy(4.dp),
                             ) {
                                 Text(
                                     text = (it.score ?: 0).toString(),
@@ -257,8 +264,9 @@ fun DetailScreen(
                                     imageVector = Icons.Filled.Star,
                                     contentDescription = "Anime Score Icon"
                                 )
+                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
-                                    text = "- " + (it.scoredBy ?: 0).toString(),
+                                    text = (it.scoredBy ?: 0).toString(),
                                     style = MaterialTheme.typography.titleSmall.copy(
                                         fontWeight = FontWeight.SemiBold
                                     )

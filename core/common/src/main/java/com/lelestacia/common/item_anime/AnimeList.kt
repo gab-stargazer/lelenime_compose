@@ -19,6 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -55,6 +58,11 @@ fun AnimeList(
                 .build(),
             contentDescription = "Cover Image from Anime ${anime.title}",
             contentScale = ContentScale.Crop,
+            colorFilter = ColorFilter.colorMatrix(
+                colorMatrix = ColorMatrix().apply {
+                    setToSaturation(sat = 0.85F)
+                }),
+            filterQuality = FilterQuality.Medium,
             modifier = Modifier
                 .width(100.dp)
                 .height(134.dp)
