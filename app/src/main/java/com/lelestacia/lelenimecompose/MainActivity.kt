@@ -51,6 +51,12 @@ class MainActivity : ComponentActivity() {
                 val scope: CoroutineScope = rememberCoroutineScope()
                 val uiController = rememberSystemUiController()
                 val navController: NavHostController = rememberAnimatedNavController()
+
+                uiController.setStatusBarColor(
+                    color = MaterialTheme.colorScheme.background,
+                    darkIcons = !isSystemInDarkTheme()
+                )
+
                 Scaffold(
                     bottomBar = {
                         LeleNimeBottomBar(navController = navController)
@@ -102,12 +108,9 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         ) {
-                            uiController.setStatusBarColor(
-                                color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
-                            )
                             val viewModel = hiltViewModel<ExplorationScreenViewModel>()
                             val uiState by viewModel.explorationScreenState.collectAsState()
+
                             ExplorationScreen(
                                 screenState = uiState,
                                 onEvent = viewModel::onEvent,
@@ -167,12 +170,9 @@ class MainActivity : ComponentActivity() {
                                     else -> null
                                 }
                             }) {
-                            uiController.setStatusBarColor(
-                                color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
-                            )
                             val viewModel = hiltViewModel<CollectionScreenViewModel>()
                             val uiState by viewModel.collectionScreenState.collectAsState()
+
                             CollectionScreen(
                                 screenState = uiState,
                                 onEvent = viewModel::onEvent,
@@ -213,14 +213,14 @@ class MainActivity : ComponentActivity() {
                             },
                             exitTransition = {
                                 when (initialState.destination.route) {
-                                    Screen.Collection.route -> slideOutOfContainer(
+                                    Screen.Explore.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
                                     )+ fadeOut(
                                         animationSpec = tween(500)
                                     )
 
-                                    Screen.More.route -> slideOutOfContainer(
+                                    Screen.Collection.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
                                     )+ fadeOut(
@@ -230,10 +230,6 @@ class MainActivity : ComponentActivity() {
                                     else -> null
                                 }
                             }) {
-                            uiController.setStatusBarColor(
-                                color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
-                            )
                             MoreScreen(
                                 navController = navController,
                                 modifier = Modifier.padding(paddingValue)
@@ -241,10 +237,6 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Screen.About.route) {
-                            uiController.setStatusBarColor(
-                                color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
-                            )
                             AboutScreen(navController = navController)
                         }
 
@@ -272,11 +264,6 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                         ) {
-                            uiController.setStatusBarColor(
-                                color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
-                            )
-
                             val viewModel = hiltViewModel<DetailViewModel>()
                             val animeResource by viewModel.anime.collectAsState()
 
