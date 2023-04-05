@@ -24,11 +24,6 @@ jobs:
         ./ktlint --version
         ./ktlint --color src/**/*.kt
 
-    - name: Check XML code
-      run: |
-        sudo apt-get install libxml2-utils
-        xmllint --noout --schema path/to/schema.xsd src/**/*.xml
-
     - name: Check Gradle files
       run: |
         ./gradlew check
