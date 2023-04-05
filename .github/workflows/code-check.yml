@@ -1,0 +1,32 @@
+name: Code Check
+
+on:
+  push:
+    branches: '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+
+    - name: Check Kotlin code
+      uses: komuradx/ktlint-action@v1
+      with:
+        files: 'src/**/*.kt'
+
+    - name: Check XML code
+      uses: w3c/xml-validator-action@v1
+      with:
+        files: 'src/**/*.xml'
+
+    - name: Check Gradle files
+      run: |
+        ./gradlew check
