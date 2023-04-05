@@ -18,14 +18,15 @@ jobs:
         java-version: '17'
 
     - name: Check Kotlin code
-      uses: komuradx/ktlint-action@v1
-      with:
-        files: 'src/**/*.kt'
+      run: |
+        curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.41.0/ktlint && chmod +x ktlint
+        ./ktlint --version
+        ./ktlint --color src/**/*.kt
 
     - name: Check XML code
-      uses: w3c/xml-validator-action@v1
-      with:
-        files: 'src/**/*.xml'
+      run: |
+        sudo apt-get install libxml2-utils
+        xmllint --noout --schema path/to/schema.xsd src/**/*.xml
 
     - name: Check Gradle files
       run: |
