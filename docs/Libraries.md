@@ -1,0 +1,16 @@
+- Accomanist by Google: A collection of libraries for Jetpack Compose that simplifies common UI tasks such as handling scrolling, theming, and loading images.
+- Compose Activity by Android Open Source Project (AOSP): A library that provides integration between the AndroidX Activity and Jetpack Compose frameworks, allowing you to create activity-based apps using Compose.
+- Kotlin KTX by Android Open Source Project (AOSP): A set of Kotlin extensions for the Android platform that provides concise, idiomatic Kotlin syntax for common Android APIs.
+- Jetpack Compose by Android Open Source Project (AOSP): A modern toolkit for building native Android UI using declarative Kotlin code, rather than XML-based layouts.
+- Coil by Coil Contributors: An image loading library for Android that is designed to be fast, lightweight, and easy to use.
+- Kotlin Coroutines by JetBrains: A library for writing asynchronous, non-blocking code in a more readable and maintainable way.
+- Dagger-Hilt by Google: A library that simplifies dependency injection in Android apps, built on top of the popular Dagger 2 library.
+- ktlint Gradle Linter by Jeroen Mols: A plugin for the Gradle build system that applies ktlint, a Kotlin linter, to your project's source code.
+- LiveData by Android Open Source Project (AOSP): A lifecycle-aware data holder class that allows you to observe changes to data and update the UI in response.
+- Logging Interceptor by Square: A network interceptor for OkHttp that logs HTTP request and response information, useful for debugging network issues.
+- Navigation Compose by Android Open Source Project (AOSP): A library that provides navigation capabilities to Jetpack Compose apps, allowing you to manage app navigation using a declarative API.
+- Paging by Android Open Source Project (AOSP): A library that helps you load and display large data sets, by providing a set of components for loading data in chunks and handling pagination.
+- Retrofit by Square: A type-safe HTTP client for Android and Java that makes it easy to consume RESTful web services.
+- Room by Android Open Source Project (AOSP): A library that provides an abstraction layer over SQLite, allowing you to easily store and retrieve data using object-oriented programming constructs.
+- System UI Controller by Google: A library that provides a Jetpack Compose API for controlling the system UI, such as the status and navigation bars, in Android apps.
+- Timber by Jake Wharton: A logging library for Android that provides a simple API for logging information at different levels, with customizable log output and filtering.
