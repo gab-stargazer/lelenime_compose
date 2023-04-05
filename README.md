@@ -1,7 +1,14 @@
 # Lelenime
 
+Lelenime is a cutting-edge app designed for anime enthusiasts. This app was built using Kotlin, Jetpack Compose and powered by [JikanAPI](https://github.com/jikan-me/jikan), making it extremely fast and efficient. With a minimum SDK requirement of 26, Lelenime is optimized for the latest Android devices.
 
-Lelenime is a pocket anime index made with Kotlin and Jetpack Compose and powered by [JikanAPI](https://github.com/jikan-me/jikan) to give you a nice user experience when you want to explore anime world.
+Using Lelenime, users can easily look up and search for their favorite anime shows. The app provides a comprehensive index of popular, airing, and upcoming anime, which can be sorted and filtered according to user preferences.
+
+One of the standout features of Lelenime is its ability to display detailed information about each anime series. Users can view synopses, cast information, ratings, and reviews, as well as access trailers and promotional material for each show.
+
+Additionally, Lelenime includes a convenient collection screen that displays recently opened anime, making it easy for users to keep track of their favorite series and pick up where they left off.
+
+Overall, Lelenime is an excellent app for anyone who loves anime and wants to stay up-to-date on the latest shows and news. Its clean, intuitive interface and powerful search capabilities make it an indispensable tool for anime enthusiasts everywhere.
 
 ## Current Feature:
 - Explore Screen to display Popular, Airing, Upcoming and even search for an Anime.
