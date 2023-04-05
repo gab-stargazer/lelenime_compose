@@ -10,10 +10,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2.5.4
+      uses: actions/checkout@v2.6.4
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v2.4.4
+      uses: actions/setup-java@v2.5.3
       with:
         java-version: '17'
 
