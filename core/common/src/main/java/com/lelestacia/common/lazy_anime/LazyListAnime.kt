@@ -36,7 +36,7 @@ fun LazyListAnime(
         state = lazyListState,
         modifier = modifier
     ) {
-        items(items = pagingAnime, key = { it.malID }) { pagingAnime ->
+        items(items = pagingAnime) { pagingAnime ->
             pagingAnime?.let { anime ->
                 AnimeList(anime = anime, onAnimeClicked = onAnimeClicked)
                 Divider()
