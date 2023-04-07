@@ -11,3 +11,15 @@ plugins {
     alias(libs.plugins.kotlin.android.plugin) apply false
     alias(libs.plugins.dagger.hilt.module.plugin) apply false
 }
+
+subprojects {
+    apply plugin: 'checkstyle'
+
+    checkstyle {
+        toolVersion = "8.43"
+        configFile = file("${rootDir}/config/checkstyle.xml")
+        ignoreFailures = false
+        showViolations = true
+        reportsDir = file("${project.buildDir}/reports/checkstyle")
+    }
+}
