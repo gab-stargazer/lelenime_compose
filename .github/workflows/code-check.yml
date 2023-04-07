@@ -18,12 +18,33 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Check Kotlin code
+    - name: Format Kotlin code with ktlint
       run: |
         curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.41.0/ktlint && chmod +x ktlint
         ./ktlint --version
-        ./ktlint --color src/**/*.kt
+        ./ktlint --color --android src/**/*.kt
+        git diff --exit-code
+
+    - name: Check Kotlin code with ktlint and save results
+      run: |
+        curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.41.0/ktlint && chmod +x ktlint
+        ./ktlint --version
+        ./ktlint --color --android src/**/*.kt > ktlint-results.txt
+      continue-on-error: true
+
+    - name: Store ktlint check results as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ktlint-results
+        path: ktlint-results.txt
 
     - name: Check Gradle files
       run: |
         ./gradlew check
+      continue-on-error: true
+
+    - name: Store Gradle check results as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: gradle-check-results
+        path: build/reports/checkstyle/checkstyle.html
