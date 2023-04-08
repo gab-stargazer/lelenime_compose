@@ -18,15 +18,6 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Kotlint
-      uses: TheFabbiusCorp/gha-kotlin-linter@v1.1
-
-    - name: Store ktlint check results as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: ktlint-results
-        path: ktlint-results.txt
-
     - name: Check Gradle files
       run: |
         ./gradlew check
