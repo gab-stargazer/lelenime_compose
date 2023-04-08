@@ -38,7 +38,7 @@ fun LazyGridAnime(
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         state = lazyGridState,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(8.dp),
         modifier = modifier
