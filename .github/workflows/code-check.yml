@@ -18,19 +18,8 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Format Kotlin code with ktlint
-      run: |
-        curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.41.0/ktlint && chmod +x ktlint
-        ./ktlint --version
-        ./ktlint --color --android src/**/*.kt
-        git diff --exit-code
-
-    - name: Check Kotlin code with ktlint and save results
-      run: |
-        curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.41.0/ktlint && chmod +x ktlint
-        ./ktlint --version
-        ./ktlint --color --android src/**/*.kt > ktlint-results.txt
-      continue-on-error: true
+    - name: Kotlint
+      uses: TheFabbiusCorp/gha-kotlin-linter@v1.1
 
     - name: Store ktlint check results as artifact
       uses: actions/upload-artifact@v2
@@ -41,7 +30,7 @@ jobs:
     - name: Check Gradle files
       run: |
         ./gradlew check
-      continue-on-error: true
+      continue-on-error: false
 
     - name: Store Gradle check results as artifact
       uses: actions/upload-artifact@v2
