@@ -98,7 +98,7 @@ fun AboutScreen(
             )
 
             DeveloperCard(
-                name = "Lelestacia as Programmer",
+                name = "Lelestacia",
                 nickName = "Kamil-Malik",
                 imageURL = "https://avatars.githubusercontent.com/u/85838849?v=4",
                 githubURL = "https://github.com/Kamil-Malik/",
@@ -106,7 +106,7 @@ fun AboutScreen(
             )
 
             DeveloperCard(
-                name = "Kaori Miyazono as Consultant",
+                name = "Kaori Miyazono",
                 nickName = "Kao chan",
                 imageURL = "https://scontent.fcgk6-2.fna.fbcdn.net/v/t39.30808-6/292270909_895812138479977_1493775890634793840_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGO4detcXf77S1uKx7-L31yDhwPM2rS1jcOHA8zatLWN8oL2o9NlrojoSslVUH7W2xm1aBbQ_vwN7icyoM-q5Pe&_nc_ohc=rEJLvEUr6ywAX8HzQNF&_nc_ht=scontent.fcgk6-2.fna&oh=00_AfD8XlZc-mfxDbbSVFm7vqzwrPBeCpqlVZIkqOmXdSreTA&oe=643055C0",
                 githubURL = null,
@@ -114,7 +114,7 @@ fun AboutScreen(
             )
 
             DeveloperCard(
-                name = "Chat GPT as Consultant",
+                name = "Chat GPT",
                 nickName = "GPT3",
                 imageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUIwD84MUO1g9n6U0VWNJKRK0pPFVGTXsBeQ3KTeeGTpxX7VKB3-rMoW1J2bvU2blIFiM&usqp=CAU",
                 githubURL = null,

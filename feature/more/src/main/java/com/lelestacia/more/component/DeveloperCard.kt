@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -97,14 +96,14 @@ fun DeveloperCard(
                         shape = RoundedCornerShape(4.dp)
                     ) {
                         Row(
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.github),
                                 contentDescription = "Github Icon",
                                 modifier = Modifier.size(24.dp)
                             )
-                            Spacer(modifier = Modifier.size(8.dp))
                             Text(
                                 text = "Github",
                                 style = MaterialTheme.typography.titleSmall,
@@ -129,14 +128,14 @@ fun DeveloperCard(
                         shape = RoundedCornerShape(4.dp)
                     ) {
                         Row(
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Facebook,
                                 contentDescription = "Facebook Icon",
                                 modifier = Modifier.size(24.dp)
                             )
-                            Spacer(modifier = Modifier.size(8.dp))
                             Text(
                                 text = "Facebook",
                                 style = MaterialTheme.typography.titleSmall,

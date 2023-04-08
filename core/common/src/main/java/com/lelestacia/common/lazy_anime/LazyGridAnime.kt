@@ -44,7 +44,10 @@ fun LazyGridAnime(
         modifier = modifier
             .fillMaxSize()
     ) {
-        items(pagingAnime.itemCount) { index ->
+        items(
+            count = pagingAnime.itemCount,
+            key = { it }
+        ) { index ->
             pagingAnime[index]?.let { anime ->
                 AnimeCard(
                     anime = anime,
