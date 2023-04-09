@@ -67,6 +67,7 @@ dependencies {
     //  Module Implementation
     implementation project(":core:common")
     implementation project(":core:model")
+    implementation project(":core:domain")
     implementation project(":feature:explore")
     implementation project(":feature:collection")
     implementation project(":feature:more")

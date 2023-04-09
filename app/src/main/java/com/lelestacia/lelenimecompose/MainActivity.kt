@@ -3,6 +3,7 @@ package com.lelestacia.lelenimecompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -49,11 +50,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LelenimeComposeTheme {
-                val scope: CoroutineScope = rememberCoroutineScope()
-                val uiController = rememberSystemUiController()
-                val navController: NavHostController = rememberAnimatedNavController()
+            val scope: CoroutineScope = rememberCoroutineScope()
+            val uiController = rememberSystemUiController()
+            val navController: NavHostController = rememberAnimatedNavController()
 
+            val activityVM by viewModels<ActivityViewModel>()
+            val theme by activityVM.darkModePreferences.collectAsState()
+
+            LelenimeComposeTheme(
+                darkTheme = when (theme) {
+                    1 -> false
+                    2 -> true
+                    else -> isSystemInDarkTheme()
+                }
+            ) {
                 Scaffold(
                     bottomBar = {
                         LeleNimeBottomBar(navController = navController)
