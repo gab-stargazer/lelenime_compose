@@ -55,6 +55,9 @@ dependencies {
     // Dagger-Hilt
     implementation libs.dagger.hilt.module
     kapt libs.dagger.hilt.compiler
+
+    //  Datastore-Preferences
+    implementation libs.datastore.pref
 }
 
 kapt {

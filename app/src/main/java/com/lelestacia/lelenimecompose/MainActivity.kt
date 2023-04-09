@@ -36,6 +36,8 @@ import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.screen.about.AboutScreen
 import com.lelestacia.more.screen.more.MoreScreen
+import com.lelestacia.more.screen.settings.SettingScreen
+import com.lelestacia.more.screen.settings.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -69,14 +71,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Collection.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.More.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
@@ -88,14 +90,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Collection.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.More.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
@@ -137,14 +139,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Explore.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.More.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
@@ -156,14 +158,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Explore.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.More.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
@@ -202,14 +204,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Explore.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.Collection.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
@@ -221,21 +223,20 @@ class MainActivity : ComponentActivity() {
                                     Screen.Explore.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.Collection.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
                                     else -> null
                                 }
                             }) {
-
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
                                 darkIcons = !isSystemInDarkTheme()
@@ -248,13 +249,28 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Screen.About.route) {
-
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
                                 darkIcons = !isSystemInDarkTheme()
                             )
 
                             AboutScreen(navController = navController)
+                        }
+
+                        composable(route = Screen.Settings.route) {
+                            uiController.setStatusBarColor(
+                                color = MaterialTheme.colorScheme.background,
+                                darkIcons = !isSystemInDarkTheme()
+                            )
+
+                            val viewModel = hiltViewModel<SettingViewModel>()
+                            val state by viewModel.settingScreenState.collectAsState()
+
+                            SettingScreen(
+                                state = state,
+                                onEvent = viewModel::onEvent,
+                                navController = navController
+                            )
                         }
 
                         composable(

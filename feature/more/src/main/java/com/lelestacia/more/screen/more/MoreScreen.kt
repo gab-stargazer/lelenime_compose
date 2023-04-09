@@ -26,7 +26,9 @@ fun MoreScreen(
             text = "Settings",
             icon = Icons.Filled.Settings
         ) {
-
+            navController.navigate(route = Screen.Settings.route) {
+                restoreState = true
+            }
         }
         MoreScreenButton(
             text = "About",

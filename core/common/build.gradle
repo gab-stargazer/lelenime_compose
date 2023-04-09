@@ -59,4 +59,10 @@ dependencies {
 
     //  Paging
     implementation(libs.paging.compose)
+
+    // Android JUnit
+    androidTestImplementation(libs.android.junit)
+
+    // Junit
+    testImplementation(libs.junit)
 }
