@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="display_style_preferences">Display Style Preferences</string>
+    <string name="dark_mode_preferences">Dark Mode Preferences</string>
+    <string name="auto_theme_preferences">Use System Settings</string>
+    <string name="day_theme_preferences">Day Mode</string>
+    <string name="dark_theme_preferences">Dark Mode</string>
+</resources>

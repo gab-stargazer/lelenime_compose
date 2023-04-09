@@ -1,6 +1,5 @@
 package com.lelestacia.more.screen.settings
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,20 +27,7 @@ class SettingViewModel @Inject constructor(
                 )
             }
 
-            is SettingScreenEvent.UpdateDarkModePreferences -> viewModelScope.launch {
-                useCases.updateUserTheme(
-                    themePreferences = event.darkModePreferences
-                )
-            }
-
-            SettingScreenEvent.DarkModePreferencesMenuStateChanged -> settingScreenState.update {
-                it.copy(
-                    isDarkModePreferencesMenuOpened = !it.isDarkModePreferencesMenuOpened
-                )
-            }
-
             is SettingScreenEvent.UpdateDisplayStylePreferences -> viewModelScope.launch {
-                Log.d(TAG, "onEvent: Update Display Style Scope Launched")
                 useCases.updateUserDisplayStyle(
                     displayStylePreferences = when (event.displayStyle) {
                         DisplayStyle.CARD -> 1
@@ -51,15 +37,27 @@ class SettingViewModel @Inject constructor(
                 )
             }
 
-            is SettingScreenEvent.UpdateDynamicThemePreferences -> viewModelScope.launch {
-                useCases.updateUserPreferenceOnDynamicTheme(
-                    dynamicPreferences = event.dynamicThemePreferences
+            SettingScreenEvent.DarkModePreferencesMenuStateChanged -> settingScreenState.update {
+                it.copy(
+                    isDarkModePreferencesMenuOpened = !it.isDarkModePreferencesMenuOpened
+                )
+            }
+
+            is SettingScreenEvent.UpdateDarkModePreferences -> viewModelScope.launch {
+                useCases.updateUserTheme(
+                    themePreferences = event.darkModePreferences
                 )
             }
 
             SettingScreenEvent.IsUpdateDynamicThemePreferencesStateChanged -> settingScreenState.update {
                 it.copy(
                     isDynamicThemePreferencesMenuOpened = !it.isDynamicThemePreferencesMenuOpened
+                )
+            }
+
+            is SettingScreenEvent.UpdateDynamicThemePreferences -> viewModelScope.launch {
+                useCases.updateUserPreferenceOnDynamicTheme(
+                    dynamicPreferences = event.dynamicThemePreferences
                 )
             }
         }
@@ -79,24 +77,25 @@ class SettingViewModel @Inject constructor(
                     )
                 }
             }
+        }
 
-            viewModelScope.launch {
-                useCases.getUserTheme().collectLatest { theme ->
-                    settingScreenState.update {
-                        it.copy(
-                            darkModePreferences = theme
-                        )
-                    }
+        viewModelScope.launch {
+            useCases.getUserTheme().collectLatest { theme ->
+                Log.d("Settings ViewModel", "ObserveTheme: $theme")
+                settingScreenState.update {
+                    it.copy(
+                        darkModePreferences = theme
+                    )
                 }
             }
+        }
 
-            viewModelScope.launch {
-                useCases.getUserPreferenceOnDynamicTheme().collectLatest { dynamicTheme ->
-                    settingScreenState.update {
-                        it.copy(
-                            dynamicThemePreferences = dynamicTheme
-                        )
-                    }
+        viewModelScope.launch {
+            useCases.getUserPreferenceOnDynamicTheme().collectLatest { dynamicTheme ->
+                settingScreenState.update {
+                    it.copy(
+                        dynamicThemePreferences = dynamicTheme
+                    )
                 }
             }
         }
