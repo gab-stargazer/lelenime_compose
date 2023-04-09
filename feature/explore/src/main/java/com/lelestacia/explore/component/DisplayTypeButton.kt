@@ -3,7 +3,6 @@ package com.lelestacia.explore.component
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.AssistChip
@@ -22,6 +21,7 @@ import com.lelestacia.explore.screen.DisplayType
 @Composable
 fun DisplayTypeButton(
     isActive: Boolean,
+    isDarkMode: Boolean,
     displayType: DisplayType,
     icon: ImageVector,
     onClicked: (DisplayType) -> Unit,
@@ -33,15 +33,7 @@ fun DisplayTypeButton(
         },
         label = {
             Text(
-                text = displayType.name,
-                color =
-                if (isSystemInDarkTheme()) {
-                    if (isActive) Color.Black
-                    else Color.White
-                } else {
-                    if (isActive) Color.White
-                    else Color.Black
-                }
+                text = displayType.name
             )
         },
         leadingIcon = {
@@ -55,12 +47,20 @@ fun DisplayTypeButton(
             if (isActive) MaterialTheme.colorScheme.primary
             else Color.Transparent,
             leadingIconContentColor =
-            if (isSystemInDarkTheme()) {
+            if (isDarkMode) {
                 if (isActive) Color.Black
                 else MaterialTheme.colorScheme.primary
             } else {
                 if (isActive) Color.White
                 else MaterialTheme.colorScheme.primary
+            },
+            labelColor =
+            if (isDarkMode) {
+                if (isActive) Color.Black
+                else Color.White
+            } else {
+                if (isActive) Color.White
+                else Color.Black
             }
         ),
         border = AssistChipDefaults.assistChipBorder(
@@ -76,6 +76,7 @@ fun DisplayTypeButton(
 fun PreviewDisplayTypeButtonActive() {
     DisplayTypeButton(
         isActive = true,
+        isDarkMode = false,
         displayType = DisplayType.POPULAR,
         icon = Icons.Filled.Favorite,
         onClicked = {}
@@ -87,6 +88,7 @@ fun PreviewDisplayTypeButtonActive() {
 fun PreviewDisplayTypeButtonActiveDarkMode() {
     DisplayTypeButton(
         isActive = true,
+        isDarkMode = false,
         displayType = DisplayType.POPULAR,
         icon = Icons.Filled.Favorite,
         onClicked = {}
@@ -98,6 +100,7 @@ fun PreviewDisplayTypeButtonActiveDarkMode() {
 fun PreviewDisplayTypeButtonInactive() {
     DisplayTypeButton(
         isActive = false,
+        isDarkMode = false,
         displayType = DisplayType.POPULAR,
         icon = Icons.Filled.Favorite,
         onClicked = {}
@@ -109,6 +112,7 @@ fun PreviewDisplayTypeButtonInactive() {
 fun PreviewDisplayTypeButtonInactiveDarkMode() {
     DisplayTypeButton(
         isActive = false,
+        isDarkMode = false,
         displayType = DisplayType.POPULAR,
         icon = Icons.Filled.Favorite,
         onClicked = {}

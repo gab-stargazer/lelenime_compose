@@ -43,6 +43,7 @@ import com.lelestacia.model.Anime
 @Composable
 fun ExplorationScreen(
     screenState: ExploreScreenState,
+    isDarkMode: Boolean,
     onEvent: (ExploreScreenEvent) -> Unit,
     onAnimeClicked: (Anime) -> Unit,
     modifier: Modifier = Modifier
@@ -76,6 +77,7 @@ fun ExplorationScreen(
                 )
                 DashboardDisplayTypeHeader(
                     state = screenState,
+                    isDarkMode = isDarkMode,
                     onEvent = onEvent,
                     modifier = Modifier.padding(start = 12.dp)
                 )
@@ -170,6 +172,7 @@ fun ExplorationScreen(
 fun PreviewExplorationScreen() {
     ExplorationScreen(
         screenState = ExploreScreenState(),
+        isDarkMode = false,
         onEvent = {},
         onAnimeClicked = {}
     )

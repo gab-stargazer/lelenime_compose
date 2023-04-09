@@ -125,6 +125,11 @@ class MainActivity : ComponentActivity() {
 
                             ExplorationScreen(
                                 screenState = uiState,
+                                isDarkMode = when (theme) {
+                                    1 -> false
+                                    2 -> true
+                                    else -> isSystemInDarkTheme()
+                                },
                                 onEvent = viewModel::onEvent,
                                 onAnimeClicked = { anime ->
                                     scope.launch {
