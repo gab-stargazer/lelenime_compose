@@ -1,8 +1,10 @@
 package com.lelestacia.lelenimecompose
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -36,6 +38,8 @@ import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
 import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.screen.about.AboutScreen
 import com.lelestacia.more.screen.more.MoreScreen
+import com.lelestacia.more.screen.settings.SettingScreen
+import com.lelestacia.more.screen.settings.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -47,11 +51,28 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LelenimeComposeTheme {
-                val scope: CoroutineScope = rememberCoroutineScope()
-                val uiController = rememberSystemUiController()
-                val navController: NavHostController = rememberAnimatedNavController()
+            val scope: CoroutineScope = rememberCoroutineScope()
+            val uiController = rememberSystemUiController()
+            val navController: NavHostController = rememberAnimatedNavController()
 
+
+            val activityVM by viewModels<ActivityViewModel>()
+            val theme by activityVM.darkModePreferences.collectAsState()
+            val dynamicModePreferences =
+                if (Build.VERSION.SDK_INT <= 31) {
+                    false
+                } else {
+                    activityVM.dynamicMode.collectAsState().value
+                }
+
+            LelenimeComposeTheme(
+                darkTheme = when (theme) {
+                    1 -> false
+                    2 -> true
+                    else -> isSystemInDarkTheme()
+                },
+                dynamicColor = dynamicModePreferences
+            ) {
                 Scaffold(
                     bottomBar = {
                         LeleNimeBottomBar(navController = navController)
@@ -69,14 +90,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Collection.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.More.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
@@ -88,14 +109,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Collection.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.More.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
@@ -113,6 +134,11 @@ class MainActivity : ComponentActivity() {
 
                             ExplorationScreen(
                                 screenState = uiState,
+                                isDarkMode = when (theme) {
+                                    1 -> false
+                                    2 -> true
+                                    else -> isSystemInDarkTheme()
+                                },
                                 onEvent = viewModel::onEvent,
                                 onAnimeClicked = { anime ->
                                     scope.launch {
@@ -137,14 +163,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Explore.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.More.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
@@ -156,14 +182,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Explore.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.More.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
@@ -202,14 +228,14 @@ class MainActivity : ComponentActivity() {
                                     Screen.Explore.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.Collection.route -> slideIntoContainer(
                                         towards = AnimatedContentScope.SlideDirection.Left,
                                         animationSpec = tween(500)
-                                    )+ fadeIn(
+                                    ) + fadeIn(
                                         animationSpec = tween(500)
                                     )
 
@@ -221,21 +247,20 @@ class MainActivity : ComponentActivity() {
                                     Screen.Explore.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
                                     Screen.Collection.route -> slideOutOfContainer(
                                         towards = AnimatedContentScope.SlideDirection.Right,
                                         animationSpec = tween(500)
-                                    )+ fadeOut(
+                                    ) + fadeOut(
                                         animationSpec = tween(500)
                                     )
 
                                     else -> null
                                 }
                             }) {
-
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
                                 darkIcons = !isSystemInDarkTheme()
@@ -248,13 +273,28 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Screen.About.route) {
-
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
                                 darkIcons = !isSystemInDarkTheme()
                             )
 
                             AboutScreen(navController = navController)
+                        }
+
+                        composable(route = Screen.Settings.route) {
+                            uiController.setStatusBarColor(
+                                color = MaterialTheme.colorScheme.background,
+                                darkIcons = !isSystemInDarkTheme()
+                            )
+
+                            val viewModel = hiltViewModel<SettingViewModel>()
+                            val state by viewModel.settingScreenState.collectAsState()
+
+                            SettingScreen(
+                                state = state,
+                                onEvent = viewModel::onEvent,
+                                navController = navController
+                            )
                         }
 
                         composable(

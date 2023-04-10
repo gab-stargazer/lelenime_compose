@@ -18,6 +18,7 @@ import com.lelestacia.explore.state_and_event.ExploreScreenState
 @Composable
 fun DashboardDisplayTypeHeader(
     state: ExploreScreenState,
+    isDarkMode: Boolean,
     onEvent: (ExploreScreenEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -27,6 +28,7 @@ fun DashboardDisplayTypeHeader(
     ) {
         DisplayTypeButton(
             isActive = state.displayType == DisplayType.POPULAR,
+            isDarkMode = isDarkMode,
             displayType = DisplayType.POPULAR,
             icon = Icons.Filled.Favorite,
             onClicked = {
@@ -35,6 +37,7 @@ fun DashboardDisplayTypeHeader(
         )
         DisplayTypeButton(
             isActive = state.displayType == DisplayType.AIRING,
+            isDarkMode = isDarkMode,
             displayType = DisplayType.AIRING,
             icon = Icons.Filled.MovieFilter,
             onClicked = {
@@ -43,6 +46,7 @@ fun DashboardDisplayTypeHeader(
         )
         DisplayTypeButton(
             isActive = state.displayType == DisplayType.UPCOMING,
+            isDarkMode = isDarkMode,
             displayType = DisplayType.UPCOMING,
             icon = Icons.Filled.Upcoming,
             onClicked = {
@@ -57,6 +61,7 @@ fun DashboardDisplayTypeHeader(
 fun PreviewTopHeader() {
     DashboardDisplayTypeHeader(
         state = ExploreScreenState(),
+        isDarkMode = false,
         onEvent = {}
     )
 }

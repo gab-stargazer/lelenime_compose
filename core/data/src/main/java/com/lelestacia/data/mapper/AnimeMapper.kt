@@ -1,6 +1,6 @@
 package com.lelestacia.data.mapper
 
-import com.lelestacia.database.entity.anime.AnimeEntity
+import com.lelestacia.database.anime_stuff.entity.anime.AnimeEntity
 import com.lelestacia.model.Anime
 import com.lelestacia.network.model.anime.AnimeResponse
 import java.util.Date

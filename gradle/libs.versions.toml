@@ -4,6 +4,7 @@ activity-compose-version = "1.7.0"
 android-version = "8.1.0-alpha11"
 android-junit-version = "1.1.5"
 compose-bom-version = "2023.03.00"
+datastore-pref-version = "1.0.0"
 espresso-version = "3.5.1"
 junit-version = "4.13.2"
 kotlin-android-version = "1.8.10"
@@ -60,6 +61,8 @@ coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", ver
 dagger-hilt-module = { module = "com.google.dagger:hilt-android", version.ref = "dagger-hilt-version" }
 dagger-hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "dagger-hilt-compose-version" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt-version" }
+#   Datastore Pref
+datastore-pref = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-pref-version" }
 #   Linter
 ktlint-gradle-linter = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint-gradle-version" }
 #   LiveData

@@ -2,13 +2,13 @@ package com.lelestacia.database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.lelestacia.database.dao.AnimeDao
-import com.lelestacia.database.dao.AnimeCharacterCrossRefDao
-import com.lelestacia.database.dao.CharacterDao
-import com.lelestacia.database.dao.CharacterVoiceActorCrossRefDao
-import com.lelestacia.database.dao.EpisodeDao
-import com.lelestacia.database.dao.VoiceActorDao
-import com.lelestacia.database.database.AnimeDatabase
+import com.lelestacia.database.anime_stuff.dao.AnimeDao
+import com.lelestacia.database.anime_stuff.dao.AnimeCharacterCrossRefDao
+import com.lelestacia.database.anime_stuff.dao.CharacterDao
+import com.lelestacia.database.anime_stuff.dao.CharacterVoiceActorCrossRefDao
+import com.lelestacia.database.anime_stuff.dao.EpisodeDao
+import com.lelestacia.database.anime_stuff.dao.VoiceActorDao
+import com.lelestacia.database.anime_stuff.database.AnimeDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

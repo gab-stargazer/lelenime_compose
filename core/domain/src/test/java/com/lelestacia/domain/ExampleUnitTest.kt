@@ -1,7 +1,6 @@
 package com.lelestacia.domain
 
 import org.junit.Test
-
 import org.junit.Assert.*
 
 /**
