@@ -69,4 +69,7 @@ dependencies {
     //  Paging and Paging Compose
     implementation libs.paging.runtime
     implementation libs.paging.compose
+
+    //  Timber
+    implementation libs.timber
 }

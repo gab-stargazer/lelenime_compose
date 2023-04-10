@@ -16,11 +16,18 @@ class ActivityViewModel @Inject constructor(
 ) : ViewModel() {
 
     val darkModePreferences: MutableStateFlow<Int> = MutableStateFlow(3)
+    val dynamicMode: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     init {
         viewModelScope.launch {
             useCases.getUserTheme().collectLatest { theme ->
                 darkModePreferences.update { theme }
+            }
+        }
+
+        viewModelScope.launch {
+            useCases.getUserPreferenceOnDynamicTheme().collectLatest { dynamicPrefences ->
+                dynamicMode.update { dynamicPrefences }
             }
         }
     }

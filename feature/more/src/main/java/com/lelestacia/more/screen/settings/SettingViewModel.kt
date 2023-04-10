@@ -1,6 +1,5 @@
 package com.lelestacia.more.screen.settings
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lelestacia.common.display_style.DisplayStyle
@@ -66,7 +65,6 @@ class SettingViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             useCases.getUserDisplayStyle().collectLatest { style ->
-                Log.d("Settings ViewModel", "observeDisplayStyle: $style")
                 settingScreenState.update {
                     it.copy(
                         displayStylePreferences = when (style) {
@@ -81,7 +79,6 @@ class SettingViewModel @Inject constructor(
 
         viewModelScope.launch {
             useCases.getUserTheme().collectLatest { theme ->
-                Log.d("Settings ViewModel", "ObserveTheme: $theme")
                 settingScreenState.update {
                     it.copy(
                         darkModePreferences = theme

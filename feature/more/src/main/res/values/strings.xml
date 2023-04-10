@@ -5,4 +5,7 @@
     <string name="auto_theme_preferences">Use System Settings</string>
     <string name="day_theme_preferences">Day Mode</string>
     <string name="dark_theme_preferences">Dark Mode</string>
+    <string name="dynamic_color">Dynamic Color</string>
+    <string name="using_dynamic_color">Using Dynamic Color</string>
+    <string name="using_static_color">Using Static Color</string>
 </resources>

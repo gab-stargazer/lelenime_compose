@@ -1,5 +1,6 @@
 package com.lelestacia.lelenimecompose
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -54,15 +55,23 @@ class MainActivity : ComponentActivity() {
             val uiController = rememberSystemUiController()
             val navController: NavHostController = rememberAnimatedNavController()
 
+
             val activityVM by viewModels<ActivityViewModel>()
             val theme by activityVM.darkModePreferences.collectAsState()
+            val dynamicModePreferences =
+                if (Build.VERSION.SDK_INT <= 31) {
+                    false
+                } else {
+                    activityVM.dynamicMode.collectAsState().value
+                }
 
             LelenimeComposeTheme(
                 darkTheme = when (theme) {
                     1 -> false
                     2 -> true
                     else -> isSystemInDarkTheme()
-                }
+                },
+                dynamicColor = dynamicModePreferences
             ) {
                 Scaffold(
                     bottomBar = {

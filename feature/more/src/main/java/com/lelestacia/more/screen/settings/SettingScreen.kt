@@ -1,5 +1,6 @@
 package com.lelestacia.more.screen.settings
 
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,10 +20,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.lelestacia.more.component.DisplayStyleSettings
+import androidx.navigation.compose.rememberNavController
 import com.lelestacia.more.component.DarkModeSettings
+import com.lelestacia.more.component.DisplayStyleSettings
+import com.lelestacia.more.component.DynamicColorSettings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,6 +77,20 @@ fun SettingScreen(
                 onEvent = { onEvent(SettingScreenEvent.UpdateDarkModePreferences(it)) },
                 changeState = { onEvent(SettingScreenEvent.DarkModePreferencesMenuStateChanged) }
             )
+            if (Build.VERSION.SDK_INT >= 31) {
+                Divider()
+                DynamicColorSettings(state, onEvent)
+            }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewSettingScreen() {
+    SettingScreen(
+        state = SettingScreenState(),
+        onEvent = {},
+        navController = rememberNavController()
+    )
 }

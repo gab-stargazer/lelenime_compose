@@ -32,3 +32,11 @@ android {
         jvmTarget = "17"
     }
 }
+
+dependencies {
+    // Android JUnit
+    androidTestImplementation libs.android.junit
+
+    // Junit
+    testImplementation libs.junit
+}

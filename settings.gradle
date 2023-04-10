@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = 'Lelenime Compose'
+rootProject.name = 'Lelenime'
 
 include(':app')
 include(':feature:explore')
