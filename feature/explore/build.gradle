@@ -78,4 +78,7 @@ dependencies {
 
     //  Shimmer
     implementation libs.shimmer.effect
+
+    //  Timber
+    implementation libs.timber
 }
