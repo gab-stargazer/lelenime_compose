@@ -13,13 +13,11 @@ data class GenericModelResponse(
     @SerializedName("title")
     val title: String
 ) {
-
     data class GenericImagesResponse(
         @SerializedName("webp")
         val webp: Webp
     ) {
         data class Webp(
-
             @SerializedName("large_image_url")
             val largeImageURL: String
         )

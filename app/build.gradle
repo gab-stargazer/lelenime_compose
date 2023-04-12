@@ -13,8 +13,8 @@ android {
         applicationId 'com.lelestacia.lelenimecompose'
         minSdkVersion 24
         targetSdkVersion 33
-        versionCode 2
-        versionName '1.0.0-beta'
+        versionCode 3
+        versionName '1.0.0-beta-II'
 
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -25,11 +25,17 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        benchmark {
+            initWith release
+            signingConfig signingConfigs.debug
+            matchingFallbacks = ['release']
+            debuggable false
+        }
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -111,6 +117,9 @@ dependencies {
     //  Accompanist
     implementation libs.accompanist.system.ui.controller
     implementation libs.accompanist.animation.navigation
+
+    //  Profiler
+    implementation libs.baseline.profiler
 }
 
 kapt {

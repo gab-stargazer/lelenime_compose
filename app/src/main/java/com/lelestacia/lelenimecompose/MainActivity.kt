@@ -58,6 +58,12 @@ class MainActivity : ComponentActivity() {
 
             val activityVM by viewModels<ActivityViewModel>()
             val theme by activityVM.darkModePreferences.collectAsState()
+            val darkIcons =
+                if (isSystemInDarkTheme()) {
+                    theme == 1
+                } else {
+                    theme != 2
+                }
             val dynamicModePreferences =
                 if (Build.VERSION.SDK_INT <= 31) {
                     false
@@ -78,6 +84,7 @@ class MainActivity : ComponentActivity() {
                         LeleNimeBottomBar(navController = navController)
                     }
                 ) { paddingValue ->
+
                     AnimatedNavHost(
                         navController = navController,
                         startDestination = Screen.Explore.route,
@@ -129,7 +136,7 @@ class MainActivity : ComponentActivity() {
 
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
+                                darkIcons = darkIcons
                             )
 
                             ExplorationScreen(
@@ -201,7 +208,7 @@ class MainActivity : ComponentActivity() {
 
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
+                                darkIcons = darkIcons
                             )
 
                             CollectionScreen(
@@ -263,7 +270,7 @@ class MainActivity : ComponentActivity() {
                             }) {
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
+                                darkIcons = darkIcons
                             )
 
                             MoreScreen(
@@ -284,7 +291,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.Settings.route) {
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
+                                darkIcons = darkIcons
                             )
 
                             val viewModel = hiltViewModel<SettingViewModel>()
@@ -326,7 +333,7 @@ class MainActivity : ComponentActivity() {
 
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
+                                darkIcons = darkIcons
                             )
 
                             DetailScreen(
