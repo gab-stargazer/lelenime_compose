@@ -59,7 +59,7 @@ fun DarkModeSettings(
                 } else {
                     Icons.Filled.ArrowDropDown
                 },
-                contentDescription = null
+                contentDescription = stringResource(id = R.string.dark_mode_preferences)
             )
             DropdownMenu(
                 expanded = isOpened,
