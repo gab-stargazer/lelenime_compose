@@ -14,7 +14,6 @@ class BaselineProfileGenerator {
     @get:Rule
     val baselineProfileRule = BaselineProfileRule()
 
-
     @Test
     fun startup() = baselineProfileRule.collectBaselineProfile(
         packageName = "com.lelestacia.lelenimecompose",
@@ -102,5 +101,4 @@ class BaselineProfileGenerator {
             device.findObject(By.text("Use System Settings")).click()
         }
     )
-
 }

@@ -102,9 +102,9 @@ fun AnimeInformation(
                     "Unknown"
                 } else {
                     "${
-                        anime.season?.replaceFirstChar {
-                            if (it.isLowerCase()) it.titlecase() else it.toString()
-                        }
+                    anime.season?.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase() else it.toString()
+                    }
                     } ${anime.year}"
                 }
             Text(
@@ -115,7 +115,7 @@ fun AnimeInformation(
             Text(
                 text = stringResource(
                     id = R.string.information_value,
-                    "${dateParser.invoke(anime.startedDate)} - ${dateParser.invoke(anime.finishedDate)}",
+                    "${dateParser.invoke(anime.startedDate)} - ${dateParser.invoke(anime.finishedDate)}"
                 ),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Normal

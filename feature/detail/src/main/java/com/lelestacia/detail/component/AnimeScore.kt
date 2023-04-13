@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 fun AnimeScore(score: String, scoredBy: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
             text = score,

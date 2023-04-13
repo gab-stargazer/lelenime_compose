@@ -1,6 +1,6 @@
 package com.lelestacia.more.screen.settings
 
-import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.displayStyle.DisplayStyle
 
 data class SettingScreenState(
     val isDisplayStylePreferencesMenuOpened: Boolean = false,
@@ -8,5 +8,5 @@ data class SettingScreenState(
     val isDarkModePreferencesMenuOpened: Boolean = false,
     val darkModePreferences: Int = 0,
     val isDynamicThemePreferencesMenuOpened: Boolean = false,
-    val dynamicThemePreferences: Boolean = true,
+    val dynamicThemePreferences: Boolean = true
 )

@@ -6,5 +6,5 @@ data class PaginationResponse(
     @SerializedName("last_visible_page")
     val lastVisiblePage: Int,
     @SerializedName("has_next_page")
-    val hasNextPage: Boolean,
+    val hasNextPage: Boolean
 )

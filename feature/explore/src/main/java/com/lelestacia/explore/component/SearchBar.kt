@@ -26,10 +26,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lelestacia.common.display_style.DisplayStyleMenu
+import com.lelestacia.common.displayStyle.DisplayStyleMenu
 import com.lelestacia.explore.component.header.HeaderScreenState
-import com.lelestacia.explore.state_and_event.ExploreScreenEvent
-import com.lelestacia.explore.state_and_event.ExploreScreenState
+import com.lelestacia.explore.stateAndEvent.ExploreScreenEvent
+import com.lelestacia.explore.stateAndEvent.ExploreScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,7 +75,8 @@ fun DashboardSearchHeader(
             IconButton(
                 onClick = {
                     onEvent(ExploreScreenEvent.OnStartSearching)
-                }) {
+                }
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Search,
                     contentDescription = "Search Anime"
@@ -85,7 +86,8 @@ fun DashboardSearchHeader(
         IconButton(
             onClick = {
                 onEvent(ExploreScreenEvent.OnDisplayStyleOptionMenuStateChanged)
-            }) {
+            }
+        ) {
             Icon(
                 imageVector = Icons.Filled.GridView,
                 contentDescription = "Display Style"

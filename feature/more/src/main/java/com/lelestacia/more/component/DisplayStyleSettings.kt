@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.displayStyle.DisplayStyle
 import com.lelestacia.more.R
 
 @Composable
@@ -67,8 +67,8 @@ fun DisplayStyleSettings(
             )
             DropdownMenu(
                 expanded = isOpened,
-                onDismissRequest = { changeState.invoke() }) {
-
+                onDismissRequest = { changeState.invoke() }
+            ) {
                 DropdownMenuItem(
                     text = {
                         Text(text = stringResource(id = com.lelestacia.common.R.string.card))
@@ -76,21 +76,24 @@ fun DisplayStyleSettings(
                     onClick = {
                         onEvent(DisplayStyle.CARD)
                         changeState.invoke()
-                    })
+                    }
+                )
 
                 DropdownMenuItem(
                     text = { Text(text = stringResource(id = com.lelestacia.common.R.string.compact_card)) },
                     onClick = {
                         onEvent(DisplayStyle.COMPACT_CARD)
                         changeState.invoke()
-                    })
+                    }
+                )
 
                 DropdownMenuItem(
                     text = { Text(text = stringResource(id = com.lelestacia.common.R.string.list)) },
                     onClick = {
                         onEvent(DisplayStyle.LIST)
                         changeState.invoke()
-                    })
+                    }
+                )
             }
         }
     }

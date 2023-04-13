@@ -1,6 +1,6 @@
 package com.lelestacia.data.mapper
 
-import com.lelestacia.database.anime_stuff.entity.anime.AnimeEntity
+import com.lelestacia.database.animeStuff.entity.anime.AnimeEntity
 import com.lelestacia.model.Anime
 import com.lelestacia.network.model.anime.AnimeResponse
 import java.util.Date
@@ -48,7 +48,7 @@ fun Anime.asNewEntity(): AnimeEntity =
         trailer = AnimeEntity.Trailer(
             id = trailer?.youtubeId,
             url = trailer?.url,
-            image = trailer?.images,
+            image = trailer?.images
         ),
         title = title,
         titleEnglish = titleEnglish,

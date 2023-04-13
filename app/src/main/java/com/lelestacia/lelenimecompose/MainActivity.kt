@@ -55,7 +55,6 @@ class MainActivity : ComponentActivity() {
             val uiController = rememberSystemUiController()
             val navController: NavHostController = rememberAnimatedNavController()
 
-
             val activityVM by viewModels<ActivityViewModel>()
             val theme by activityVM.darkModePreferences.collectAsState()
             val darkIcons =
@@ -87,9 +86,8 @@ class MainActivity : ComponentActivity() {
 
                     AnimatedNavHost(
                         navController = navController,
-                        startDestination = Screen.Explore.route,
+                        startDestination = Screen.Explore.route
                     ) {
-
                         composable(
                             route = Screen.Explore.route,
                             enterTransition = {
@@ -202,7 +200,8 @@ class MainActivity : ComponentActivity() {
 
                                     else -> null
                                 }
-                            }) {
+                            }
+                        ) {
                             val viewModel = hiltViewModel<CollectionScreenViewModel>()
                             val uiState by viewModel.collectionScreenState.collectAsState()
 
@@ -267,7 +266,8 @@ class MainActivity : ComponentActivity() {
 
                                     else -> null
                                 }
-                            }) {
+                            }
+                        ) {
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
                                 darkIcons = darkIcons

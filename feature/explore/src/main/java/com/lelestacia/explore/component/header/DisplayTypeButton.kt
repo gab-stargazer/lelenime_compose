@@ -24,7 +24,7 @@ fun DisplayTypeButton(
     isActive: Boolean,
     displayType: DisplayType,
     icon: ImageVector,
-    onClicked: (DisplayType) -> Unit,
+    onClicked: (DisplayType) -> Unit
 ) {
     AssistChip(
         onClick = {
@@ -36,11 +36,17 @@ fun DisplayTypeButton(
                 text = displayType.name,
                 color =
                 if (isSystemInDarkTheme()) {
-                    if (isActive) Color.Black
-                    else Color.White
+                    if (isActive) {
+                        Color.Black
+                    } else {
+                        Color.White
+                    }
                 } else {
-                    if (isActive) Color.White
-                    else Color.Black
+                    if (isActive) {
+                        Color.White
+                    } else {
+                        Color.Black
+                    }
                 }
             )
         },
@@ -52,21 +58,33 @@ fun DisplayTypeButton(
         },
         colors = AssistChipDefaults.assistChipColors(
             containerColor =
-            if (isActive) MaterialTheme.colorScheme.primary
-            else Color.Transparent,
+            if (isActive) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                Color.Transparent
+            },
             leadingIconContentColor =
             if (isSystemInDarkTheme()) {
-                if (isActive) Color.Black
-                else MaterialTheme.colorScheme.primary
+                if (isActive) {
+                    Color.Black
+                } else {
+                    MaterialTheme.colorScheme.primary
+                }
             } else {
-                if (isActive) Color.White
-                else MaterialTheme.colorScheme.primary
+                if (isActive) {
+                    Color.White
+                } else {
+                    MaterialTheme.colorScheme.primary
+                }
             }
         ),
         border = AssistChipDefaults.assistChipBorder(
             borderColor =
-            if (isActive) Color.Transparent
-            else MaterialTheme.colorScheme.outline
+            if (isActive) {
+                Color.Transparent
+            } else {
+                MaterialTheme.colorScheme.outline
+            }
         )
     )
 }

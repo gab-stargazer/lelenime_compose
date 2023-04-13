@@ -63,7 +63,7 @@ import com.lelestacia.common.R.string.currently_airing
 import com.lelestacia.common.R.string.empty_synopsis
 import com.lelestacia.common.R.string.finished_airing
 import com.lelestacia.common.Resource
-import com.lelestacia.common.request_param.AnimeRating
+import com.lelestacia.common.requestParam.AnimeRating
 import com.lelestacia.detail.component.AnimeInformation
 import com.lelestacia.detail.component.AnimeRank
 import com.lelestacia.detail.component.AnimeScore
@@ -99,17 +99,18 @@ fun DetailScreen(
                 title = {
                     Text(
                         text = "Detail Anime",
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleMedium
                     )
                 },
                 navigationIcon = {
                     IconButton(
                         onClick = {
                             navHostController.popBackStack()
-                        }) {
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Navigation Icon",
+                            contentDescription = "Navigation Icon"
                         )
                     }
                 },
@@ -117,11 +118,17 @@ fun DetailScreen(
                     scrolledContainerColor = MaterialTheme.colorScheme.background,
                     containerColor = Color.Transparent,
                     titleContentColor =
-                    if (isDarkMode) Color.White
-                    else Color.Black,
+                    if (isDarkMode) {
+                        Color.White
+                    } else {
+                        Color.Black
+                    },
                     navigationIconContentColor =
-                    if (isDarkMode) Color.White
-                    else Color.Black
+                    if (isDarkMode) {
+                        Color.White
+                    } else {
+                        Color.Black
+                    }
                 ),
                 scrollBehavior = scrollBehavior
             )
@@ -143,11 +150,17 @@ fun DetailScreen(
                         Crossfade(targetState = anime.data?.isFavorite, label = "") {
                             Icon(
                                 imageVector =
-                                if (isFavorite) Icons.Default.Favorite
-                                else Icons.Default.FavoriteBorder,
+                                if (isFavorite) {
+                                    Icons.Default.Favorite
+                                } else {
+                                    Icons.Default.FavoriteBorder
+                                },
                                 tint =
-                                if (isDarkMode) Color.Black
-                                else Color.White,
+                                if (isDarkMode) {
+                                    Color.Black
+                                } else {
+                                    Color.White
+                                },
                                 contentDescription = stringResource(id = com.lelestacia.common.R.string.favorite_btn)
                             )
                         }
@@ -159,7 +172,6 @@ fun DetailScreen(
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-
         val gradient = Brush.verticalGradient(
             colors = listOf(
                 MaterialTheme.colorScheme.background.copy(
@@ -176,7 +188,6 @@ fun DetailScreen(
                     .verticalScroll(scrollState),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-
                 Box {
                     Box(
                         modifier = Modifier
@@ -201,7 +212,8 @@ fun DetailScreen(
                             colorFilter = ColorFilter.colorMatrix(
                                 colorMatrix = ColorMatrix().apply {
                                     setToSaturation(sat = 0.5F)
-                                }),
+                                }
+                            ),
                             filterQuality = FilterQuality.Medium,
                             alignment = Alignment.TopCenter,
                             modifier = Modifier
@@ -251,8 +263,9 @@ fun DetailScreen(
                                 .padding(horizontal = 8.dp)
                         ) {
                             if (it.status != stringResource(id = com.lelestacia.common.R.string.not_yet_aired)) {
-                                if (it.rating != AnimeRating.RX.title)
+                                if (it.rating != AnimeRating.RX.title) {
                                     AnimeRank(rank = it.rank.toString())
+                                }
 
                                 AnimeScore(
                                     score = (it.score ?: 0).toString(),

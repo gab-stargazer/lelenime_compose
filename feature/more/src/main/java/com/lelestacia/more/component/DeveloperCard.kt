@@ -41,7 +41,7 @@ fun DeveloperCard(
     imageURL: String,
     githubURL: String?,
     facebookURL: String?,
-    isDarkMode: Boolean,
+    isDarkMode: Boolean
 ) {
     val context = LocalContext.current
     Row(
@@ -58,7 +58,6 @@ fun DeveloperCard(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         AsyncImage(
             model = imageURL,
             contentDescription = "$name Profile Picture",
@@ -91,8 +90,11 @@ fun DeveloperCard(
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent,
                             contentColor =
-                            if (isDarkMode) Color.White
-                            else Color.Black
+                            if (isDarkMode) {
+                                Color.White
+                            } else {
+                                Color.Black
+                            }
                         ),
                         contentPadding = PaddingValues(horizontal = 4.dp),
                         shape = RoundedCornerShape(4.dp)
@@ -108,7 +110,7 @@ fun DeveloperCard(
                             )
                             Text(
                                 text = "Github",
-                                style = MaterialTheme.typography.titleSmall,
+                                style = MaterialTheme.typography.titleSmall
                             )
                         }
                     }
@@ -123,8 +125,11 @@ fun DeveloperCard(
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent,
                             contentColor =
-                            if (isDarkMode) Color.White
-                            else Color.Black
+                            if (isDarkMode) {
+                                Color.White
+                            } else {
+                                Color.Black
+                            }
                         ),
                         contentPadding = PaddingValues(horizontal = 4.dp),
                         shape = RoundedCornerShape(4.dp)
@@ -140,7 +145,7 @@ fun DeveloperCard(
                             )
                             Text(
                                 text = "Facebook",
-                                style = MaterialTheme.typography.titleSmall,
+                                style = MaterialTheme.typography.titleSmall
                             )
                         }
                     }

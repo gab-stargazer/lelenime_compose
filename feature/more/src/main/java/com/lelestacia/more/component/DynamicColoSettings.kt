@@ -32,12 +32,15 @@ fun DynamicColorSettings(
         ) {
             Text(
                 text = stringResource(R.string.dynamic_color),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium
             )
             Text(
                 text =
-                if (state.dynamicThemePreferences) stringResource(R.string.using_dynamic_color)
-                else stringResource(R.string.using_static_color),
+                if (state.dynamicThemePreferences) {
+                    stringResource(R.string.using_dynamic_color)
+                } else {
+                    stringResource(R.string.using_static_color)
+                },
                 style = MaterialTheme.typography.titleMedium
             )
         }
@@ -45,7 +48,7 @@ fun DynamicColorSettings(
             checked = state.dynamicThemePreferences,
             onCheckedChange = { newPreferences ->
                 onEvent(SettingScreenEvent.UpdateDynamicThemePreferences(newPreferences))
-            },
+            }
         )
     }
 }

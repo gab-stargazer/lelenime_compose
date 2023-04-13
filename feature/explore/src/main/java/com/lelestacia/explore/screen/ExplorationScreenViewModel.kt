@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.displayStyle.DisplayStyle
 import com.lelestacia.domain.usecases.explore.IExploreUseCases
 import com.lelestacia.domain.usecases.settings.IUserPreferencesUseCases
 import com.lelestacia.explore.component.header.HeaderScreenState
-import com.lelestacia.explore.state_and_event.ExploreScreenEvent
-import com.lelestacia.explore.state_and_event.ExploreScreenState
+import com.lelestacia.explore.stateAndEvent.ExploreScreenEvent
+import com.lelestacia.explore.stateAndEvent.ExploreScreenState
 import com.lelestacia.model.Anime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,7 +33,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ExplorationScreenViewModel @Inject constructor(
     private val useCases: IExploreUseCases,
-    private val useCasesPreferences: IUserPreferencesUseCases,
+    private val useCasesPreferences: IUserPreferencesUseCases
 ) : ViewModel() {
 
     private val currentSearchQuery: MutableStateFlow<String> = MutableStateFlow("")
@@ -65,7 +65,7 @@ class ExplorationScreenViewModel @Inject constructor(
         combine(
             headerState,
             displayedStyle,
-            displayedAnimeType,
+            displayedAnimeType
         ) { headerState: HeaderScreenState, displayedStyle: DisplayStyle, displayedType: DisplayType ->
             ExploreScreenState(
                 headerScreenState = headerState,
@@ -157,7 +157,7 @@ class ExplorationScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             useCasesPreferences.getUserDisplayStyle().collectLatest { stylePreferences ->
-                val displayStyle =  when (stylePreferences) {
+                val displayStyle = when (stylePreferences) {
                     1 -> DisplayStyle.CARD
                     2 -> DisplayStyle.COMPACT_CARD
                     else -> DisplayStyle.LIST

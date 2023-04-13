@@ -5,8 +5,11 @@ class ListToString {
         var newList = ""
         for (i in list.indices) {
             newList +=
-                if (i == 0) list[i]
-                else ", ${list[i]}"
+                if (i == 0) {
+                    list[i]
+                } else {
+                    ", ${list[i]}"
+                }
         }
         return newList
     }

@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.collection.state_and_event.CollectionScreenEvent
-import com.lelestacia.collection.state_and_event.CollectionScreenState
-import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.collection.stateAndEvent.CollectionScreenEvent
+import com.lelestacia.collection.stateAndEvent.CollectionScreenState
+import com.lelestacia.common.displayStyle.DisplayStyle
 import com.lelestacia.domain.usecases.collection.ICollectionUseCases
 import com.lelestacia.domain.usecases.settings.IUserPreferencesUseCases
 import com.lelestacia.model.Anime
@@ -25,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CollectionScreenViewModel @Inject constructor(
     private val useCases: ICollectionUseCases,
-    private val useCasesPreferences: IUserPreferencesUseCases,
+    private val useCasesPreferences: IUserPreferencesUseCases
 ) : ViewModel() {
 
     private val historyAnime: Flow<PagingData<Anime>> =
@@ -35,7 +35,8 @@ class CollectionScreenViewModel @Inject constructor(
         MutableStateFlow(CollectionScreenState())
 
     val collectionScreenState = combine(
-        historyAnime, _collectionScreenState
+        historyAnime,
+        _collectionScreenState
     ) { _, state ->
         CollectionScreenState(
             displayStyle = state.displayStyle,

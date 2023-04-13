@@ -24,7 +24,7 @@ data class Anime(
     val year: Int,
     val studios: List<String>,
     val genres: List<String>,
-    val isFavorite: Boolean,
+    val isFavorite: Boolean
 ) {
     data class Trailer(
         val youtubeId: String?,

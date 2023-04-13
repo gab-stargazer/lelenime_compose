@@ -33,16 +33,18 @@ fun LeleNimeBottomBar(navController: NavHostController) {
                     icon = {
                         Icon(
                             imageVector =
-                            if (currentRoute == navItem.screen.route)
+                            if (currentRoute == navItem.screen.route) {
                                 navItem.iconActive
-                            else navItem.iconInactive,
+                            } else {
+                                navItem.iconInactive
+                            },
                             contentDescription = navItem.title
                         )
                     },
                     label = {
                         Text(text = navItem.title)
                     },
-                    alwaysShowLabel = true,
+                    alwaysShowLabel = true
                 )
             }
         }

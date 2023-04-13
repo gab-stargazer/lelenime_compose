@@ -25,12 +25,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.lelestacia.collection.state_and_event.CollectionScreenEvent
-import com.lelestacia.collection.state_and_event.CollectionScreenState
-import com.lelestacia.common.display_style.DisplayStyle
-import com.lelestacia.common.display_style.DisplayStyleMenu
-import com.lelestacia.common.lazy_anime.LazyGridAnime
-import com.lelestacia.common.lazy_anime.LazyListAnime
+import com.lelestacia.collection.stateAndEvent.CollectionScreenEvent
+import com.lelestacia.collection.stateAndEvent.CollectionScreenState
+import com.lelestacia.common.displayStyle.DisplayStyle
+import com.lelestacia.common.displayStyle.DisplayStyleMenu
+import com.lelestacia.common.lazyAnime.LazyGridAnime
+import com.lelestacia.common.lazyAnime.LazyListAnime
 import com.lelestacia.model.Anime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +48,7 @@ fun CollectionScreen(
     Scaffold(
         topBar = {
             Column(
-               verticalArrangement = Arrangement.spacedBy(4.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -100,7 +100,7 @@ fun CollectionScreen(
                 return@Scaffold
             }
 
-             is LoadState.NotLoading -> {
+            is LoadState.NotLoading -> {
                 if (screenState.displayStyle == DisplayStyle.LIST) {
                     LazyListAnime(
                         lazyListState = lazyListState,

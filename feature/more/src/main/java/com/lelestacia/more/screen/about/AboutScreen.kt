@@ -38,7 +38,7 @@ import com.lelestacia.more.component.DeveloperCard
 @Composable
 fun AboutScreen(
     navController: NavHostController,
-    isDarkMode: Boolean,
+    isDarkMode: Boolean
 ) {
     Scaffold(
         topBar = {

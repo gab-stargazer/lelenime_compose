@@ -7,8 +7,8 @@ import androidx.paging.map
 import com.lelestacia.common.Resource
 import com.lelestacia.data.mapper.asAnime
 import com.lelestacia.data.mapper.asNewEntity
-import com.lelestacia.database.anime_stuff.entity.anime.AnimeEntity
-import com.lelestacia.database.anime_stuff.service.IAnimeDatabaseService
+import com.lelestacia.database.animeStuff.entity.anime.AnimeEntity
+import com.lelestacia.database.animeStuff.service.IAnimeDatabaseService
 import com.lelestacia.model.Anime
 import com.lelestacia.network.model.anime.AnimeResponse
 import com.lelestacia.network.source.IAnimeNetworkService

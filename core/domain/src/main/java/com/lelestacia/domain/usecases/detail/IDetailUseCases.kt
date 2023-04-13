@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface IDetailUseCases {
     suspend fun updateAnimeFavoriteByAnimeID(animeID: Int)
-    fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int) : Flow<Resource<Anime>>
+    fun getAnimeFromLocalDatabaseByAnimeID(animeID: Int): Flow<Resource<Anime>>
 }

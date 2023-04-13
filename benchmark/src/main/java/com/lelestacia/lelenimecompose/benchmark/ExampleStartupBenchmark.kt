@@ -30,7 +30,6 @@ class ExampleStartupBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
-
 //    @Test
 //    fun startupTestPartial() {
 //        startupTest(CompilationMode.Partial())

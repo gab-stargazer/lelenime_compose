@@ -2,7 +2,7 @@ package com.lelestacia.more.screen.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lelestacia.common.display_style.DisplayStyle
+import com.lelestacia.common.displayStyle.DisplayStyle
 import com.lelestacia.domain.usecases.settings.IUserPreferencesUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

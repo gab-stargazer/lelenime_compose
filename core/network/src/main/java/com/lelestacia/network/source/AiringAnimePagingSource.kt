@@ -20,15 +20,24 @@ class AiringAnimePagingSource(
             val apiResponse = animeAPI.getCurrentSeason(page = currentPage)
             Timber.d("Successfully fetch ${apiResponse.data.size} data")
             delay(
-                if (currentPage == 1) 0
-                else 500
+                if (currentPage == 1) {
+                    0
+                } else {
+                    500
+                }
             )
             val previousPage =
-                if (currentPage == 1) null
-                else currentPage - 1
+                if (currentPage == 1) {
+                    null
+                } else {
+                    currentPage - 1
+                }
             val nextPage =
-                if (apiResponse.pagination.hasNextPage) currentPage + 1
-                else null
+                if (apiResponse.pagination.hasNextPage) {
+                    currentPage + 1
+                } else {
+                    null
+                }
             LoadResult.Page(
                 data = apiResponse.data,
                 prevKey = previousPage,

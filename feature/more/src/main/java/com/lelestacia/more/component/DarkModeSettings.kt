@@ -63,8 +63,8 @@ fun DarkModeSettings(
             )
             DropdownMenu(
                 expanded = isOpened,
-                onDismissRequest = { changeState.invoke() }) {
-
+                onDismissRequest = { changeState.invoke() }
+            ) {
                 DropdownMenuItem(
                     text = {
                         Text(text = stringResource(id = R.string.auto_theme_preferences))
@@ -72,21 +72,24 @@ fun DarkModeSettings(
                     onClick = {
                         onEvent(3)
                         changeState.invoke()
-                    })
+                    }
+                )
 
                 DropdownMenuItem(
                     text = { Text(text = stringResource(id = R.string.day_theme_preferences)) },
                     onClick = {
                         onEvent(1)
                         changeState.invoke()
-                    })
+                    }
+                )
 
                 DropdownMenuItem(
                     text = { Text(text = stringResource(id = R.string.dark_theme_preferences)) },
                     onClick = {
                         onEvent(2)
                         changeState.invoke()
-                    })
+                    }
+                )
             }
         }
     }

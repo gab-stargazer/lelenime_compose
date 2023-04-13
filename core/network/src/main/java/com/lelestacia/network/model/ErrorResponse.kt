@@ -10,5 +10,5 @@ data class ErrorResponse(
     @SerializedName("message")
     val message: String,
     @SerializedName("error")
-    val error: String,
+    val error: String
 )

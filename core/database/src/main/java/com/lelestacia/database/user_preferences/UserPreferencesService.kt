@@ -20,7 +20,6 @@ class UserPreferencesService(private val context: Context) : IUserPreferencesSer
     private val dynamicThemeKey: Preferences.Key<Boolean> =
         booleanPreferencesKey(DYNAMIC_THEME_PREFERENCES)
 
-
     override suspend fun getUserDisplayStyle(): Flow<Int> =
         context.preferences.data.map {
             it[displayStyleKey] ?: 1

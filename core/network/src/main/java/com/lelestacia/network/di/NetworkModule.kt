@@ -17,6 +17,4 @@ object NetworkModule {
     @Singleton
     fun provideAnimeDataSource(animeAPI: AnimeAPI): IAnimeNetworkService =
         AnimeNetworkService(animeAPI)
-
-
 }

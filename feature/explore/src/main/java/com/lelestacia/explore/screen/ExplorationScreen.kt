@@ -33,14 +33,14 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.common.R.string.retry
 import com.lelestacia.common.R.string.unknown_error
-import com.lelestacia.common.display_style.DisplayStyle
-import com.lelestacia.common.lazy_anime.LazyGridAnime
-import com.lelestacia.common.lazy_anime.LazyListAnime
+import com.lelestacia.common.displayStyle.DisplayStyle
+import com.lelestacia.common.lazyAnime.LazyGridAnime
+import com.lelestacia.common.lazyAnime.LazyListAnime
 import com.lelestacia.explore.R
 import com.lelestacia.explore.component.DashboardDisplayTypeHeader
 import com.lelestacia.explore.component.DashboardSearchHeader
-import com.lelestacia.explore.state_and_event.ExploreScreenEvent
-import com.lelestacia.explore.state_and_event.ExploreScreenState
+import com.lelestacia.explore.stateAndEvent.ExploreScreenEvent
+import com.lelestacia.explore.stateAndEvent.ExploreScreenState
 import com.lelestacia.model.Anime
 
 @OptIn(
@@ -136,7 +136,6 @@ fun ExplorationScreen(
             }
 
             is LoadState.NotLoading -> {
-
                 if (pagingAnime.itemCount == 0 && screenState.displayType == DisplayType.SEARCH) {
                     Column(
                         verticalArrangement = Arrangement.Center,
