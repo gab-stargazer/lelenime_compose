@@ -1,6 +1,7 @@
 package com.lelestacia.network.di
 
 import android.content.Context
+import com.lelestacia.network.BuildConfig
 import com.lelestacia.network.util.ConnectivityChecker
 import dagger.Module
 import dagger.Provides
@@ -22,7 +23,10 @@ object HttpModule {
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        HttpLoggingInterceptor().setLevel(
+            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+            else HttpLoggingInterceptor.Level.NONE
+        )
 
     @Provides
     @Singleton

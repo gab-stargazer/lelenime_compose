@@ -37,10 +37,11 @@ import com.lelestacia.model.Anime
 @Composable
 fun AnimeList(
     anime: Anime,
-    onAnimeClicked: (Anime) -> Unit
+    onAnimeClicked: (Anime) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable { onAnimeClicked(anime) }
             .padding(8.dp)

@@ -1,5 +1,6 @@
 package com.lelestacia.common.lazy_anime
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,12 +25,13 @@ import com.lelestacia.common.R
 import com.lelestacia.common.item_anime.AnimeList
 import com.lelestacia.model.Anime
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LazyListAnime(
     lazyListState: LazyListState,
     pagingAnime: LazyPagingItems<Anime>,
-    modifier: Modifier = Modifier,
-    onAnimeClicked: (Anime) -> Unit
+    onAnimeClicked: (Anime) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         contentPadding = PaddingValues(8.dp),
@@ -38,7 +40,11 @@ fun LazyListAnime(
     ) {
         items(items = pagingAnime) { pagingAnime ->
             pagingAnime?.let { anime ->
-                AnimeList(anime = anime, onAnimeClicked = onAnimeClicked)
+                AnimeList(
+                    anime = anime,
+                    onAnimeClicked = onAnimeClicked,
+                    modifier = Modifier.animateItemPlacement()
+                )
                 Divider()
             }
         }

@@ -1,5 +1,6 @@
 package com.lelestacia.common.lazy_anime
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,6 +28,7 @@ import com.lelestacia.common.display_style.DisplayStyle
 import com.lelestacia.common.item_anime.AnimeCard
 import com.lelestacia.model.Anime
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LazyGridAnime(
     lazyGridState: LazyGridState,
@@ -42,68 +44,71 @@ fun LazyGridAnime(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(8.dp),
         modifier = modifier
-            .fillMaxSize()
-    ) {
-        items(
-            count = pagingAnime.itemCount,
-            key = { it }
-        ) { index ->
-            pagingAnime[index]?.let { anime ->
-                AnimeCard(
-                    anime = anime,
-                    displayStyle = displayStyle,
-                    onAnimeClicked = { clickedAnime ->
-                        onAnimeClicked(clickedAnime)
-                    })
+            .fillMaxSize(),
+        content = {
+            items(
+                count = pagingAnime.itemCount,
+                key = { it }
+            ) { index ->
+                pagingAnime[index]?.let { anime ->
+                    AnimeCard(
+                        anime = anime,
+                        displayStyle = displayStyle,
+                        onAnimeClicked = { clickedAnime ->
+                            onAnimeClicked(clickedAnime)
+                        },
+                        modifier = Modifier.animateItemPlacement()
+                    )
+                }
             }
-        }
 
-        when (val appending = pagingAnime.loadState.append) {
-            is LoadState.Error -> {
-                item(
-                    span = {
-                        GridItemSpan(3)
-                    }
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 24.dp)
+            when (val appending = pagingAnime.loadState.append) {
+                is LoadState.Error -> {
+                    item(
+                        span = {
+                            GridItemSpan(3)
+                        }
                     ) {
-                        Text(
-                            text = appending.error.message
-                                ?: stringResource(id = R.string.unknown_error)
-                        )
-                        Button(
-                            onClick = { pagingAnime.retry() },
-                            shape = RoundedCornerShape(4.dp)
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp)
                         ) {
-                            Text(text = stringResource(id = R.string.retry))
+                            Text(
+                                text = appending.error.message
+                                    ?: stringResource(id = R.string.unknown_error)
+                            )
+                            Button(
+                                onClick = { pagingAnime.retry() },
+                                shape = RoundedCornerShape(4.dp)
+                            ) {
+                                Text(text = stringResource(id = R.string.retry))
+                            }
                         }
                     }
                 }
-            }
 
-            LoadState.Loading -> {
-                item(
-                    span = {
-                        GridItemSpan(3)
-                    }) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 24.dp)
-                    ) {
-                        CircularProgressIndicator(
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                LoadState.Loading -> {
+                    item(
+                        span = {
+                            GridItemSpan(3)
+                        }) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 24.dp)
+                        ) {
+                            CircularProgressIndicator(
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
                     }
                 }
-            }
 
-            is LoadState.NotLoading -> Unit
+                is LoadState.NotLoading -> Unit
+            }
         }
-    }
+    )
 }

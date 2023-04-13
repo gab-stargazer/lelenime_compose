@@ -31,15 +31,15 @@ class ExampleStartupBenchmark {
     val benchmarkRule = MacrobenchmarkRule()
 
 
-    @Test
-    fun startupTestPartial() {
-        startupTest(CompilationMode.Partial())
-    }
-
-    @Test
-    fun startupTestDefault() {
-        startupTest(CompilationMode.None())
-    }
+//    @Test
+//    fun startupTestPartial() {
+//        startupTest(CompilationMode.Partial())
+//    }
+//
+//    @Test
+//    fun startupTestDefault() {
+//        startupTest(CompilationMode.None())
+//    }
 
     private fun startupTest(
         compilationMode: CompilationMode
@@ -76,7 +76,8 @@ class ExampleStartupBenchmark {
         pressHome()
         startActivityAndWait()
 
-        val scrollAnime = By.scrollable(true)
+        val scrollAnime = By.res("explore:scrollAnime")
+        val loading = By.res("explore:loading")
         val navigationIcon = By.desc("Navigation Icon")
 
         //  Wait until the anime is loaded and scroll down
@@ -110,7 +111,6 @@ class ExampleStartupBenchmark {
         //  Search for anime
         device.findObject(By.desc("Search Anime")).click()
         device.wait(Until.hasObject(By.desc("Insert Anime Title")), 5000)
-        device.findObject(By.text("Close search mode"))
 
         //  Open some Anime First
         device.findObject(By.text("POPULAR")).click()

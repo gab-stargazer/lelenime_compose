@@ -26,12 +26,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.lelestacia.common.Constant.CHAT_GPT
+import com.lelestacia.common.Constant.FB_KAORI
+import com.lelestacia.common.Constant.FB_LELESTACIA
+import com.lelestacia.common.Constant.GITHUB_LELESTACIA
+import com.lelestacia.common.Constant.KAORI_PICTURE
+import com.lelestacia.common.Constant.LELESTACIA_PICTURE
 import com.lelestacia.more.component.DeveloperCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    isDarkMode: Boolean,
 ) {
     Scaffold(
         topBar = {
@@ -100,25 +107,28 @@ fun AboutScreen(
             DeveloperCard(
                 name = "Lelestacia",
                 nickName = "Kamil-Malik",
-                imageURL = "https://avatars.githubusercontent.com/u/85838849?v=4",
-                githubURL = "https://github.com/Kamil-Malik/",
-                facebookURL = "https://www.facebook.com/KamilGC"
+                imageURL = LELESTACIA_PICTURE,
+                githubURL = GITHUB_LELESTACIA,
+                facebookURL = FB_LELESTACIA,
+                isDarkMode = isDarkMode
             )
 
             DeveloperCard(
                 name = "Kaori Miyazono",
                 nickName = "Kao chan",
-                imageURL = "https://scontent.fcgk6-2.fna.fbcdn.net/v/t39.30808-6/292270909_895812138479977_1493775890634793840_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGO4detcXf77S1uKx7-L31yDhwPM2rS1jcOHA8zatLWN8oL2o9NlrojoSslVUH7W2xm1aBbQ_vwN7icyoM-q5Pe&_nc_ohc=rEJLvEUr6ywAX8HzQNF&_nc_ht=scontent.fcgk6-2.fna&oh=00_AfD8XlZc-mfxDbbSVFm7vqzwrPBeCpqlVZIkqOmXdSreTA&oe=643055C0",
+                imageURL = KAORI_PICTURE,
                 githubURL = null,
-                facebookURL = "https://www.facebook.com/kaori.miyazono.37266136"
+                facebookURL = FB_KAORI,
+                isDarkMode = isDarkMode
             )
 
             DeveloperCard(
                 name = "Chat GPT",
                 nickName = "GPT3",
-                imageURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUIwD84MUO1g9n6U0VWNJKRK0pPFVGTXsBeQ3KTeeGTpxX7VKB3-rMoW1J2bvU2blIFiM&usqp=CAU",
+                imageURL = CHAT_GPT,
                 githubURL = null,
                 facebookURL = null,
+                isDarkMode = isDarkMode
             )
         }
     }
@@ -127,5 +137,8 @@ fun AboutScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMoreScreen() {
-    AboutScreen(navController = rememberNavController())
+    AboutScreen(
+        navController = rememberNavController(),
+        isDarkMode = false
+    )
 }

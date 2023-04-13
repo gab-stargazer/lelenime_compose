@@ -5,7 +5,6 @@ import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +41,7 @@ fun DeveloperCard(
     imageURL: String,
     githubURL: String?,
     facebookURL: String?,
+    isDarkMode: Boolean,
 ) {
     val context = LocalContext.current
     Row(
@@ -61,6 +62,7 @@ fun DeveloperCard(
         AsyncImage(
             model = imageURL,
             contentDescription = "$name Profile Picture",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(64.dp)
                 .clip(CircleShape)
@@ -89,7 +91,7 @@ fun DeveloperCard(
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent,
                             contentColor =
-                            if (isSystemInDarkTheme()) Color.White
+                            if (isDarkMode) Color.White
                             else Color.Black
                         ),
                         contentPadding = PaddingValues(horizontal = 4.dp),
@@ -121,7 +123,7 @@ fun DeveloperCard(
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Transparent,
                             contentColor =
-                            if (isSystemInDarkTheme()) Color.White
+                            if (isDarkMode) Color.White
                             else Color.Black
                         ),
                         contentPadding = PaddingValues(horizontal = 4.dp),

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -44,7 +43,8 @@ import com.lelestacia.model.Anime
 fun AnimeCard(
     anime: Anime,
     displayStyle: DisplayStyle,
-    onAnimeClicked: (Anime) -> Unit
+    onAnimeClicked: (Anime) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var sizeImage by remember { mutableStateOf(IntSize.Zero) }
     val gradient = Brush.verticalGradient(
@@ -55,7 +55,7 @@ fun AnimeCard(
 
     Column(
         verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.animateContentSize()
+        modifier = modifier.animateContentSize()
     ) {
         Box(
             contentAlignment = Alignment.BottomCenter
@@ -79,7 +79,7 @@ fun AnimeCard(
                     }),
                 filterQuality = FilterQuality.Low,
                 modifier = Modifier
-                    .width(width = 150.dp)
+                    .widthIn(min = 100.dp, max = 150.dp)
                     .aspectRatio(3f / 4f)
                     .clip(RoundedCornerShape(4.dp))
                     .clickable {

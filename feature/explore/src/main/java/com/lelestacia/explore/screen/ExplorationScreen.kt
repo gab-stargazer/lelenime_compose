@@ -19,8 +19,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,7 +43,10 @@ import com.lelestacia.explore.state_and_event.ExploreScreenEvent
 import com.lelestacia.explore.state_and_event.ExploreScreenState
 import com.lelestacia.model.Anime
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalComposeUiApi::class
+)
 @Composable
 fun ExplorationScreen(
     screenState: ExploreScreenState,
@@ -59,7 +66,7 @@ fun ExplorationScreen(
         Pair(DisplayType.AIRING, rememberLazyListState()),
         Pair(DisplayType.UPCOMING, rememberLazyListState())
     )
-    
+
     val lazyGridState = listOfLazyGridState[screenState.displayType] ?: rememberLazyGridState()
     val lazyListState = listOfLazyListState[screenState.displayType] ?: rememberLazyListState()
 
@@ -85,6 +92,9 @@ fun ExplorationScreen(
             }
         },
         modifier = modifier
+            .semantics {
+                testTagsAsResourceId = true
+            }
     ) { paddingValue ->
         when (val refreshing = pagingAnime.loadState.refresh) {
             is LoadState.Error -> {
@@ -103,7 +113,7 @@ fun ExplorationScreen(
                         onClick = { pagingAnime.retry() },
                         shape = RoundedCornerShape(4.dp)
                     ) {
-                    Text(text = stringResource(id = retry))
+                        Text(text = stringResource(id = retry))
                     }
                 }
                 return@Scaffold
@@ -118,7 +128,8 @@ fun ExplorationScreen(
                         .padding(paddingValue)
                 ) {
                     CircularProgressIndicator(
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.testTag("explore:loading")
                     )
                 }
                 return@Scaffold
@@ -150,7 +161,9 @@ fun ExplorationScreen(
                     LazyListAnime(
                         lazyListState = lazyListState,
                         pagingAnime = pagingAnime,
-                        modifier = Modifier.padding(paddingValue),
+                        modifier = Modifier
+                            .padding(paddingValue)
+                            .testTag("explore:scrollAnime"),
                         onAnimeClicked = onAnimeClicked
                     )
                 } else {
@@ -158,7 +171,9 @@ fun ExplorationScreen(
                         lazyGridState = lazyGridState,
                         pagingAnime = pagingAnime,
                         displayStyle = screenState.displayStyle,
-                        modifier = Modifier.padding(paddingValue),
+                        modifier = Modifier
+                            .padding(paddingValue)
+                            .testTag("explore:scrollAnime"),
                         onAnimeClicked = onAnimeClicked
                     )
                 }

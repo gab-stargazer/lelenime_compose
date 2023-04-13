@@ -282,10 +282,17 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.About.route) {
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
-                                darkIcons = !isSystemInDarkTheme()
+                                darkIcons = darkIcons
                             )
 
-                            AboutScreen(navController = navController)
+                            AboutScreen(
+                                navController = navController,
+                                isDarkMode = when (theme) {
+                                    1 -> false
+                                    2 -> true
+                                    else -> isSystemInDarkTheme()
+                                }
+                            )
                         }
 
                         composable(route = Screen.Settings.route) {
@@ -338,6 +345,11 @@ class MainActivity : ComponentActivity() {
 
                             DetailScreen(
                                 animeID = it.arguments?.getInt("mal_id") ?: 0,
+                                isDarkMode = when (theme) {
+                                    1 -> false
+                                    2 -> true
+                                    else -> isSystemInDarkTheme()
+                                },
                                 navHostController = navController,
                                 anime = animeResource,
                                 initiate = viewModel::getAnimeByAnimeID,
