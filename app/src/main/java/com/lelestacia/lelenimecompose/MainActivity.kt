@@ -15,11 +15,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -54,21 +54,14 @@ class MainActivity : ComponentActivity() {
             val scope: CoroutineScope = rememberCoroutineScope()
             val uiController = rememberSystemUiController()
             val navController: NavHostController = rememberAnimatedNavController()
-
             val activityVM by viewModels<ActivityViewModel>()
-            val theme by activityVM.darkModePreferences.collectAsState()
+            val theme by activityVM.darkModePreferences.collectAsStateWithLifecycle()
             val darkIcons =
-                if (isSystemInDarkTheme()) {
-                    theme == 1
-                } else {
-                    theme != 2
-                }
+                if (isSystemInDarkTheme()) theme == 1
+                else theme != 2
             val dynamicModePreferences =
-                if (Build.VERSION.SDK_INT <= 31) {
-                    false
-                } else {
-                    activityVM.dynamicMode.collectAsState().value
-                }
+                if (Build.VERSION.SDK_INT <= 30) false
+                else activityVM.dynamicMode.collectAsStateWithLifecycle().value
 
             LelenimeComposeTheme(
                 darkTheme = when (theme) {
@@ -130,7 +123,7 @@ class MainActivity : ComponentActivity() {
                             }
                         ) {
                             val viewModel = hiltViewModel<ExplorationScreenViewModel>()
-                            val uiState by viewModel.explorationScreenState.collectAsState()
+                            val uiState by viewModel.explorationScreenState.collectAsStateWithLifecycle()
 
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
@@ -203,7 +196,7 @@ class MainActivity : ComponentActivity() {
                             }
                         ) {
                             val viewModel = hiltViewModel<CollectionScreenViewModel>()
-                            val uiState by viewModel.collectionScreenState.collectAsState()
+                            val uiState by viewModel.collectionScreenState.collectAsStateWithLifecycle()
 
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,
@@ -302,7 +295,7 @@ class MainActivity : ComponentActivity() {
                             )
 
                             val viewModel = hiltViewModel<SettingViewModel>()
-                            val state by viewModel.settingScreenState.collectAsState()
+                            val state by viewModel.settingScreenState.collectAsStateWithLifecycle()
 
                             SettingScreen(
                                 state = state,
@@ -336,7 +329,7 @@ class MainActivity : ComponentActivity() {
                             }
                         ) {
                             val viewModel = hiltViewModel<DetailViewModel>()
-                            val animeResource by viewModel.anime.collectAsState()
+                            val animeResource by viewModel.anime.collectAsStateWithLifecycle()
 
                             uiController.setStatusBarColor(
                                 color = MaterialTheme.colorScheme.background,

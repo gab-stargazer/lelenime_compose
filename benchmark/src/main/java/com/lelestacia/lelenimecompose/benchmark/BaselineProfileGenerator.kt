@@ -21,7 +21,7 @@ class BaselineProfileGenerator {
             pressHome()
             startActivityAndWait()
 
-            val scrollAnime = By.scrollable(true)
+            val scrollAnime = By.res("explore:scrollAnime")
             val navigationIcon = By.desc("Navigation Icon")
 
             //  Wait until the anime is loaded and scroll down
@@ -55,12 +55,15 @@ class BaselineProfileGenerator {
             //  Search for anime
             device.findObject(By.desc("Search Anime")).click()
             device.wait(Until.hasObject(By.desc("Insert Anime Title")), 5000)
-            device.findObject(By.text("Close search mode"))
 
             //  Open some Anime First
             device.findObject(By.text("POPULAR")).click()
             device.wait(Until.hasObject(scrollAnime), 5000)
             device.findObject(By.textContains("Fullmetal")).click()
+            device.wait(Until.hasObject(navigationIcon), 10000)
+            device.findObject(navigationIcon).click()
+            device.wait(Until.hasObject(scrollAnime), 5000)
+            device.findObject(By.textContains("Stein")).click()
             device.wait(Until.hasObject(navigationIcon), 10000)
             device.findObject(navigationIcon).click()
             device.wait(Until.hasObject(By.text("Collection")), 10000)
@@ -76,6 +79,9 @@ class BaselineProfileGenerator {
 
             //  Open some Anime First
             device.findObject(By.textContains("Fullmetal")).click()
+            device.wait(Until.hasObject(navigationIcon), 10000)
+            device.findObject(navigationIcon).click()
+            device.findObject(By.textContains("Stein")).click()
             device.wait(Until.hasObject(navigationIcon), 10000)
             device.findObject(navigationIcon).click()
             device.wait(Until.hasObject(By.text("More")), 10000)

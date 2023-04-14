@@ -24,7 +24,8 @@ interface AnimeAPI {
     @GET("anime")
     suspend fun getAnimeSearch(
         @Query("q") q: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("sfw") sfw: Boolean = true
     ): GenericPaginationResponse<AnimeResponse>
 
     @GET("anime")

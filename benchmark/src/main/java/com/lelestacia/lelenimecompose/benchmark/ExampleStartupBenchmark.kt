@@ -30,15 +30,15 @@ class ExampleStartupBenchmark {
     @get:Rule
     val benchmarkRule = MacrobenchmarkRule()
 
-//    @Test
-//    fun startupTestPartial() {
-//        startupTest(CompilationMode.Partial())
-//    }
-//
-//    @Test
-//    fun startupTestDefault() {
-//        startupTest(CompilationMode.None())
-//    }
+    @Test
+    fun startupTestPartial() {
+        startupTest(CompilationMode.Partial())
+    }
+
+    @Test
+    fun startupTestDefault() {
+        startupTest(CompilationMode.None())
+    }
 
     private fun startupTest(
         compilationMode: CompilationMode
@@ -117,6 +117,11 @@ class ExampleStartupBenchmark {
         device.findObject(By.textContains("Fullmetal")).click()
         device.wait(Until.hasObject(navigationIcon), 10000)
         device.findObject(navigationIcon).click()
+        device.wait(Until.hasObject(scrollAnime), 5000)
+        device.findObject(scrollAnime).scroll(Direction.DOWN, 50F)
+        device.findObject(By.textContains("Bleach")).click()
+        device.wait(Until.hasObject(navigationIcon), 10000)
+        device.findObject(navigationIcon).click()
         device.wait(Until.hasObject(By.text("Collection")), 10000)
         device.findObject(By.text("Collection")).click()
         device.wait(Until.hasObject(scrollAnime), 5000)
@@ -130,6 +135,10 @@ class ExampleStartupBenchmark {
 
         //  Open some Anime First
         device.findObject(By.textContains("Fullmetal")).click()
+        device.wait(Until.hasObject(navigationIcon), 10000)
+        device.findObject(navigationIcon).click()
+        device.findObject(scrollAnime).scroll(Direction.DOWN, 50F)
+        device.findObject(By.textContains("Bleach")).click()
         device.wait(Until.hasObject(navigationIcon), 10000)
         device.findObject(navigationIcon).click()
         device.wait(Until.hasObject(By.text("More")), 10000)
