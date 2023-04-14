@@ -13,8 +13,8 @@ import com.lelestacia.database.animeStuff.service.EpisodeDatabaseService
 import com.lelestacia.database.animeStuff.service.IAnimeDatabaseService
 import com.lelestacia.database.animeStuff.service.ICharacterDatabaseService
 import com.lelestacia.database.animeStuff.service.IEpisodeDatabaseService
-import com.lelestacia.database.user_preferences.IUserPreferencesService
-import com.lelestacia.database.user_preferences.UserPreferencesService
+import com.lelestacia.database.userPreferences.IUserPreferencesService
+import com.lelestacia.database.userPreferences.UserPreferencesService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

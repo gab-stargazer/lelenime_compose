@@ -1,7 +1,7 @@
-package com.lelestacia.lelenimecompose.app
+package com.lelestacia.lelenime.app
 
 import android.app.Application
-import com.lelestacia.lelenimecompose.BuildConfig
+import com.lelestacia.lelenime.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

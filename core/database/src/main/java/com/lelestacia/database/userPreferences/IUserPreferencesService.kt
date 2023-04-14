@@ -1,4 +1,4 @@
-package com.lelestacia.database.user_preferences
+package com.lelestacia.database.userPreferences
 
 import kotlinx.coroutines.flow.Flow
 

@@ -1,4 +1,4 @@
-package com.lelestacia.lelenimecompose.ui.component
+package com.lelestacia.lelenime.ui.component
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -10,7 +10,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.lelestacia.common.navItem
-import com.lelestacia.lelenimecompose.util.rootDestinations
+import com.lelestacia.lelenime.util.rootDestinations
 
 @Composable
 fun LeleNimeBottomBar(navController: NavHostController) {

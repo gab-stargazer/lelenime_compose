@@ -1,4 +1,4 @@
-package com.lelestacia.database.user_preferences
+package com.lelestacia.database.userPreferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore

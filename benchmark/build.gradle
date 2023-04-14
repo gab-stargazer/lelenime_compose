@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.lelestacia.lelenimecompose.benchmark'
+    namespace 'com.lelestacia.lelenime.benchmark'
     compileSdk 33
 
     compileOptions {

@@ -5,7 +5,7 @@ import com.lelestacia.data.repository.IAnimeRepository
 import com.lelestacia.data.repository.IUserPreferencesRepository
 import com.lelestacia.data.repository.UserPreferencesRepository
 import com.lelestacia.database.animeStuff.service.IAnimeDatabaseService
-import com.lelestacia.database.user_preferences.IUserPreferencesService
+import com.lelestacia.database.userPreferences.IUserPreferencesService
 import com.lelestacia.network.source.IAnimeNetworkService
 import dagger.Module
 import dagger.Provides

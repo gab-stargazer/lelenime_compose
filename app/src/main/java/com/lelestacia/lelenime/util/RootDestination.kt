@@ -1,4 +1,4 @@
-package com.lelestacia.lelenimecompose.util
+package com.lelestacia.lelenime.util
 
 import com.lelestacia.common.route.Screen
 

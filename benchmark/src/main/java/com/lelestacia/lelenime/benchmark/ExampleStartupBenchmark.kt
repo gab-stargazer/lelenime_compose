@@ -1,4 +1,4 @@
-package com.lelestacia.lelenimecompose.benchmark
+package com.lelestacia.lelenime.benchmark
 
 import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.FrameTimingMetric
@@ -76,7 +76,6 @@ class ExampleStartupBenchmark {
         startActivityAndWait()
 
         val scrollAnime = By.res("explore:scrollAnime")
-        val loading = By.res("explore:loading")
         val navigationIcon = By.desc("Navigation Icon")
 
         //  Wait until the anime is loaded and scroll down

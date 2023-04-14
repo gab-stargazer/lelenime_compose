@@ -1,4 +1,4 @@
-package com.lelestacia.lelenimecompose.benchmark
+package com.lelestacia.lelenime.benchmark
 
 import androidx.benchmark.macro.ExperimentalBaselineProfilesApi
 import androidx.benchmark.macro.junit4.BaselineProfileRule

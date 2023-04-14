@@ -1,4 +1,4 @@
-package com.lelestacia.lelenimecompose
+package com.lelestacia.lelenime
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

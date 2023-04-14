@@ -1,6 +1,6 @@
 package com.lelestacia.data.repository
 
-import com.lelestacia.database.user_preferences.IUserPreferencesService
+import com.lelestacia.database.userPreferences.IUserPreferencesService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

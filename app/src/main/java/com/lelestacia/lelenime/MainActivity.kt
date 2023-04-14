@@ -1,4 +1,4 @@
-package com.lelestacia.lelenimecompose
+package com.lelestacia.lelenime
 
 import android.os.Build
 import android.os.Bundle
@@ -34,8 +34,8 @@ import com.lelestacia.detail.screen.DetailScreen
 import com.lelestacia.detail.screen.DetailViewModel
 import com.lelestacia.explore.screen.ExplorationScreen
 import com.lelestacia.explore.screen.ExplorationScreenViewModel
-import com.lelestacia.lelenimecompose.ui.component.LeleNimeBottomBar
-import com.lelestacia.lelenimecompose.ui.theme.LelenimeComposeTheme
+import com.lelestacia.lelenime.ui.component.LeleNimeBottomBar
+import com.lelestacia.lelenime.ui.theme.LelenimeComposeTheme
 import com.lelestacia.more.screen.about.AboutScreen
 import com.lelestacia.more.screen.more.MoreScreen
 import com.lelestacia.more.screen.settings.SettingScreen
@@ -57,11 +57,17 @@ class MainActivity : ComponentActivity() {
             val activityVM by viewModels<ActivityViewModel>()
             val theme by activityVM.darkModePreferences.collectAsStateWithLifecycle()
             val darkIcons =
-                if (isSystemInDarkTheme()) theme == 1
-                else theme != 2
+                if (isSystemInDarkTheme()) {
+                    theme == 1
+                } else {
+                    theme != 2
+                }
             val dynamicModePreferences =
-                if (Build.VERSION.SDK_INT <= 30) false
-                else activityVM.dynamicMode.collectAsStateWithLifecycle().value
+                if (Build.VERSION.SDK_INT <= 30) {
+                    false
+                } else {
+                    activityVM.dynamicMode.collectAsStateWithLifecycle().value
+                }
 
             LelenimeComposeTheme(
                 darkTheme = when (theme) {

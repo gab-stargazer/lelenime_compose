@@ -77,7 +77,7 @@ fun AboutScreen(
                     .padding(top = 24.dp)
             )
             Text(
-                text = "Version 1.0.0-beta",
+                text = "Version 1.0.0",
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 16.dp)
             )
